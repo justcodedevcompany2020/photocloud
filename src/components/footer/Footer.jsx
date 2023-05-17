@@ -10,6 +10,7 @@ export const Footer = () => {
 }
 
 export const FooterBlock = styled.div`
+position: fixed;
 height: 130px;
 left: 0;
 bottom: 0;
@@ -19,7 +20,6 @@ color: white;
 text-align: center;
 `
 export const FooterText = styled.p`
-padding-top: 30px;
 margin-bottom: 16px;
 font-family: 'Raleway';
 font-style: normal;

@@ -2,8 +2,14 @@ import { forwardRef } from "react";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export const Login = forwardRef(({forgotPassCB, regCB}, ref) => {
+export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB }, ref) => {
+    const handleCloseModal = () => {
+        regCB()
+        loginCloseCB()
+    }
+
     return (<BackDiv>
         <MainBlock ref={ref}>
             <Content>
@@ -11,8 +17,8 @@ export const Login = forwardRef(({forgotPassCB, regCB}, ref) => {
                 <Input inputName={'Юзернейм'} />
                 <Input inputName={'Пароль'} />
                 <ForgotPasswordText onClick={forgotPassCB}>Забыли пароль</ForgotPasswordText>
-                <Button mt={'40px'} bgColor={'#4F6688'} text={'Войти'} />
-                <BtnSubText>Нет аккаунта ? <LoginText onClick={regCB}>Зарегистрироваться</LoginText></BtnSubText>
+                <Link to={'/userProfile'}> <Button onClick={handleCloseModal} mt={'40px'} bgColor={'#4F6688'} text={'Войти'} /></Link>
+                <BtnSubText>Нет аккаунта ? <LoginText >Зарегистрироваться</LoginText></BtnSubText>
             </Content>
         </MainBlock>
     </BackDiv>)

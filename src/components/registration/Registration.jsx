@@ -2,8 +2,9 @@ import styled from "styled-components"
 import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
 import { forwardRef } from "react";
+import { Link } from "react-router-dom";
 
-export const Registration = forwardRef(({loginBtnCB}, ref) => {
+export const Registration = forwardRef(({ loginBtnCB }, ref) => {
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>
@@ -12,7 +13,7 @@ export const Registration = forwardRef(({loginBtnCB}, ref) => {
             <Input inputName={'Эл. почта'} />
             <Input inputName={'Пароль'} />
             <Input inputName={'Повтор пароля'} />
-            <Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} />
+            <Link to={'/userProfile'}><Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB()}/> </Link>
             <BtnSubText>Уже зарегистрировались? <LoginText onClick={loginBtnCB}>Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
 });

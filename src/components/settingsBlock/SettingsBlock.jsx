@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Button } from "../../ui/Button"
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
+import { Link } from "react-router-dom";
 
 export const SettingsBlock = () => {
     return (
@@ -14,9 +15,11 @@ export const SettingsBlock = () => {
                         <IconWrapper>
                             <LogoutIcon />
                         </IconWrapper>
-                        <LogoutText>
-                            Выйти
-                        </LogoutText>
+                        <Link to={'/'}>
+                            <LogoutText>
+                                Выйти
+                            </LogoutText>
+                        </Link>
                     </LogoutWrapper>
                 </UserBlock>
                 <SettingsDiv>

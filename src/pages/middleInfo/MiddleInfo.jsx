@@ -1,17 +1,21 @@
 import React from "react"
 import styled from "styled-components"
 import { Button } from "../../ui/Button"
+import { Footer } from "../../components/footer/Footer"
+import { Link } from "react-router-dom"
 
 export const MiddleInfo = () => {
     return (
+    <>
         <MainDiv>
             <MainTitle>Загружайте и делитесь изображениями</MainTitle>
             <MainText>Начните загружать изображения простым перетаскиванием в любое место окна прямо сейчас. Ограничение на размер изображения 32 MB. После загрузки, Вам будут доступны прямые ссылки, BB-коды и миниатюры.</MainText>
-            <Button text={'Начать загрузку'} bgColor={'#4F6688'}/>
+          <Link to={'/createFolder'} > <Button text={'Начать загрузку'} bgColor={'#4F6688'} /></Link>
         </MainDiv>
+        <Footer/>
+    </>
     )
 }
-
 
 export const MainDiv = styled.div`
 margin-top: 312px;

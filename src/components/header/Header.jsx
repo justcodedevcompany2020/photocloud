@@ -8,11 +8,13 @@ import { Login } from "../login/Login";
 import { PasswordRecovery } from "../passwordRecovery/PasswordRecovery";
 import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
     const [regToggle, setRegToggle] = useState(false)
     const [loginToggle, setLoginToggle] = useState(false)
     const [recoveryToggle, setRecoveryToggle] = useState(false)
+    let { pathname } = useLocation();
 
     const refReg = useRef();
     const logRef = useRef();
@@ -36,7 +38,7 @@ export const Header = () => {
 
     const handleLoginClick = () => {
         setRegToggle(!regToggle)
-        setLoginToggle(!loginToggle)
+        setLoginToggle(false)
     }
 
     const handleRegFromLogin = () => {
@@ -44,15 +46,20 @@ export const Header = () => {
         setRegToggle(true)
     }
 
+    const handleCloseLoginModal = () => {
+        setLoginToggle(false)
+        setRegToggle(false)
+    }
+
     return (<>
         <HeaderBlock>
             <MainBlock>
                 <LogoBlock>
-                    <LogoTitle>
+                    <Link style={{ textDecoration: 'none' }} to={'/userProfile'}><LogoTitle>
                         PhotoHosting
-                    </LogoTitle>
+                    </LogoTitle></Link>
                 </LogoBlock>
-                {false ? <UserProfileBlock>
+                {pathname === '/userProfile' ? <UserProfileBlock>
                     <UserName>
                         AccountName
                     </UserName>
@@ -66,7 +73,7 @@ export const Header = () => {
             </MainBlock>
         </HeaderBlock>
         {regToggle && <Registration ref={refReg} loginBtnCB={handleLoginClick} />}
-        {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} />}
+        {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal} />}
         {recoveryToggle && <PasswordRecovery ref={recRef} />}
         {/* <RecoveryCode/> */}
         {/* <PasswordRecoveryForm/> */}
@@ -93,6 +100,7 @@ const LogoBlock = styled.div`
 
 `
 const LogoTitle = styled.span`
+text-decoration: none;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 700;
