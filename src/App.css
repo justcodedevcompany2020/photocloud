@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+body {
+  background: #E9E9E9;
+}
+
+@font-face {
+  font-family: "Raleway"; 
+  src: local("RalewayBold"),
+    url("./fonts/Raleway-Bold.ttf") format("truetype");
+}
