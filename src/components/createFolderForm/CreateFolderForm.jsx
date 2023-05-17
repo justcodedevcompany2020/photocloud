@@ -9,7 +9,7 @@ export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB }, ref) => {
             <MainBlock ref={ref}>
                 <Content>
                     <RegistrationTitle>Создать папку</RegistrationTitle>
-                    <Input inputName={'Название папки'} />
+                    <Input width={'100%'} inputName={'Название папки'} />
                     <Button mt={'40px'} bgColor={'#4F6688'} text={'Создать'} />
                 </Content>
             </MainBlock>
@@ -27,6 +27,10 @@ right:0px;
 bottom:0px;
 left:0px;
 z-index: 9989;
+display: flex;
+justify-content: center;
+align-items: center;
+
 `
 const MainBlock = styled.div`
 left: 0px;
@@ -37,6 +41,12 @@ height: 299px;;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+@media (max-width: 425px) {
+    width:90%;
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin: auto;
+}
 `
 const MainBlockWrapper = styled.div`
 display: inline-block;
@@ -56,4 +66,5 @@ font-size: 40px;
 line-height: 47px;
 text-align: center;
 color: #333333;
+
 `

@@ -10,9 +10,10 @@ export const Button = ({
     mt,
     ml,
     mb,
+    font
 }) => {
     return (
-        <UIbutton onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}</UIbutton>
+        <UIbutton font = {font} onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}</UIbutton>
     )
 }
 
@@ -29,7 +30,7 @@ color: ${props => props.txColor ? props.txColor : '#FFFFFF'};
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 600;
-font-size: 17px;
+font-size:${props => props.font ? props.font : '17px'};
 line-height: 20px;
 cursor: pointer;
 `

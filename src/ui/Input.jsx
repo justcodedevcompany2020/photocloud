@@ -1,15 +1,17 @@
 import styled from "styled-components"
 
 export const Input = ({
-    inputName
+    inputName,
+    width,
 }) => {
     return (
-        <UIInput type="text" placeholder={inputName} />
+        <UIInput width = {width} type="text" placeholder={inputName} />
     )
 }
 
 export const UIInput = styled.input`
-width: 350px;
+width: ${props => props.width ? props.width : '350px'};
+max-width:350px;
 padding:15px 20px;
 margin: 12px 0;
 box-sizing: border-box;

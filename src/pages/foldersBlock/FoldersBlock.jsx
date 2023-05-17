@@ -27,7 +27,7 @@ const MainBlock = styled.div`
 display:flex;
 max-width: 1170px;
 min-height: 720px;
-width: 100%;
+width: 95%;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 10px;

@@ -8,11 +8,11 @@ export const Registration = forwardRef(({ loginBtnCB }, ref) => {
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>
-            <Input inputName={'Имя'} />
-            <Input inputName={'Юзернейм'} />
-            <Input inputName={'Эл. почта'} />
-            <Input inputName={'Пароль'} />
-            <Input inputName={'Повтор пароля'} />
+            <Input width={'100%'} inputName={'Имя'} />
+            <Input width={'100%'} inputName={'Юзернейм'} />
+            <Input width={'100%'} inputName={'Эл. почта'} />
+            <Input width={'100%'} inputName={'Пароль'} />
+            <Input width={'100%'} inputName={'Повтор пароля'} />
             <Link to={'/userProfile'}><Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB()}/> </Link>
             <BtnSubText>Уже зарегистрировались? <LoginText onClick={loginBtnCB}>Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
@@ -28,6 +28,10 @@ right:0px;
 bottom:0px;
 left:0px;
 z-index: 9989;
+display: flex;
+justify-content: center;
+align-items: center;
+
 `
 const MainBlock = styled.div`
 left: 0px;
@@ -38,6 +42,11 @@ height: 623px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+@media (max-width: 425px) {
+    width:90%;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
 `
 const RegistrationTitle = styled.div`
 padding-top: 38px;

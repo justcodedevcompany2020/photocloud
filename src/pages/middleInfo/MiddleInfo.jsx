@@ -8,7 +8,7 @@ export const MiddleInfo = () => {
     return (
     <>
         <MainDiv>
-            <MainTitle>Загружайте и делитесь изображениями</MainTitle>
+            <MainTitle >Загружайте и делитесь изображениями</MainTitle>
             <MainText>Начните загружать изображения простым перетаскиванием в любое место окна прямо сейчас. Ограничение на размер изображения 32 MB. После загрузки, Вам будут доступны прямые ссылки, BB-коды и миниатюры.</MainText>
           <Link to={'/createFolder'} > <Button text={'Начать загрузку'} bgColor={'#4F6688'} /></Link>
         </MainDiv>
@@ -18,7 +18,16 @@ export const MiddleInfo = () => {
 }
 
 export const MainDiv = styled.div`
-margin-top: 312px;
+height: calc(100vh - 230px);
+justify-content: center;
+align-items: center;
+display: flex;
+flex-direction: column;
+margin: auto;
+width:55%
+@media (max-width: 425px) {
+    width:70%
+}
 `
 export const MainTitle = styled.span`
 font-family: 'Raleway';
@@ -28,6 +37,10 @@ font-size: 40px;
 line-height: 47px;
 text-align: center;
 color: #4F6688;
+@media (max-width: 425px) {
+    line-height: 33px;
+    font-size: 28px;
+}
 `
 export const MainText = styled.p`
 font-style: normal;
@@ -39,5 +52,11 @@ font-feature-settings: 'pnum' on, 'lnum' on;
 color: #333333;
 margin-left: auto;
 margin-right: auto;
-width: 44em
+margin-bottom: 65px;
+width: 44em;
+@media (max-width: 425px) {
+    font-size: 16px;
+    width: 90%; 
+    line-height: 19px;
+}
 `

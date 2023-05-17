@@ -2,8 +2,26 @@ import styled from "styled-components"
 import { Button } from "../../ui/Button"
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ReactComponent as Settings } from '../../assets/settings.svg';
+
 
 export const SettingsBlock = () => {
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
+    useEffect(()=>{
+        const handleWindowResize = () => {
+            setWindowSize([window.innerWidth, window.innerHeight]);
+          };
+      
+          window.addEventListener('resize', handleWindowResize);
+      
+          return () => {
+            window.removeEventListener('resize', handleWindowResize);
+          };
+    },[])
     return (
         <MainBlock>
             <ContentBlock>
@@ -23,9 +41,11 @@ export const SettingsBlock = () => {
                     </LogoutWrapper>
                 </UserBlock>
                 <SettingsDiv>
-                    <ButtonWrapper>
-                        <Button text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
-                    </ButtonWrapper>
+                    {windowSize[0]<=425 ? <Settings />:
+                        <ButtonWrapper>
+                            <Button text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
+                        </ButtonWrapper>
+                    }
                 </SettingsDiv>
             </ContentBlock>
         </MainBlock>
@@ -36,7 +56,7 @@ const MainBlock = styled.div`
 display:flex;
 max-width: 1170px;
 align-items: center;
-width: 100%;
+width: 95%;
 justify-content: space-between;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
@@ -65,6 +85,9 @@ color: #333333;
 cursor: pointer;
 margin-top: 0px;
 margin-bottom: 16px;
+@media (max-width: 425px) {
+    font-size: 16px;
+  }
 `
 const LogoutText = styled.span`
 font-family: 'Raleway';

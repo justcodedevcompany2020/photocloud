@@ -1,8 +1,12 @@
 import styled from "styled-components"
 import { ReactComponent as UserIcon } from '../../assets/UserIcon.svg';
+import { ReactComponent as UsericoneMobil } from '../../assets/UsericoneMobil.svg';
+import { ReactComponent as settings } from '../../assets/settings.svg';
+
+
 import { Button } from "../../ui/Button";
 import { Registration } from "../registration/Registration";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { Login } from "../login/Login";
 import { PasswordRecovery } from "../passwordRecovery/PasswordRecovery";
@@ -50,9 +54,23 @@ export const Header = () => {
         setLoginToggle(false)
         setRegToggle(false)
     }
-
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
+    useEffect(()=>{
+        const handleWindowResize = () => {
+            setWindowSize([window.innerWidth, window.innerHeight]);
+          };
+      
+          window.addEventListener('resize', handleWindowResize);
+      
+          return () => {
+            window.removeEventListener('resize', handleWindowResize);
+          };
+    },[])
     return (<>
-        <HeaderBlock>
+        <HeaderBlock >
             <MainBlock>
                 <LogoBlock>
                     <Link style={{ textDecoration: 'none' }} to={'/userProfile'}><LogoTitle>
@@ -64,11 +82,15 @@ export const Header = () => {
                         AccountName
                     </UserName>
                     <UserIconWrapper>
-                        <UserIcon />
+                        {windowSize[0] >= 425 ? <UserIcon /> : <UsericoneMobil />}
                     </UserIconWrapper>
                 </UserProfileBlock> : <LoginBlock>
-                    <Button onClick={handleLoginToggle} text={'Войти'} txColor={'#4F6688'} width={'230px'} />
-                    <Button onClick={handleRegToggle} text={'Зарегистрироваться'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
+                    <ButtonWrapperLogin><Button onClick={handleLoginToggle} text={'Войти'} txColor={'#4F6688'} width={'230px'}  /></ButtonWrapperLogin>
+
+                    <ButtonWrapperMobile><Button onClick={handleLoginToggle} text={'Войти'} txColor={'#4F6688'} width={'100px'} height ={'35px'} font = {'14px'} /></ButtonWrapperMobile>
+                    <ButtonWrapper><Button onClick={handleRegToggle} text={'Зарегистрироваться'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} /></ButtonWrapper>
+                   
+
                 </LoginBlock>}
             </MainBlock>
         </HeaderBlock>
@@ -82,18 +104,21 @@ export const Header = () => {
 }
 
 const HeaderBlock = styled.div`
-border: 1px solid #BEBEBE;
 height: 100px;
 display: flex;
-justify-content: center; /*Центрирование по горизонтали*/
+justify-content: center;
 align-items: center;
 background: #FFFFFF;
+border-bottom: 1px solid #BEBEBE;
+@media (max-width: 425px) {
+    height: 60px;
+  }
 `
 const MainBlock = styled.div`
 display:flex;
 max-width: 1170px;
 align-items: center;
-width: 100%;
+width: 95%;
 justify-content: space-between;
 `
 const LogoBlock = styled.div`
@@ -108,6 +133,9 @@ font-size: 30px;
 line-height: 35px;
 color: #4F6688;
 cursor: pointer;
+@media (max-width: 425px) {
+    font-size: 20px;
+  }
 `
 const UserProfileBlock = styled.div`
 display: flex;
@@ -124,10 +152,33 @@ font-feature-settings: 'pnum' on, 'lnum' on;
 color: #333333;
 margin-right: 13px;
 cursor: pointer;
+display:block;
+@media (max-width: 425px) {
+    display: none;
+  }
+
 `
 const UserIconWrapper = styled.div`
 cursor: pointer;
 `
-const LoginBlock = styled.div`
 
+const LoginBlock = styled.div`
+display: flex;
+`
+const ButtonWrapper = styled.div `
+@media (max-width: 425px) {
+    display: none;
+  }
+`
+const ButtonWrapperMobile = styled.div`
+display: none;
+@media (max-width: 425px) {
+    display: block;
+  }
+`
+const ButtonWrapperLogin = styled.div `
+display: block;
+@media (max-width: 425px) {
+    display: none;
+  }
 `
