@@ -38,3 +38,9 @@ export const start_forgot_password_code = () =>{
         type:'start_forgot_password_code'
     }
 }
+
+export const start_create_new_password = () =>{
+    return {
+        type:'start_create_new_password'
+    }
+}

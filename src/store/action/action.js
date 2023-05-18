@@ -1,6 +1,7 @@
 import axios from "axios";
-import { error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
+import { error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
 import {
+  start_create_new_password,
   start_forgot_password,
   start_forgot_password_code,
   start_get_user,
@@ -11,6 +12,7 @@ import {
   start_verefy_email,
 } from "./startAction";
 import {
+  success_create_new_password,
   success_forgot_password,
   success_forgot_password_code,
   success_get_user,
@@ -142,12 +144,10 @@ export const forgot_password_api = (email) =>{
         dispatch(success_forgot_password(r.data))
       }
       else {
-        console.log('8888')
         dispatch(error_forgot_password())
       }
     })
     .catch((error)=>{
-      console.log('77777')
       dispatch(error_forgot_password())
     })
   }
@@ -176,5 +176,23 @@ export const forgot_password_code = (data) =>{
 export const clear_forgot_password_code = () =>{
   return {
     type:'clear_forgot_password_code'
+  }
+}
+
+
+export const create_new_password = (data) =>{
+  return (dispatch) =>{
+    dispatch(start_create_new_password())
+    axios.post(`${url}add_new_password_from_forgot_password`,data).then((r)=>{
+      if(r.data.status){
+        dispatch(success_create_new_password(r.data))
+      }
+      else {
+        dispatch(error_create_new_password())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_create_new_password())
+    })
   }
 }

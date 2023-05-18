@@ -4,7 +4,10 @@ const initialState = {
     error:'',
     statusCode:false,
     loadingCode:false,
-    errorCode:''
+    errorCode:'',
+    statusNew:false,
+    loadingNew:false,
+    errorNew:'',
 }
 
 export const forgotPassword = (state = initialState, action) => {
@@ -43,7 +46,21 @@ export const forgotPassword = (state = initialState, action) => {
         case 'clear_forgot_password_code':
             temp.errorCode = ''
             temp.statusCode = false
-            temp.loadingCode = false          
+            temp.loadingCode = false
+            break
+        case 'start_create_new_password':
+            temp.statusNew = false
+            temp.loadingNew = true
+            break
+        case 'success_create_new_password':
+            temp.statusNew = true
+            temp.loadingNew = false
+            temp.errorNew = ''
+            break
+        case 'error_create_new_password':
+            temp.statusNew = false
+            temp.loadingNew = false
+            break
         default:
             break;
     }

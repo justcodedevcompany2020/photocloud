@@ -40,3 +40,9 @@ export const success_forgot_password_code = (data)=>{
         data
     }
 }
+export const success_create_new_password = (data) =>{
+    return {
+        type:'success_create_new_password',
+        data 
+    }
+}

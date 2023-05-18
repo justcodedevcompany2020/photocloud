@@ -17,6 +17,9 @@ export const loginReducer = (state = initialState, action) => {
             temp.status = false
             temp.error = 'Неправильный логин или пароль'
             break
+        case 'success_verefy_email':
+            temp.loading = false
+            break
         case 'clear_login_error':
             temp.error = ''
             break

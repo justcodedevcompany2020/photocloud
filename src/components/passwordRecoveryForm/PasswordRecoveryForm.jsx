@@ -1,9 +1,18 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Input } from "../../ui/Input";
 import { Button } from "../../ui/Button";
 import styled from "styled-components";
 
 export const PasswordRecoveryForm = forwardRef((props, ref) => {
+    const [data,setData] = useState()
+    useEffect(()=>{
+        setData(props.data)
+    },[])
+    const handelChage = (e,i) =>{
+        let item = [...data]
+        item[i].value = e
+        setData(item)
+    }
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -14,9 +23,12 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
                     строчные и прописные буквы,а так же цифры
                     и символы
                 </RecoverySubText>
-                <Input inputName={'Новый пароль'} />
-                <Input inputName={'Повтор пароля'} />
-                <Button onClick={()=>props.onClick} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
+                {data?.map((elm,i)=>{
+                    return <Input value={elm.value} error = {elm.error} key = {i} onChange = {(e)=>handelChage(e,i)} inputName={elm.lable} />
+                })
+
+                }
+                <Button loading = {props.loading} onClick={()=>props.handelNewPassword(data)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
     </BackDiv>)

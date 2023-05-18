@@ -30,7 +30,6 @@ export const SettingsBlock = () => {
 
     const {reg} = useSelector((st)=>st)
     useEffect(()=>{
-        console.log(reg)
         if(reg.logOutStats){
             navigate('/')
         }

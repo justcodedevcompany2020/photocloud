@@ -13,7 +13,7 @@ import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
+import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
 import { VerefayEmail } from "../verefayEmail";
 
 export const Header = () => {
@@ -23,7 +23,12 @@ export const Header = () => {
     const [recoveryPasswordFormToggle, setRecoveryPasswordFormToggle] = useState(false)
     const [recoveryPasswordForm, setRecoveryPasswordForm] = useState(false)
     const [verefayEmail,setVerefayEmail] = useState(false)
-    const [forgotPaswordMail,setForgotPasswordMail] = useState()
+    const [forgotPaswordMail,setForgotPasswordMail] = useState('')
+    const [newPassword,setNewPassword] = useState([
+        {value:'',lable:'Новый пароль',error:false},
+        {value:'',lable:'Повтор пароля',error:false},
+    ])
+    const [code,setCode] = useState('')
 
     
     let { pathname } = useLocation();
@@ -42,7 +47,6 @@ export const Header = () => {
       ]);
     const {reg} = useSelector(st=>st)
     const {forgotPassword} = useSelector(st=>st)
-    console.log(forgotPassword)
     useOnClickOutside(refReg, () => setRegToggle(false));
     useOnClickOutside(logRef, () => closeLogin());
     useOnClickOutside(recRef, () =>closeRecoverPassword());
@@ -163,11 +167,31 @@ export const Header = () => {
         setRegToggle(false)
     }
     const handelRecoveryPassForm = (e) =>{
-        console.log(e)
+        setCode(e)
         dispatch(forgot_password_code({email:forgotPaswordMail,code:e}))
-
     }
    
+    const handelNewPassword = (value) =>{
+        let item = [...value]
+        if((item[0].value !== item[1].value )|| item[0].value === '' || item[1].value === '' ||item[0].value.length<8||item[1].value.length<8){
+            item[0].error = true
+            item[1].error = true
+        }
+        else {
+            item[0].error = false
+            item[1].error = false
+        }
+        setNewPassword(item)
+        if(!item[0].error && !item[1].error){
+            dispatch(create_new_password({
+                email:forgotPaswordMail,
+                code:code,
+                password:item[0].value,
+                password_confirmation:item[1].value
+            }))
+        }
+        // setRecoveryPasswordForm(false)
+    }
 
     const handelVerefyForm = (value) =>{
         dispatch(verify_email({email:registerData[2].value,code:value}))
@@ -204,6 +228,13 @@ export const Header = () => {
             setRecoveryPasswordForm(true)
         }
     },[forgotPassword.statusCode])
+
+    useEffect(()=>{
+        if(forgotPassword.statusNew){
+            setRecoveryPasswordForm(false) 
+            setLoginToggle(true)
+        }
+    },[forgotPassword.statusNew])
 
     useEffect(()=>{
         const handleWindowResize = () => {
@@ -243,7 +274,7 @@ export const Header = () => {
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
         {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
         {recoveryPasswordFormToggle  && <RecoveryCode error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
-        {recoveryPasswordForm && <PasswordRecoveryForm onClick = {()=>setRecoveryPasswordForm(false)} ref = {recpasref}/>}
+        {recoveryPasswordForm && <PasswordRecoveryForm loading = {forgotPassword.loadingNew} data = {newPassword} handelNewPassword = {(e)=>handelNewPassword(e)} ref = {recpasref}/>}
         {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
     </>
     )
