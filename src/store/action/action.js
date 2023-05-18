@@ -1,5 +1,5 @@
 import axios from "axios";
-import { error_change_username_and_name, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
+import { error_change_username_and_name, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
   start_change_username_and_name,
   start_create_new_password,
@@ -10,6 +10,7 @@ import {
   start_logout,
   start_register,
   start_resend_verify_mail,
+  start_update_password,
   start_verefy_email,
 } from "./startAction";
 import {
@@ -21,6 +22,7 @@ import {
   success_login,
   success_logout,
   success_register,
+  success_update_password,
   success_verefy_email,
 } from "./successAction";
 
@@ -217,5 +219,30 @@ export const change_username_and_name = (data) =>{
       console.log(error)
       dispatch(error_change_username_and_name())
     })
+  }
+}
+
+export const update_user_password = (data) =>{
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+    dispatch(start_update_password())
+    axios.post(`${url}update_password`,data,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+        dispatch(success_update_password(r.data))
+      }
+      else {
+        dispatch(error_update_password())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_update_password())
+    })
+  }
+}
+export const open_popup_change_password = () =>{
+  return {
+    type:'open_popup_change_password'
   }
 }

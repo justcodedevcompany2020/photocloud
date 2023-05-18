@@ -49,3 +49,8 @@ export const start_change_username_and_name = () =>{
         type:'start_change_username_and_name'
     }
 } 
+export const start_update_password = () =>{
+    return {
+        type:'start_update_password'
+    }
+}

@@ -43,3 +43,8 @@ export const error_change_username_and_name = () =>{
         type:'error_change_username_and_name'
     }
 }
+export const error_update_password = () =>{
+    return {
+        type:'error_update_password'
+    }
+}

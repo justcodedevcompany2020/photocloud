@@ -52,3 +52,9 @@ export const success_change_username_and_name = (data) =>{
         type:'success_change_username_and_name'
     }
 }
+export const success_update_password = (data)=>{
+    return {
+        type:'success_update_password',
+        data
+    }
+}

@@ -5,7 +5,7 @@ import { Button } from "../../ui/Button"
 import { Input } from "../../ui/Input"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useDispatch, useSelector } from "react-redux"
-import { change_username_and_name } from "../../store/action/action"
+import { change_username_and_name, open_popup_change_password, update_user_password } from "../../store/action/action"
 
 export const Settings = () =>{
     const [changePasswordToggle, setChangePasswordToggle] = useState(false)
@@ -53,6 +53,13 @@ export const Settings = () =>{
             item[1].error = false
             item[2].error = false
         }
+        if(!item[1].error && !item[0].error && !item[2].error){
+            dispatch(update_user_password({
+                old_password:item[0].value,
+                password:item[1].value,
+                password_confirmation:item[2].value
+            }))
+        }
         setChnagePassword(item)
         // setChangePasswordToggle(false)
     }
@@ -73,6 +80,11 @@ export const Settings = () =>{
         item[i].value =  e
         setData(item)
     }
+    useEffect(()=>{
+        if(changeData.changePasswordstatus){
+            setChangePasswordToggle(false)
+        }
+    },[changeData.changePasswordstatus])
     const handelClickSave = () =>{
         let send = false
         let item = [...data]
@@ -116,16 +128,24 @@ export const Settings = () =>{
                         <Lable>Эл. почта</Lable>
                         <Input error={data[2].error} value={data[2].value} onChange ={(e)=>hadnelClick(e,2)} width={'500px'} max={'500px'} inputName={'User@gmail.com'} />
                     </InputWrapper>
-                    <TextMobile onClick={()=>setChangePasswordToggle(true)}>Сменить пароль</TextMobile>
+                    <TextMobile onClick={()=>{
+                        dispatch(open_popup_change_password())
+                        setChangePasswordToggle(true)
+
+                    }
+                    }>Сменить пароль</TextMobile>
                     <Br />
                     <ButtonWrapper>
                         <Button loading = {changeData.loading} onClick={(e)=>handelClickSave(e)}  text={'Сохранить'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
-                        <Text onClick={()=>setChangePasswordToggle(true)}>Сменить пароль</Text>
+                        <Text onClick={()=>{
+                            dispatch(open_popup_change_password())
+                            setChangePasswordToggle(true)}}
+                        >Сменить пароль</Text>
                     </ButtonWrapper>
                 </Content>
             </Block>
         </MainBlock>
-        {changePasswordToggle && <ChangePasswordForm changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
+        {changePasswordToggle && <ChangePasswordForm error = {changeData.error} loading= {changeData.changePasswordLoading} changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
     </>
 }
 const MainBlock = styled.div`

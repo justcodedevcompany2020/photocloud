@@ -3,7 +3,7 @@ import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
 import { forwardRef, useEffect, useState } from "react";
 
-export const ChangePasswordForm = forwardRef(({ handelClick,changeData }, ref) => {
+export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,loading}, ref) => {
     const [data,setData] = useState([
         {value:'',lable:'Старый пароль',error:''},
         {value:'',lable:'Новый пароль',error:''},
@@ -28,7 +28,8 @@ export const ChangePasswordForm = forwardRef(({ handelClick,changeData }, ref) =
                     return <Input error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
                 })
             }
-            <Button  onClick={()=>handelClick(data)} mt={'40px'} bgColor={'#4F6688'} text={'Сохранить'} />
+                <ErrorText>{error}</ErrorText>
+            <Button loading ={loading} onClick={()=>handelClick(data)} mt={'10px'} bgColor={'#4F6688'} text={'Сохранить'} />
         </MainBlock>
     </BackDiv>)
 });
@@ -90,4 +91,10 @@ text-align: center;
 @media (max-width: 768px) {
     padding: 0px;
 }
+`
+const ErrorText = styled.p`
+    margin: 0;
+    font-size: 12px;
+    color: red;
+    height: 20px;
 `
