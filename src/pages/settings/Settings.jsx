@@ -1,16 +1,104 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { ChangePasswordForm } from "../../components/changePasswordForm/ChangePasswordForm"
 import { Button } from "../../ui/Button"
 import { Input } from "../../ui/Input"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { useDispatch, useSelector } from "react-redux"
+import { change_username_and_name } from "../../store/action/action"
 
 export const Settings = () =>{
     const [changePasswordToggle, setChangePasswordToggle] = useState(false)
     const refReg = useRef()
-    useOnClickOutside(refReg, () => setChangePasswordToggle(false));
-    const handelClick = () =>{
+    useOnClickOutside(refReg, () => closeChangePassword());
+    const {reg} = useSelector((st)=>st)
+    const {changeData} = useSelector(st=>st)
+    const dispatch = useDispatch()
+    const [data,setData] = useState([
+        {value:'',lable:'Имя',error:''},
+        {value:'',lable:'Юзернейм',error:''},
+        {value:'',lable:'Эл. почта',error:''},
+    ])
+    const[prevData,setPrevData] = useState([
+        {value:'',lable:'Имя',error:''},
+        {value:'',lable:'Юзернейм',error:''},
+        {value:'',lable:'Эл. почта',error:''},
+    ])
+    const [chnagePassword,setChnagePassword] = useState([
+        {value:'',lable:'Старый пароль',error:''},
+        {value:'',lable:'Новый пароль',error:''},
+        {value:'',lable:'Повтор пароля',error:''},
+    ])
+    const closeChangePassword = () =>{
+        setChnagePassword([
+        {value:'',lable:'Старый пароль',error:''},
+        {value:'',lable:'Новый пароль',error:''},
+        {value:'',lable:'Повтор пароля',error:''},
+        ])
+        setChangePasswordToggle(false)
+    }
+    const handelClick = (value) =>{
+        let item = [...value]
+        if(item[0].value === ''){
+            item[0].error = true
+        }
+        else {
+            item[0].error = false
+        }
+        if((item[1].value !== item[2].value) || item[1].value === ''||item[2].value === '' ||item[1].value.length<8|| item[2].value.length<8 ){
+            item[1].error = true
+            item[2].error = true
+        }
+        else {
+            item[1].error = false
+            item[2].error = false
+        }
+        setChnagePassword(item)
         // setChangePasswordToggle(false)
+    }
+    useEffect(()=>{
+        let item = [...data]
+        let item2 = [...prevData]
+        item[0].value = reg.user.name
+        item[1].value = reg.user.username
+        item[2].value = reg.user.email
+        item2[0].value = reg.user.name
+        item2[1].value = reg.user.username
+        item2[2].value = reg.user.email
+        setData(item)
+        setPrevData(item2)
+    },[reg.user])
+    const hadnelClick = (e,i) =>{
+        let item =[...data]
+        item[i].value =  e
+        setData(item)
+    }
+    const handelClickSave = () =>{
+        let send = false
+        let item = [...data]
+        if(item[0].value !==prevData[0].value || item[1].value !== prevData[1].value){
+            if(item[0].value === ''){
+                send = false
+                item[0].error = true
+            }
+            else {
+                item[0].error = false
+            }
+            if(item[1].value === ''){
+                send = false
+                item[1].error = true
+            }
+            else {
+                item[1].error = false
+            }
+            if(item[0].value !=='' && item[1].value !==''){
+                send = true
+            }
+            setData(item)
+        }
+        if(send){
+            dispatch(change_username_and_name({name:data[0].value,username:data[1].value}))
+        }
     }
     return <>
         <MainBlock>
@@ -18,26 +106,26 @@ export const Settings = () =>{
                 <Content>
                     <InputWrapper>  
                         <Lable>Имя</Lable>
-                        <Input  width={'500px'} max={'500px'} inputName={'Имя'} />
+                        <Input error={data[0].error} value={data[0].value} onChange ={(e)=>hadnelClick(e,0)} width={'500px'} max={'500px'} inputName={'Имя'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Юзернейм</Lable>
-                        <Input width={'500px'} max={'500px'} inputName={'Username'} />
+                        <Input error={data[1].error} value={data[1].value} onChange ={(e)=>hadnelClick(e,1)}  width={'500px'} max={'500px'} inputName={'Username'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Эл. почта</Lable>
-                        <Input width={'500px'} max={'500px'} inputName={'User@gmail.com'} />
+                        <Input error={data[2].error} value={data[2].value} onChange ={(e)=>hadnelClick(e,2)} width={'500px'} max={'500px'} inputName={'User@gmail.com'} />
                     </InputWrapper>
                     <TextMobile onClick={()=>setChangePasswordToggle(true)}>Сменить пароль</TextMobile>
                     <Br />
                     <ButtonWrapper>
-                        <Button  text={'Сохранить'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
+                        <Button loading = {changeData.loading} onClick={(e)=>handelClickSave(e)}  text={'Сохранить'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
                         <Text onClick={()=>setChangePasswordToggle(true)}>Сменить пароль</Text>
                     </ButtonWrapper>
                 </Content>
             </Block>
         </MainBlock>
-        {changePasswordToggle && <ChangePasswordForm onClick = {()=>handelClick()} ref = {refReg} />}
+        {changePasswordToggle && <ChangePasswordForm changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
     </>
 }
 const MainBlock = styled.div`
@@ -88,6 +176,7 @@ width: 500px;
 }
 `
 const Text = styled.p `
+    cursor: pointer;
     color:#4F6688;
     font-style: normal;
     font-size: 16px;

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
+import { error_change_username_and_name, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
 import {
+  start_change_username_and_name,
   start_create_new_password,
   start_forgot_password,
   start_forgot_password_code,
@@ -12,6 +13,7 @@ import {
   start_verefy_email,
 } from "./startAction";
 import {
+  success_change_username_and_name,
   success_create_new_password,
   success_forgot_password,
   success_forgot_password_code,
@@ -193,6 +195,27 @@ export const create_new_password = (data) =>{
     })
     .catch((error)=>{
       dispatch(error_create_new_password())
+    })
+  }
+}
+export const change_username_and_name = (data) =>{
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+      dispatch(start_change_username_and_name())
+    axios.post(`${url}update_username_and_name`,data,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+          dispatch(get_user(token))
+          dispatch(success_change_username_and_name(r.data))
+      }
+      else {
+        dispatch(error_change_username_and_name())
+      }
+    })
+    .catch((error)=>{
+      console.log(error)
+      dispatch(error_change_username_and_name())
     })
   }
 }

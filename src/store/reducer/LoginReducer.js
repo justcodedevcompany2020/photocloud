@@ -11,6 +11,8 @@ export const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'start_login':
             temp.loading = true
+            temp.status = false
+            temp.error = ''
             break
         case 'error_login':
             temp.loading = false
@@ -19,6 +21,7 @@ export const loginReducer = (state = initialState, action) => {
             break
         case 'success_verefy_email':
             temp.loading = false
+            temp.error = ''
             break
         case 'clear_login_error':
             temp.error = ''

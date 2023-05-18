@@ -9,6 +9,7 @@ export const SettingsForm = () => {
     const [changePasswordModal, setChangePasswordModal] = useState(false)
     const changePassRef = useRef();
     useOnClickOutside(changePassRef, () => setChangePasswordModal(false));
+    
     return (<>
         <MainBlock>
             <div>
@@ -30,7 +31,7 @@ export const SettingsForm = () => {
                 </ChangePassTitle>
             </ButtonWrapper>
         </MainBlock>
-        {changePasswordModal && <ChangePasswordForm ref={changePassRef}/>}
+        {changePasswordModal && <ChangePasswordForm  ref={changePassRef}/>}
     </>
     )
 }

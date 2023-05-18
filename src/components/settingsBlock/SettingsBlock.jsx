@@ -86,6 +86,7 @@ const UserBlock = styled.div`
 `
 
 const UserName = styled.p`
+text-align: left;
 font-family: 'Raleway';
 font-style: normal;
 font-weight: 600;

@@ -46,3 +46,9 @@ export const success_create_new_password = (data) =>{
         data 
     }
 }
+
+export const success_change_username_and_name = (data) =>{
+    return {
+        type:'success_change_username_and_name'
+    }
+}

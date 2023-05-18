@@ -1,19 +1,34 @@
 import styled from "styled-components"
 import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
-export const ChangePasswordForm = forwardRef(({ loginBtnCB }, ref) => {
+export const ChangePasswordForm = forwardRef(({ handelClick,changeData }, ref) => {
+    const [data,setData] = useState([
+        {value:'',lable:'Старый пароль',error:''},
+        {value:'',lable:'Новый пароль',error:''},
+        {value:'',lable:'Повтор пароля',error:''},
+    ])
+    useEffect(()=>{
+        setData(changeData)
+    },[data])
+    const handelChange = (e,i) =>{
+        let item = [...data]
+        item[i].value=e
+        setData(item) 
+    }
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Cмена пароля</RegistrationTitle>
             <SubText>Придумайте сложный пароль,содержащий
                 строчные и прописные буквы,а так же цифры
                 и символы</SubText>
-            <Input width={'100%'} inputName={'Старый пароль'} />
-            <Input width={'100%'} inputName={'Новый пароль'} />
-            <Input width={'100%'} inputName={'Повтор пароля'} />
-            <Button mt={'40px'} bgColor={'#4F6688'} text={'Сохранить'} />
+            {
+                data.map((elm,i)=>{
+                    return <Input error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
+                })
+            }
+            <Button  onClick={()=>handelClick(data)} mt={'40px'} bgColor={'#4F6688'} text={'Сохранить'} />
         </MainBlock>
     </BackDiv>)
 });
@@ -68,8 +83,11 @@ line-height: 26px;
 const SubText = styled.p`
 font-style: normal;
 font-weight: 400;
+padding: 0 120px;
 font-size: 14px;
 line-height: 16px;
 text-align: center;
-padding: 0 5px;
+@media (max-width: 768px) {
+    padding: 0px;
+}
 `

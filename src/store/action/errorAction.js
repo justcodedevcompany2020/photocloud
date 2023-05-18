@@ -38,3 +38,8 @@ export const error_create_new_password = () =>{
         type:'error_create_new_password'
     }
 }
+export const error_change_username_and_name = () =>{
+    return {
+        type:'error_change_username_and_name'
+    }
+}

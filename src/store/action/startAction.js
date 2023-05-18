@@ -44,3 +44,8 @@ export const start_create_new_password = () =>{
         type:'start_create_new_password'
     }
 }
+export const start_change_username_and_name = () =>{
+    return{
+        type:'start_change_username_and_name'
+    }
+} 
