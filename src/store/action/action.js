@@ -1,7 +1,8 @@
 import axios from "axios";
-import { error_forgot_password, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
+import { error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
 import {
   start_forgot_password,
+  start_forgot_password_code,
   start_get_user,
   start_login,
   start_logout,
@@ -11,6 +12,7 @@ import {
 } from "./startAction";
 import {
   success_forgot_password,
+  success_forgot_password_code,
   success_get_user,
   success_login,
   success_logout,
@@ -153,5 +155,26 @@ export const forgot_password_api = (email) =>{
 export const clear_forgot_password_error = () =>{
   return {
     type:'clear_forgot_password_error'
+  }
+}
+export const forgot_password_code = (data) =>{
+  return (dispatch) => {
+    dispatch(start_forgot_password_code())
+    axios.post(`${url}validation_forgot_password_code`,data).then((r)=>{
+      if(r.data.status){
+        dispatch(success_forgot_password_code(r.data))
+      }
+      else {
+        dispatch(error_forgot_password_code())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_forgot_password_code())
+    })
+  }
+}
+export const clear_forgot_password_code = () =>{
+  return {
+    type:'clear_forgot_password_code'
   }
 }

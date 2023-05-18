@@ -28,3 +28,8 @@ export const error_forgot_password = () =>{
         type:'error_forgot_password'
     }
 }
+export const error_forgot_password_code = () =>{
+    return {
+        type:'error_forgot_password_code'
+    }
+}

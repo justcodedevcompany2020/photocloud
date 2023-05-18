@@ -33,3 +33,8 @@ export const start_forgot_password =() =>{
         type:'start_forgot_password'
     }
 }
+export const start_forgot_password_code = () =>{
+    return {
+        type:'start_forgot_password_code'
+    }
+}

@@ -1,9 +1,10 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { Input } from "../../ui/Input";
 import { Button } from "../../ui/Button";
 import styled from "styled-components";
 
 export const RecoveryCode = forwardRef((props, ref) => {
+    const [value,setValue] = useState('')
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -12,8 +13,9 @@ export const RecoveryCode = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input inputName={'Код подтверждения'} />
-                <Button mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
+                <Input value = {value} onChange = {(e)=>setValue(e)} inputName={'Код подтверждения'} />
+                <ErrorText>{props.error}</ErrorText>
+                <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
     </BackDiv>)
@@ -64,4 +66,10 @@ margin-top: 0px;
 `
 const RecoverySubText = styled.p`
 margin-top: 0px;
+`
+const ErrorText = styled.p`
+    margin: 0;
+    font-size: 12px;
+    color: red;
+    height: 20px;
 `
