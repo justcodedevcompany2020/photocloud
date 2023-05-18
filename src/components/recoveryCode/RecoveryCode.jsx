@@ -29,6 +29,9 @@ right:0px;
 bottom:0px;
 left:0px;
 z-index: 9989;
+display: flex;
+justify-content: center;
+align-items: center;
 `
 const MainBlock = styled.div`
 left: 0px;
@@ -39,6 +42,11 @@ height: 370px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+@media (max-width: 768px) {
+    width:90%;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
 `
 const RecoveryCodeContent = styled.div`
 padding-top: 38px;

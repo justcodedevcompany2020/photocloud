@@ -16,7 +16,7 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
                 </RecoverySubText>
                 <Input inputName={'Новый пароль'} />
                 <Input inputName={'Повтор пароля'} />
-                <Button mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
+                <Button onClick={()=>props.onClick} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
     </BackDiv>)
@@ -32,6 +32,10 @@ right:0px;
 bottom:0px;
 left:0px;
 z-index: 9989;
+display: flex;
+justify-content: center;
+align-items: center;
+
 `
 
 const MainBlock = styled.div`
@@ -43,6 +47,11 @@ height: 495px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+@media (max-width: 768px) {
+    width:90%;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
 `
 const RecoveryCodeContent = styled.div`
 padding-top: 38px;
@@ -60,4 +69,13 @@ margin-top: 0px;
 `
 const RecoverySubText = styled.p`
 margin-top: 0px;
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+text-align: center;
+padding: 0 120px;
+@media (max-width: 768px) {
+    padding: 0;
+}
 `

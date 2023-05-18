@@ -13,7 +13,7 @@ export const PasswordRecovery = forwardRef((props, ref) => {
                     Мы отправим 4-х значный код на вашу эл.почту для подтверждения личности
                 </RecoverySubText>
                 <Input inputName={'Эл. почта'} />
-                <Button mt={'25px'} bgColor={'#4F6688'} text={'Отправить код'} />
+                <Button onClick={props.handelRecoveryForm} mt={'25px'} bgColor={'#4F6688'} text={'Отправить код'} />
             </RecoveryContent>
         </MainBlock>
     </BackDiv>)
@@ -28,6 +28,12 @@ height: 370px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+@media (max-width: 768px) {
+    width:90%;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
 `
 const RecoveryContent = styled.div`
 padding-top: 38px;
@@ -42,9 +48,20 @@ text-align: center;
 color: #333333;
 margin-bottom: 9px;
 margin-top: 0px;
+
 `
 const RecoverySubText = styled.p`
 margin-top: 0px;
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+text-align: center;
+margin: 15px 65px;
+@media (max-width: 768px) {
+    margin: 15px 0;
+
+}
 `
 const BackDiv = styled.div`
 background: rgba(255, 255, 255, 0.25);
@@ -56,4 +73,7 @@ right:0px;
 bottom:0px;
 left:0px;
 z-index: 9989;
+display: flex;
+justify-content: center;
+align-items: center;
 `

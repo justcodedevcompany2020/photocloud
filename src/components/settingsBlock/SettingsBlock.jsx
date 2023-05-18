@@ -4,13 +4,14 @@ import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReactComponent as Settings } from '../../assets/settings.svg';
-
+import { useNavigate } from "react-router-dom"; 
 
 export const SettingsBlock = () => {
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
       ]);
+      const navigate = useNavigate();
     useEffect(()=>{
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -41,9 +42,9 @@ export const SettingsBlock = () => {
                     </LogoutWrapper>
                 </UserBlock>
                 <SettingsDiv>
-                    {windowSize[0]<=425 ? <Settings />:
+                    {windowSize[0]<=768 ? <Settings onClick = {()=>navigate("/settings")} />:
                         <ButtonWrapper>
-                            <Button text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
+                            <Button onClick = {()=>navigate("/settings")} text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
                         </ButtonWrapper>
                     }
                 </SettingsDiv>
@@ -85,7 +86,7 @@ color: #333333;
 cursor: pointer;
 margin-top: 0px;
 margin-bottom: 16px;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     font-size: 16px;
   }
 `

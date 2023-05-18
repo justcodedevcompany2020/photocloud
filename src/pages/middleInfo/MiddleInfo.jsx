@@ -25,7 +25,7 @@ display: flex;
 flex-direction: column;
 margin: auto;
 width:55%
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     width:70%
 }
 `
@@ -37,7 +37,7 @@ font-size: 40px;
 line-height: 47px;
 text-align: center;
 color: #4F6688;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     line-height: 33px;
     font-size: 28px;
 }
@@ -54,7 +54,7 @@ margin-left: auto;
 margin-right: auto;
 margin-bottom: 65px;
 width: 44em;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     font-size: 16px;
     width: 90%; 
     line-height: 19px;

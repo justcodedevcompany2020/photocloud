@@ -2,13 +2,14 @@ import { forwardRef } from "react";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB }, ref) => {
+export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register }, ref) => {
     const handleCloseModal = () => {
         regCB()
         loginCloseCB()
     }
+    const navigate = useNavigate();
 
     return (<BackDiv>
         <MainBlock ref={ref}>
@@ -18,7 +19,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB }, ref) => 
                 <Input width = {'100%'} inputName={'Пароль'} />
                 <ForgotPasswordText onClick={forgotPassCB}>Забыли пароль</ForgotPasswordText>
                 <Link to={'/userProfile'}> <Button onClick={handleCloseModal} mt={'40px'} bgColor={'#4F6688'} text={'Войти'} /></Link>
-                <BtnSubText>Нет аккаунта ? <LoginText >Зарегистрироваться</LoginText></BtnSubText>
+                <BtnSubText>Нет аккаунта ? <LoginText onClick={regCB} >Зарегистрироваться</LoginText></BtnSubText>
             </Content>
         </MainBlock>
     </BackDiv>)
@@ -47,7 +48,7 @@ height: 419px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     width:90%;
     box-sizing: border-box;
     padding: 0 20px;
@@ -72,6 +73,9 @@ text-align: right;
 text-decoration-line: underline;
 color: #333333;
 cursor: pointer;
+@media (max-width: 768px) {
+    margin-right: 0;
+}
 `
 const BtnSubText = styled.p`
 font-family: 'Raleway';

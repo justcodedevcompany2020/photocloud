@@ -1,22 +1,41 @@
 import styled from "styled-components"
 import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
-import { forwardRef } from "react";
-import { Link } from "react-router-dom";
+import { forwardRef, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const Registration = forwardRef(({ loginBtnCB }, ref) => {
+export const Registration = forwardRef(({ loginBtnCB,registerData }, ref) => {
+    const [data,setData] = useState([
+        {value:'',error:'',lable:'Имя'},
+        {value:'',error:'',lable:'Юзернейм'},
+        {value:'',error:'',lable:'Эл. почта'},
+        {value:'',error:'',lable:'Пароль'},
+        {value:'',error:'',lable:'Повтор пароля'},
+    ])
+    const {reg} = useSelector((st)=>st)
+    console.log(reg)
+   
+
+    const handelChange = (v,i) =>{
+        let item = [...data]
+        item[i].value = v
+        setData(item)
+    }
+
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>
-            <Input width={'100%'} inputName={'Имя'} />
-            <Input width={'100%'} inputName={'Юзернейм'} />
-            <Input width={'100%'} inputName={'Эл. почта'} />
-            <Input width={'100%'} inputName={'Пароль'} />
-            <Input width={'100%'} inputName={'Повтор пароля'} />
-            <Link to={'/userProfile'}><Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB()}/> </Link>
-            <BtnSubText>Уже зарегистрировались? <LoginText onClick={loginBtnCB}>Войти</LoginText></BtnSubText> </MainBlock>
+            {
+                data.map((elm,i)=>{
+                    return <Input error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
+                })
+            }
+            <Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
+            <BtnSubText>Уже зарегистрировались? <LoginText >Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
 });
+// userProfile
 
 const BackDiv = styled.div`
 background: rgba(255, 255, 255, 0.25);
@@ -42,7 +61,7 @@ height: 623px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     width:90%;
     box-sizing: border-box;
     padding: 0 20px;

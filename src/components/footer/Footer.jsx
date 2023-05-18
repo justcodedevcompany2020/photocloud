@@ -18,7 +18,7 @@ width: 100%;
 background: #FFFFFF;
 color: white;
 text-align: center;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     height: 77px;
 }
 `
@@ -30,7 +30,7 @@ font-weight: 700;
 font-size: 30px;
 line-height: 35px;
 color: #4F6688;
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     font-size: 18px;
     line-height: 18px;
 }

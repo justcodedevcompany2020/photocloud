@@ -16,6 +16,7 @@ export const FoldersBlock = () => {
                         <PlusIcon />
                     </PlusIconWrapper>
                 </AddCards>
+                <Text>Добавить папку</Text>
             </Content>
         </MainBlock>
         {createFolderModal && <CreateFolderForm ref={folderRef} />}
@@ -34,10 +35,14 @@ border-radius: 10px;
 height: 100px;
 margin: auto;
 margin-top: 25px;
+margin-top: 0;
 `
 const Content = styled.div`
 margin: 15px;
 height: 100%;
+@media (max-width: 768px) {
+    margin: 15px auto;
+  }
 `
 const AddCards = styled.div`
 width: 220px;
@@ -51,4 +56,11 @@ const PlusIconWrapper = styled.div`
 position: absolute;
 top: 35%;
 left: 37%;
+`
+const Text = styled.p `
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 21px;
+text-align: center;
 `
