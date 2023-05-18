@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReactComponent as Settings } from '../../assets/settings.svg';
 import { useNavigate } from "react-router-dom"; 
+import { useSelector } from "react-redux";
 
 export const SettingsBlock = () => {
     const [windowSize, setWindowSize] = useState([
@@ -23,12 +24,13 @@ export const SettingsBlock = () => {
             window.removeEventListener('resize', handleWindowResize);
           };
     },[])
+    const {reg} = useSelector((st)=>st)
     return (
         <MainBlock>
             <ContentBlock>
                 <UserBlock>
                     <UserName>
-                        AccountName
+                        {reg.user.username}
                     </UserName>
                     <LogoutWrapper>
                         <IconWrapper>

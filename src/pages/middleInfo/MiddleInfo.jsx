@@ -37,6 +37,7 @@ font-size: 40px;
 line-height: 47px;
 text-align: center;
 color: #4F6688;
+
 @media (max-width: 768px) {
     line-height: 33px;
     font-size: 28px;
@@ -44,6 +45,7 @@ color: #4F6688;
 `
 export const MainText = styled.p`
 font-style: normal;
+font-family: 'Raleway';
 font-weight: 500;
 font-size: 22px;
 line-height: 26px;

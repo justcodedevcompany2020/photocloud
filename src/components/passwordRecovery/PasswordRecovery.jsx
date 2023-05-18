@@ -23,7 +23,7 @@ const MainBlock = styled.div`
 left: 0px;
 top: 0px;
 z-index: 999;
-width: 570px;
+width: 400px;
 height: 370px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
@@ -57,7 +57,8 @@ font-weight: 400;
 font-size: 14px;
 line-height: 16px;
 text-align: center;
-margin: 15px 65px;
+color: #333333;
+margin: 15px 50px;
 @media (max-width: 768px) {
     margin: 15px 0;
 

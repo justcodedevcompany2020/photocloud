@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { ReactComponent as UserIcon } from '../../assets/UserIcon.svg';
 import { ReactComponent as UsericoneMobil } from '../../assets/UsericoneMobil.svg';
-import { ReactComponent as settings } from '../../assets/settings.svg';
 
 
 import { Button } from "../../ui/Button";
@@ -14,7 +13,8 @@ import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register_action } from "../../store/action/action";
+import { clear_login_error, register_action, verify_email } from "../../store/action/action";
+import { VerefayEmail } from "../verefayEmail";
 
 export const Header = () => {
     const [regToggle, setRegToggle] = useState(false)
@@ -22,7 +22,7 @@ export const Header = () => {
     const [recoveryToggle, setRecoveryToggle] = useState(false)
     const [recoveryPasswordFormToggle, setRecoveryPasswordFormToggle] = useState(false)
     const [recoveryPasswordForm, setRecoveryPasswordForm] = useState(false)
-
+    const [verefayEmail,setVerefayEmail] = useState(false)
 
     let { pathname } = useLocation();
     const dispatch = useDispatch()
@@ -31,20 +31,29 @@ export const Header = () => {
     const recRef = useRef();
     const recpasfor = useRef()
     const recpasref = useRef()
+    const verRef = useRef();
     const navigate = useNavigate();
     const [registerData,setRegisterData] = useState([])
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
     const {reg} = useSelector(st=>st)
     useOnClickOutside(refReg, () => setRegToggle(false));
-    useOnClickOutside(logRef, () => setLoginToggle(false));
+    useOnClickOutside(logRef, () => closeLogin());
     useOnClickOutside(recRef, () => setRecoveryToggle(false));
     useOnClickOutside(recpasfor, () => setRecoveryPasswordFormToggle(false));
     useOnClickOutside(recpasref, () => setRecoveryPasswordForm(false));
-
-
+      
     // useOnClickOutside(recpasfor, () => setRecoveryPasswordFormToggle(false));
 
     const handleRegToggle = () => {
         setRegToggle(!regToggle)
+    }
+    const closeLogin = () =>{
+        setLoginToggle(false)
+        /////
+        dispatch(clear_login_error())
     }
 
     const handleLoginToggle = () => {
@@ -59,74 +68,74 @@ export const Header = () => {
         return /\S+@\S+\.\S+/.test(email);
       }
     const handleLoginClick = (item) => {
-    //     let temp =[...item]
-    //     temp.map((elm,i)=>{
-    //         if(elm.lable === 'Имя'){
-    //             if(elm.value === ''){
-    //                 elm.error = 'Email is invalid' 
-    //             }
-    //             else {
-    //                 elm.error = '' 
-    //             }
-    //         }
-    //         if(elm.lable === 'Эл. почта'){
-    //             if(!isValidEmail(elm.value)){
-    //                 elm.error = 'Email is invalid' 
-    //             }
-    //             else {
-    //                 elm.error = ''
-    //             }
-    //         }
-    //         if(elm.lable === 'Пароль'){
-    //             if(elm.value.length<=7){
-    //                 elm.error = '88'
-    //             }
-    //             else if(elm.value === ''){
-    //                 elm.error = 'password is empty'
-    //             }
-    //             else {
-    //                 elm.error = ''
-    //             }
-    //         }
-    //         if(elm.lable === 'Юзернейм'){
-    //             if(elm.value === ''){
-    //                 elm.error = 'Username is empty'
-    //             }
-    //             else {
-    //                 elm.error = ''
-    //             }
-    //         }
-    //         if(elm.lable === 'Повтор пароля'){
-    //             if(elm.value !== temp[3].value || elm.value ===''){
-    //                 elm.error = 'password'
-    //             }
-    //             else {
-    //                 elm.error = ''
-    //             }
-    //         }
+        let temp =[...item]
+        temp.map((elm,i)=>{
+            if(elm.lable === 'Имя'){
+                if(elm.value === ''){
+                    elm.error = 'Email is invalid' 
+                }
+                else {
+                    elm.error = '' 
+                }
+            }
+            if(elm.lable === 'Эл. почта'){
+                if(!isValidEmail(elm.value)){
+                    elm.error = 'Email is invalid' 
+                }
+                else {
+                    elm.error = ''
+                }
+            }
+            if(elm.lable === 'Пароль'){
+                if(elm.value.length<=7){
+                    elm.error = '88'
+                }
+                else if(elm.value === ''){
+                    elm.error = 'password is empty'
+                }
+                else {
+                    elm.error = ''
+                }
+            }
+            if(elm.lable === 'Юзернейм'){
+                if(elm.value === ''){
+                    elm.error = 'Username is empty'
+                }
+                else {
+                    elm.error = ''
+                }
+            }
+            if(elm.lable === 'Повтор пароля'){
+                if(elm.value !== temp[3].value || elm.value ===''){
+                    elm.error = 'password'
+                }
+                else {
+                    elm.error = ''
+                }
+            }
             
        
-    //     })
-    //     let error = true
-    //     temp.map((elm,i)=>{                
-    //         if(elm.error){
-    //             error = false
-    //         }
-    // })
-    // if(error){
-    //     dispatch(register_action({
-    //         name:temp[0].value,
-    //         username:temp[1].value,
-    //         email:temp[2].value,
-    //         password:temp[3].value,
-    //         password_confirmation:temp[4].value
-    //     }))
-    // }
-    //     setRegisterData(temp)
-        setRegToggle(!regToggle)
-        setLoginToggle(false)
-        dispatch(register_action())
-        navigate('userProfile')
+        })
+        let error = true
+        temp.map((elm,i)=>{                
+            if(elm.error){
+                error = false
+            }
+    })
+    if(error){
+        dispatch(register_action({
+            name:temp[0].value,
+            username:temp[1].value,
+            email:temp[2].value,
+            password:temp[3].value,
+            password_confirmation:temp[4].value
+        }))
+    }
+        setRegisterData(temp)
+        // setRegToggle(!regToggle)
+        // setLoginToggle(false)
+        // dispatch(register_action())
+        // navigate('userProfile')
     }
 
     const handleRegFromLogin = () => {
@@ -145,19 +154,32 @@ export const Header = () => {
         setRecoveryPasswordFormToggle(false)
         setRecoveryPasswordForm(true)
     }
-    const [windowSize, setWindowSize] = useState([
-        window.innerWidth,
-        window.innerHeight,
-      ]);
-    //   useEffect(()=>{
-    //     console.log('pp')
-    //     if(reg.status){
-    //         setLoginToggle(false)
-    //         setRegToggle(false)
-    //         navigate('userProfile')
+   
 
-    //     }
-    // },[reg.status])
+    const handelVerefyForm = (value) =>{
+        dispatch(verify_email({email:registerData[2].value,code:value}))
+    }
+
+
+      useEffect(()=>{
+        if(reg.status){
+            setLoginToggle(false)
+            setRegToggle(false)
+            setVerefayEmail(true)
+            // navigate('userProfile')
+        }
+    },[reg.status])
+
+    useEffect(()=>{
+        if(reg.status_verif){
+            setVerefayEmail(false)
+            navigate('userProfile')
+            setLoginToggle(false)
+        }
+    },[reg.status_verif])
+
+
+
     useEffect(()=>{
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -177,27 +199,27 @@ export const Header = () => {
                         PhotoHosting
                     </LogoTitle></Link>
                 </LogoBlock>
-                {pathname === '/userProfile' ? <UserProfileBlock>
+                {(pathname === '/userProfile' || pathname === '/settings') ? <UserProfileBlock>
                     <UserName>
-                        AccountName
+                        {reg.user.username}
                     </UserName>
                     <UserIconWrapper>
                         {windowSize[0] >= 768 ? <UserIcon /> : <UsericoneMobil />}
                     </UserIconWrapper>
-                </UserProfileBlock> : <LoginBlock>
+                </UserProfileBlock> : 
+                <LoginBlock>
                     <ButtonWrapperLogin><Button onClick={handleLoginToggle} text={'Войти'} txColor={'#4F6688'} width={'230px'}  /></ButtonWrapperLogin>
-
                     <ButtonWrapperMobile><Button onClick={handleLoginToggle} text={'Войти'} txColor={'#4F6688'} width={'100px'} height ={'35px'} font = {'14px'} /></ButtonWrapperMobile>
                     <ButtonWrapper><Button onClick={handleRegToggle} text={'Зарегистрироваться'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} /></ButtonWrapper>
-                   
                 </LoginBlock>}
             </MainBlock>
         </HeaderBlock>
-        {regToggle && <Registration registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
+        {regToggle && <Registration error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
         {recoveryToggle && <PasswordRecovery handelRecoveryForm = {handelRecoveryForm} ref={recRef}  />}
         {recoveryPasswordFormToggle  && <RecoveryCode onClick = {handelRecoveryPassForm} ref = {recpasfor} />}
         {recoveryPasswordForm && <PasswordRecoveryForm onClick = {()=>setRecoveryPasswordForm(false)} ref = {recpasref}/>}
+        {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
     </>
     )
 }

@@ -4,3 +4,21 @@ export const success_register = (data) =>{
         data
     }
 }
+export const success_verefy_email = (data) =>{
+    return {
+        type:'success_verefy_email',
+        data
+    }
+}
+export const success_login = (data) =>{
+    return {
+        type:'success_login',
+        data,
+    }
+}
+export const success_get_user = (data)=>{
+    return {
+        type:'success_get_user',
+        data
+    }
+}

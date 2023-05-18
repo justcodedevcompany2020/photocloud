@@ -4,7 +4,6 @@ import { Button } from "../../ui/Button"
 import { forwardRef } from "react";
 
 export const ChangePasswordForm = forwardRef(({ loginBtnCB }, ref) => {
-    console.log('85')
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Cмена пароля</RegistrationTitle>

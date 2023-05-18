@@ -7,8 +7,16 @@ import { MiddleInfo } from './pages/middleInfo/MiddleInfo';
 import { FoldersBlock } from './pages/foldersBlock/FoldersBlock';
 import { UserProfile } from './pages/userProfile/UserProfile';
 import { Settings } from './pages/settings/Settings';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { get_user } from './store/action/action';
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    const token = localStorage.getItem('token')
+    dispatch(get_user(token))
+  },[])
   return (
     <div className="App">
       <Routes>

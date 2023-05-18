@@ -9,7 +9,6 @@ export const Settings = () =>{
     const [changePasswordToggle, setChangePasswordToggle] = useState(false)
     const refReg = useRef()
     useOnClickOutside(refReg, () => setChangePasswordToggle(false));
-    console.log(changePasswordToggle)
     const handelClick = () =>{
         // setChangePasswordToggle(false)
     }
@@ -19,7 +18,7 @@ export const Settings = () =>{
                 <Content>
                     <InputWrapper>  
                         <Lable>Имя</Lable>
-                        <Input width={'500px'} max={'500px'} inputName={'Имя'} />
+                        <Input  width={'500px'} max={'500px'} inputName={'Имя'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Юзернейм</Lable>
@@ -75,6 +74,7 @@ font-weight: 400;
 font-size: 15px;
 line-height: 18px;
 margin-bottom: -5px;    
+cursor: pointer;
 `
 const ButtonWrapper = styled.div`
 display: flex;

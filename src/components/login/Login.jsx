@@ -1,24 +1,61 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login_action } from "../../store/action/action";
 
 export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register }, ref) => {
-    const handleCloseModal = () => {
-        regCB()
-        loginCloseCB()
-    }
-    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const {login}= useSelector((st)=>st)
+    const  [data,setData] = useState([
+        {value:'',lable:'Юзернейм',error:false},
+        {value:'',lable:'Пароль',error:false},
+    ])
+    const handleCloseModal = (data) => {
+        let send = true
+        let item = [...data]
+        item.map((elm,i)=>{
+            if(elm.value=== ''){
+                elm.error = true
+            }
+            else {
+                elm.error = false
+            }
+        })
+        item.map((elm,i)=>{
+            if(elm.error){
+                send = false
+            }
+        })
 
+        if(send){
+            dispatch(login_action({username:data[0].value,password:data[1].value}))
+        }
+        // regCB()
+        // loginCloseCB()
+    }
+    
+    const handelChange = (e,i) =>{
+        let item = [...data]
+        item[i].value = e
+        setData(item)
+    }
     return (<BackDiv>
         <MainBlock ref={ref}>
             <Content>
                 <RegistrationTitle>Вход</RegistrationTitle>
-                <Input width = {'100%'} inputName={'Юзернейм'} />
-                <Input width = {'100%'} inputName={'Пароль'} />
+                {data.map((elm,i)=>(
+                    <Input error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
+                ))
+
+                }
                 <ForgotPasswordText onClick={forgotPassCB}>Забыли пароль</ForgotPasswordText>
-                <Link to={'/userProfile'}> <Button onClick={handleCloseModal} mt={'40px'} bgColor={'#4F6688'} text={'Войти'} /></Link>
+                <ErrorText>{login.error}</ErrorText>
+                {/* <Link to={'/userProfile'}>  */}
+                <Button onClick={()=>handleCloseModal(data)} mt={'5px'} bgColor={'#4F6688'} text={'Войти'} />
+                {/* </Link> */}
                 <BtnSubText>Нет аккаунта ? <LoginText onClick={regCB} >Зарегистрироваться</LoginText></BtnSubText>
             </Content>
         </MainBlock>
@@ -95,4 +132,10 @@ font-size: 40px;
 line-height: 47px;
 text-align: center;
 color: #333333;
+`
+const ErrorText = styled.p`
+    margin: 0;
+    font-size: 12px;
+    color: red;
+    height: 20px;
 `

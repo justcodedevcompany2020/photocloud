@@ -1,3 +1,5 @@
+import { ClipLoader } from "react-spinners"
+import FadeLoader from "react-spinners/FadeLoader"
 import styled from "styled-components"
 
 export const Button = ({
@@ -10,14 +12,26 @@ export const Button = ({
     mt,
     ml,
     mb,
-    font
+    font,
+    loading = false,
 }) => {
-    return (
-        <UIbutton font = {font} onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}</UIbutton>
-    )
+    return (<>
+        <UIbutton disabled = {loading} font = {font} onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}
+        <div style={{position:'absolute', top:'13px',button:'0',margin:'auto',right: '3px'}}>
+            <ClipLoader
+                color={'white'}
+                loading={loading}
+                size={15}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
+        </div>
+        </UIbutton>
+    </>)
 }
 
 export const UIbutton = styled.button`
+position:relative;
 border: 2px solid #4F6688;
 margin-left: ${props => props.ml ? props.ml : '0px'};
 margin-bottom: ${props => props.mb ? props.mb : '0px'};

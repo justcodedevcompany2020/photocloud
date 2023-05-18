@@ -1,11 +1,10 @@
 import styled from "styled-components"
 import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
-import { forwardRef, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { forwardRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-export const Registration = forwardRef(({ loginBtnCB,registerData }, ref) => {
+export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error }, ref) => {
     const [data,setData] = useState([
         {value:'',error:'',lable:'Имя'},
         {value:'',error:'',lable:'Юзернейм'},
@@ -14,8 +13,6 @@ export const Registration = forwardRef(({ loginBtnCB,registerData }, ref) => {
         {value:'',error:'',lable:'Повтор пароля'},
     ])
     const {reg} = useSelector((st)=>st)
-    console.log(reg)
-   
 
     const handelChange = (v,i) =>{
         let item = [...data]
@@ -31,7 +28,8 @@ export const Registration = forwardRef(({ loginBtnCB,registerData }, ref) => {
                     return <Input error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
                 })
             }
-            <Button mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
+            <ErrorText>{error}</ErrorText>
+            <Button loading = {loading} mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
             <BtnSubText>Уже зарегистрировались? <LoginText >Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
 });
@@ -59,6 +57,8 @@ z-index: 999;
 width: 570px;
 height: 623px;
 background: #FFFFFF;
+font-weight: 600;
+
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
 @media (max-width: 768px) {
@@ -69,9 +69,8 @@ border-radius: 15px;
 `
 const RegistrationTitle = styled.div`
 padding-top: 38px;
-font-family: 'Raleway';
 font-style: normal;
-font-weight: 600;
+font-family: 'Raleway';
 font-size: 40px;
 line-height: 47px;
 text-align: center;
@@ -85,8 +84,15 @@ font-size: 13px;
 line-height: 15px;
 text-align: center;
 color: #333333;
+
 `
 const LoginText = styled.span`
 color: #4F6688;
 cursor: pointer;
+`
+const ErrorText = styled.p`
+    margin: 0;
+    font-size: 12px;
+    color: red;
+    height: 20px;
 `
