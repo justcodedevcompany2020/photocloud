@@ -18,3 +18,8 @@ export const error_get_user = () =>{
         type:'error_get_user'
     }
 }
+export const error_logout = () =>{
+    return {
+        type:'error_logout'
+    }
+}

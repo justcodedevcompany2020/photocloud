@@ -22,3 +22,9 @@ export const success_get_user = (data)=>{
         data
     }
 }
+export const success_logout = (data) =>{
+    return {
+        type:'success_logout',
+        data
+    }
+}

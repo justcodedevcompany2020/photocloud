@@ -1,8 +1,9 @@
 import axios from "axios";
-import { error_get_user, error_login, error_register, error_verefy_email } from "./errorAction";
+import { error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
 import {
   start_get_user,
   start_login,
+  start_logout,
   start_register,
   start_resend_verify_mail,
   start_verefy_email,
@@ -10,6 +11,7 @@ import {
 import {
   success_get_user,
   success_login,
+  success_logout,
   success_register,
   success_verefy_email,
 } from "./successAction";
@@ -98,9 +100,32 @@ export const get_user = (token) => {
         if(r.data.status){
             dispatch(success_get_user(r.data))
         }
+        else {
+          dispatch(error_get_user())
+        }
       })
       .catch((error) => {
         dispatch(error_get_user())
       });
   };
 };
+
+export const logout_action = () =>{
+  let token = localStorage.getItem('token')
+  return (dispatch) =>{
+    axios.get(`${url}logout`,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      dispatch(start_logout())
+      if(r.data.status){
+        dispatch(success_logout(r.data))
+      }
+      else {
+        dispatch(error_logout())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_logout())
+    })
+  }
+}

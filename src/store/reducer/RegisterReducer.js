@@ -7,7 +7,9 @@ const initialState = {
     status_verif:false,
     error_verify_email:'',
     error:'',
-    loadingGetUSer:false
+    loadingGetUSer:false,
+    logOutLoading:false,
+    logOutStats:false,
 }
 
 export const registerRegister = (state = initialState, action) => {
@@ -58,6 +60,16 @@ export const registerRegister = (state = initialState, action) => {
         case 'error_get_user':
             temp.loadingGetUSer = false
             break
+        case 'start_logout':
+            temp.logOutLoading = true
+            break
+        case 'success_logout':
+            temp.logOutLoading = false
+            temp.logOutStats = true
+            break
+        case 'error_logout':
+            temp.logOutLoading = false
+            temp.logOutStats = false
         default:
             break;
     }

@@ -12,13 +12,6 @@ export const loginReducer = (state = initialState, action) => {
         case 'start_login':
             temp.loading = true
             break
-        case 'success_login':
-            temp.user = action.data.user_data
-            temp.loading = false
-            temp.token = action.data.token
-            localStorage.setItem('token',action.data.token);
-            temp.status = true
-            break
         case 'error_login':
             temp.loading = false
             temp.status = false

@@ -23,3 +23,8 @@ export const start_get_user = () =>{
         type:'start_get_user'
     }
 }
+export const start_logout = () =>{
+    return {
+        type:'start_logout'
+    }
+}

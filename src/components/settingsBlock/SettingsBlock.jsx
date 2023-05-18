@@ -5,15 +5,18 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReactComponent as Settings } from '../../assets/settings.svg';
 import { useNavigate } from "react-router-dom"; 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout_action } from "../../store/action/action";
 
 export const SettingsBlock = () => {
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
       ]);
+      const dispatch = useDispatch()
       const navigate = useNavigate();
     useEffect(()=>{
+
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
           };
@@ -24,7 +27,14 @@ export const SettingsBlock = () => {
             window.removeEventListener('resize', handleWindowResize);
           };
     },[])
+
     const {reg} = useSelector((st)=>st)
+    useEffect(()=>{
+        console.log(reg)
+        if(reg.logOutStats){
+            navigate('/')
+        }
+    },[reg.logOutStats])
     return (
         <MainBlock>
             <ContentBlock>
@@ -36,11 +46,9 @@ export const SettingsBlock = () => {
                         <IconWrapper>
                             <LogoutIcon />
                         </IconWrapper>
-                        <Link to={'/'}>
-                            <LogoutText>
+                            <LogoutText onClick={()=>dispatch(logout_action())}>
                                 Выйти
                             </LogoutText>
-                        </Link>
                     </LogoutWrapper>
                 </UserBlock>
                 <SettingsDiv>
