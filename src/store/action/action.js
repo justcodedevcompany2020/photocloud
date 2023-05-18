@@ -1,6 +1,7 @@
 import axios from "axios";
-import { error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
+import { error_forgot_password, error_get_user, error_login, error_logout, error_register, error_verefy_email } from "./errorAction";
 import {
+  start_forgot_password,
   start_get_user,
   start_login,
   start_logout,
@@ -9,6 +10,7 @@ import {
   start_verefy_email,
 } from "./startAction";
 import {
+  success_forgot_password,
   success_get_user,
   success_login,
   success_logout,
@@ -127,5 +129,29 @@ export const logout_action = () =>{
     .catch((error)=>{
       dispatch(error_logout())
     })
+  }
+}
+
+export const forgot_password_api = (email) =>{
+  return (dispatch) =>{
+    dispatch(start_forgot_password())
+    axios.post(`${url}forgot_password_send_code_to_email`,email).then((r)=>{
+      if(r.data.status){
+        dispatch(success_forgot_password(r.data))
+      }
+      else {
+        console.log('8888')
+        dispatch(error_forgot_password())
+      }
+    })
+    .catch((error)=>{
+      console.log('77777')
+      dispatch(error_forgot_password())
+    })
+  }
+}
+export const clear_forgot_password_error = () =>{
+  return {
+    type:'clear_forgot_password_error'
   }
 }

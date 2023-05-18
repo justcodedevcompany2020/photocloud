@@ -13,7 +13,7 @@ import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clear_login_error, register_action, verify_email } from "../../store/action/action";
+import { clear_forgot_password_error, clear_login_error, forgot_password_api, register_action, verify_email } from "../../store/action/action";
 import { VerefayEmail } from "../verefayEmail";
 
 export const Header = () => {
@@ -23,7 +23,9 @@ export const Header = () => {
     const [recoveryPasswordFormToggle, setRecoveryPasswordFormToggle] = useState(false)
     const [recoveryPasswordForm, setRecoveryPasswordForm] = useState(false)
     const [verefayEmail,setVerefayEmail] = useState(false)
+    const [forgotPasword,setForgotPassword] = useState(false)
 
+    
     let { pathname } = useLocation();
     const dispatch = useDispatch()
     const refReg = useRef();
@@ -39,9 +41,11 @@ export const Header = () => {
         window.innerHeight,
       ]);
     const {reg} = useSelector(st=>st)
+    const {forgotPassword} = useSelector(st=>st)
+    console.log(forgotPassword)
     useOnClickOutside(refReg, () => setRegToggle(false));
     useOnClickOutside(logRef, () => closeLogin());
-    useOnClickOutside(recRef, () => setRecoveryToggle(false));
+    useOnClickOutside(recRef, () =>closeRecoverPassword());
     useOnClickOutside(recpasfor, () => setRecoveryPasswordFormToggle(false));
     useOnClickOutside(recpasref, () => setRecoveryPasswordForm(false));
       
@@ -54,6 +58,10 @@ export const Header = () => {
         setLoginToggle(false)
         /////
         dispatch(clear_login_error())
+    }
+    const closeRecoverPassword =() =>{
+        setRecoveryToggle(false)
+        dispatch(clear_forgot_password_error())
     }
 
     const handleLoginToggle = () => {
@@ -142,9 +150,8 @@ export const Header = () => {
         setLoginToggle(false)
         setRegToggle(true)
     }
-    const handelRecoveryForm = () =>{
-        setRecoveryToggle(false)
-        setRecoveryPasswordFormToggle(true)
+    const handelRecoveryForm = (e) =>{
+        dispatch(forgot_password_api({email:e}))
     }
     const handleCloseLoginModal = () => {
         setLoginToggle(false)
@@ -178,6 +185,12 @@ export const Header = () => {
         }
     },[reg.status_verif])
 
+    useEffect(()=>{
+        if(forgotPassword.status){{
+        setRecoveryToggle(false)
+        setRecoveryPasswordFormToggle(true)
+        }}
+    },[forgotPassword.status])
 
 
     useEffect(()=>{
@@ -216,7 +229,7 @@ export const Header = () => {
         </HeaderBlock>
         {regToggle && <Registration error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
-        {recoveryToggle && <PasswordRecovery handelRecoveryForm = {handelRecoveryForm} ref={recRef}  />}
+        {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
         {recoveryPasswordFormToggle  && <RecoveryCode onClick = {handelRecoveryPassForm} ref = {recpasfor} />}
         {recoveryPasswordForm && <PasswordRecoveryForm onClick = {()=>setRecoveryPasswordForm(false)} ref = {recpasref}/>}
         {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }

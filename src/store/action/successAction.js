@@ -28,3 +28,9 @@ export const success_logout = (data) =>{
         data
     }
 }
+export const success_forgot_password = (data) =>{
+    return {
+        type:'success_forgot_password',
+        data
+    }
+}

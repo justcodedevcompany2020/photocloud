@@ -28,3 +28,8 @@ export const start_logout = () =>{
         type:'start_logout'
     }
 }
+export const start_forgot_password =() =>{
+    return {
+        type:'start_forgot_password'
+    }
+}
