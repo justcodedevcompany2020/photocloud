@@ -3,7 +3,11 @@ const initialState = {
     loading:false,
     changePasswordLoading:false,
     changePasswordstatus:false,
-    error:''
+    error:'',
+    changeEmailStatus:false,
+    codeLoading:false,
+    stautsCode:false,
+    errorCode:false,
 }
 
 export const changeDataReducer = (state = initialState, action) => {
@@ -40,6 +44,35 @@ export const changeDataReducer = (state = initialState, action) => {
             temp.changePasswordLoading = false
             temp.changePasswordstatus = false
             temp.error = ''
+            break
+        case 'start_change_email':
+            temp.changeEmailStatus = false
+            break
+        case 'success_chnage_email':
+            temp.changeEmailStatus = true
+            break
+        case 'error_change_email':
+            temp.changeEmailStatus = false
+            break
+        case 'start_check_email_code':
+            temp.codeLoading = true
+            temp.errorCode = ''
+            temp.stautsCode = false
+            break
+        case 'success_send_email_code':
+            temp.codeLoading = false
+            temp.errorCode = ''
+            temp.stautsCode = true
+            break
+        case 'error_check_email_code':
+            temp.codeLoading = false
+            temp.errorCode = 'неверный код'
+            temp.stautsCode = false
+            break
+        case 'clear_change_code_error':
+            temp.codeLoading = false
+            temp.errorCode = ''
+            temp.stautsCode = false
             break
         default:
             break;

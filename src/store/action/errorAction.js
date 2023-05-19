@@ -48,3 +48,13 @@ export const error_update_password = () =>{
         type:'error_update_password'
     }
 }
+export const error_change_email = () =>{
+    return {
+        type:'error_change_email'
+    }
+}
+export const error_check_email_code = () =>{
+    return {
+        type:'error_check_email_code'
+    }
+}

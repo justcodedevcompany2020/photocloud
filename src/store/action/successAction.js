@@ -58,3 +58,15 @@ export const success_update_password = (data)=>{
         data
     }
 }
+export const success_chnage_email = (data) =>{
+    return {
+        type:'success_chnage_email',
+        data
+    }
+}
+export const success_send_email_code = (data) =>{
+    return {
+        type:'success_send_email_code',
+        data
+    }
+}

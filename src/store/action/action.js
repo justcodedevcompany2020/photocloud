@@ -1,7 +1,9 @@
 import axios from "axios";
-import { error_change_username_and_name, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
+import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
+  start_change_email,
   start_change_username_and_name,
+  start_check_email_code,
   start_create_new_password,
   start_forgot_password,
   start_forgot_password_code,
@@ -15,6 +17,7 @@ import {
 } from "./startAction";
 import {
   success_change_username_and_name,
+  success_chnage_email,
   success_create_new_password,
   success_forgot_password,
   success_forgot_password_code,
@@ -22,6 +25,7 @@ import {
   success_login,
   success_logout,
   success_register,
+  success_send_email_code,
   success_update_password,
   success_verefy_email,
 } from "./successAction";
@@ -244,5 +248,52 @@ export const update_user_password = (data) =>{
 export const open_popup_change_password = () =>{
   return {
     type:'open_popup_change_password'
+  }
+}
+
+export const change_email = (email) =>{
+  const token  = localStorage.getItem('token')
+
+  console.log(email)
+  return (dispatch) =>{
+    dispatch(start_change_email())
+    axios.post(`${url}add_new_email_from_my_cabinet`,email,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+        dispatch(success_chnage_email(r.data))
+      }
+      else {
+        dispatch(error_change_email())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_change_email())
+    })
+  }
+}
+
+export const change_code =(code) =>{
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+    dispatch(start_check_email_code())
+    axios.post(`${url}validation_new_email_code_from_my_cabinet`,code,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+        dispatch(success_send_email_code(r.data))
+      }
+      else {
+        dispatch(error_check_email_code())
+      }
+    }).catch((error)=>{
+      dispatch(error_check_email_code())
+    })
+  }
+}
+
+export const clear_change_code_error =() =>{
+  return {
+    type:'clear_change_code_error'
   }
 }

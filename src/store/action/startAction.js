@@ -54,3 +54,13 @@ export const start_update_password = () =>{
         type:'start_update_password'
     }
 }
+export const start_change_email = () =>{
+    return {
+        type:'start_change_email'
+    }
+}
+export  const start_check_email_code = () =>{
+    return {
+        type:'start_check_email_code'
+    }
+}

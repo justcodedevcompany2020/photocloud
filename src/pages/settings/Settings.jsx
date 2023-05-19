@@ -5,15 +5,25 @@ import { Button } from "../../ui/Button"
 import { Input } from "../../ui/Input"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useDispatch, useSelector } from "react-redux"
-import { change_username_and_name, open_popup_change_password, update_user_password } from "../../store/action/action"
+import { change_code, change_email, change_username_and_name, open_popup_change_password, update_user_password } from "../../store/action/action"
+import { ChangeEmailForm } from "../../components/changeEmailForm"
 
 export const Settings = () =>{
     const [changePasswordToggle, setChangePasswordToggle] = useState(false)
     const refReg = useRef()
-    useOnClickOutside(refReg, () => closeChangePassword());
+    const refcode = useRef()
     const {reg} = useSelector((st)=>st)
     const {changeData} = useSelector(st=>st)
+    const [changeMail,setChangeMail] = useState(false)
+
+
+    useOnClickOutside(refReg, () => closeChangePassword());
+    useOnClickOutside(refcode, () => setChangeMail(false));
+
     const dispatch = useDispatch()
+    function isValidEmail(email) {
+        return /\S+@\S+\.\S+/.test(email);
+      }
     const [data,setData] = useState([
         {value:'',lable:'Имя',error:''},
         {value:'',lable:'Юзернейм',error:''},
@@ -37,6 +47,14 @@ export const Settings = () =>{
         ])
         setChangePasswordToggle(false)
     }
+    const sendCode = (value) =>{
+        console.log(value)
+        if(value.lenght !== ''){
+            dispatch(change_code({code:value}))
+        }
+    }
+
+
     const handelClick = (value) =>{
         let item = [...value]
         if(item[0].value === ''){
@@ -106,12 +124,35 @@ export const Settings = () =>{
             if(item[0].value !=='' && item[1].value !==''){
                 send = true
             }
-            setData(item)
         }
         if(send){
             dispatch(change_username_and_name({name:data[0].value,username:data[1].value}))
         }
+        if(item[2].value !== prevData[2].value){
+            console.log('555')
+            // setChangeMail(true)
+            if(!isValidEmail(item[2].value)){
+                item[2].error = true
+            }
+            else {
+                item[2].error = false
+                dispatch(change_email({email:item[2].value}))
+            }
+        }
+        setData(item)
+
     }
+    useEffect(()=>{
+        // dispatch(chan)
+        if(changeData.changeEmailStatus){
+            setChangeMail(true)
+        }
+    },[changeData.changeEmailStatus])
+    useEffect(()=>{
+        if(changeData.stautsCode){
+            setChangeMail(false)
+        }
+    },[changeData.stautsCode])
     return <>
         <MainBlock>
             <Block>
@@ -146,6 +187,7 @@ export const Settings = () =>{
             </Block>
         </MainBlock>
         {changePasswordToggle && <ChangePasswordForm error = {changeData.error} loading= {changeData.changePasswordLoading} changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
+        {changeMail && <ChangeEmailForm error = {changeData.errorCode} loading = {changeData.codeLoading} handelRecoveryForm = {(e)=>sendCode(e)} ref = {refcode}/>}
     </>
 }
 const MainBlock = styled.div`
