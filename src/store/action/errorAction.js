@@ -58,3 +58,8 @@ export const error_check_email_code = () =>{
         type:'error_check_email_code'
     }
 }
+export const error_create_folder = () =>{
+    return {
+        type:'error_create_folder'
+    }
+}

@@ -4,13 +4,13 @@ import { Button } from "../../ui/Button"
 import { forwardRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error }, ref) => {
+export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,openLogin }, ref) => {
     const [data,setData] = useState([
         {value:'',error:'',lable:'Имя'},
         {value:'',error:'',lable:'Юзернейм'},
         {value:'',error:'',lable:'Эл. почта'},
-        {value:'',error:'',lable:'Пароль'},
-        {value:'',error:'',lable:'Повтор пароля'},
+        {value:'',error:'',lable:'Пароль',password:true,type:true},
+        {value:'',error:'',lable:'Повтор пароля',password:true,type:true},
     ])
     const {reg} = useSelector((st)=>st)
 
@@ -19,18 +19,23 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error 
         item[i].value = v
         setData(item)
     }
-
+    const handelEye = (i) => {
+        let item = [...data]
+        item[i].type =!item[i].type
+        setData(item)
+    }
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>
             {
                 data.map((elm,i)=>{
-                    return <Input error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
+                    console.log(elm.type)
+                    return <Input onEye = {()=>handelEye(i)} password={elm.password} t = {elm.type} errorText ={elm.error } error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
                 })
             }
             <ErrorText>{error}</ErrorText>
-            <Button loading = {loading} mt={'40px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
-            <BtnSubText>Уже зарегистрировались? <LoginText >Войти</LoginText></BtnSubText> </MainBlock>
+            <Button loading = {loading} mt={'0px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
+            <BtnSubText>Уже зарегистрировались? <LoginText onClick={openLogin} >Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
 });
 // userProfile

@@ -64,3 +64,8 @@ export  const start_check_email_code = () =>{
         type:'start_check_email_code'
     }
 }
+export const start_create_folder =() =>{
+    return {
+        type:'start_create_folder'
+    }
+}

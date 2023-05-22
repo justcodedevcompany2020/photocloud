@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { ReactComponent as Eye } from '../assets/eye.svg';
 
 export const Input = ({
     inputName,
@@ -7,9 +8,22 @@ export const Input = ({
     onChange,
     error,
     max,
+    errorText,
+    password,
+    onEye,
+    t
 }) => {
+    console.log()
     return (
-        <UIInput max = {max} error = {error}  onChange ={(e)=>onChange ?onChange(e.target.value):{}} value = {value} width = {width} type="text" placeholder={inputName} />
+        <>  
+            <InputProvider  max = {max} width = {width}>
+                <UIInput type = {t?"password":"text"} max = {max} error = {error}  onChange ={(e)=>onChange ?onChange(e.target.value):{}} value = {value} width = {width}  placeholder={inputName} />
+                <EyeProvider>
+                    {password && <Eye onClick={onEye}/>}
+                </EyeProvider>
+            </InputProvider>
+            <ErrorText max = {max} width = {width} >{errorText !== 'invalid' ?errorText:''}</ErrorText>
+        </>
     )
 }
 
@@ -19,6 +33,7 @@ max-width: ${props => props.max ? props.max : '350px'};
 padding:15px 20px;
 margin: 12px 0;
 box-sizing: border-box;
+padding-right: 35px;
 border: ${props =>props.error ? '1px solid red':'1px solid #BEBEBE'} ;
 border-radius: 8px;
 color: black;
@@ -29,4 +44,27 @@ color: black;
     max-width:350;
     width:100%;
 }
+`
+export const ErrorText = styled.p`
+    margin: 0;
+    font-size: 9px;
+    color: red;
+    width: ${props => props.width ? props.width : '350px'};
+    max-width: ${props => props.max ? props.max : '350px'};
+    margin: auto;
+    height: 10px;
+    text-align: left; 
+
+`
+export const EyeProvider = styled.div `
+position: absolute;
+    top: 25px;
+    margin: auto;
+    right: 12px;
+`
+export const InputProvider = styled.div`
+    position: relative;
+    width: ${props => props.width ? props.width : '350px'};
+    max-width: ${props => props.max ? props.max : '350px'};
+    margin: auto;
 `

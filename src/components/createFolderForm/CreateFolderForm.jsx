@@ -1,16 +1,29 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { create_folder } from "../../store/action/action";
 
 export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB }, ref) => {
+    const [value,setValue] = useState('')
+    const dispatch = useDispatch()
+    const [error,setError] = useState(false)
+    const handelChange = () =>{
+        if(value){
+            dispatch(create_folder({name:value}))
+        }
+        else {
+            setValue(true)
+        }
+    }
     return (<BackDiv>
         <MainBlockWrapper>
             <MainBlock ref={ref}>
                 <Content>
                     <RegistrationTitle>Создать папку</RegistrationTitle>
-                    <Input width={'100%'} inputName={'Название папки'} />
-                    <Button mt={'40px'} bgColor={'#4F6688'} text={'Создать'} />
+                    <Input error={error} value={value} onChange ={(e)=>setValue(e)} width={'100%'} inputName={'Название папки'} />
+                    <Button onClick={()=>handelChange()} mt={'40px'} bgColor={'#4F6688'} text={'Создать'} />
                 </Content>
             </MainBlock>
         </MainBlockWrapper>

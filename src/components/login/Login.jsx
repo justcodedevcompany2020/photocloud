@@ -11,7 +11,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
     const {login}= useSelector((st)=>st)
     const  [data,setData] = useState([
         {value:'',lable:'Юзернейм',error:false},
-        {value:'',lable:'Пароль',error:false},
+        {value:'',lable:'Пароль',error:false,password:true,type:true},
     ])
     const handleCloseModal = (data) => {
         let send = true
@@ -36,7 +36,11 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
         // regCB()
         // loginCloseCB()
     }
-    
+    const handelEye = (i) =>{
+        let item = [...data]
+        item[i].type = !item[i].type
+        setData(item)
+    }
     const handelChange = (e,i) =>{
         let item = [...data]
         item[i].value = e
@@ -47,7 +51,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
             <Content>
                 <RegistrationTitle>Вход</RegistrationTitle>
                 {data.map((elm,i)=>(
-                    <Input error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
+                    <Input password={elm.password} t = {elm.type} onEye={()=>handelEye(i)} error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
                 ))
 
                 }

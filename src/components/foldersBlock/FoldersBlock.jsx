@@ -1,12 +1,19 @@
 import styled from "styled-components"
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
 import { CreateFolderForm } from "../../components/createFolderForm/CreateFolderForm"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
+import { useSelector } from "react-redux"
 
 export const FoldersBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
+    const {creatFolder} = useSelector((st)=>st)
     const folderRef = useRef()
+    useEffect(()=>{
+        if(creatFolder.status){
+            setCreateFolderModal(false)
+        }
+    },[creatFolder.status])
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     return (<>
         <MainBlock>

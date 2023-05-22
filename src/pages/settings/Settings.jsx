@@ -7,6 +7,9 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useDispatch, useSelector } from "react-redux"
 import { change_code, change_email, change_username_and_name, open_popup_change_password, update_user_password } from "../../store/action/action"
 import { ChangeEmailForm } from "../../components/changeEmailForm"
+import { ReactComponent as Vectore } from '../../assets/Vectore.svg';
+import { useNavigate } from "react-router-dom";
+
 
 export const Settings = () =>{
     const [changePasswordToggle, setChangePasswordToggle] = useState(false)
@@ -15,6 +18,7 @@ export const Settings = () =>{
     const {reg} = useSelector((st)=>st)
     const {changeData} = useSelector(st=>st)
     const [changeMail,setChangeMail] = useState(false)
+    const navigate = useNavigate();
 
 
     useOnClickOutside(refReg, () => closeChangePassword());
@@ -154,6 +158,8 @@ export const Settings = () =>{
         }
     },[changeData.stautsCode])
     return <>
+        <Title onClick = {()=>navigate('/userProfile')}><Vectore /> Настройки</Title>
+    
         <MainBlock>
             <Block>
                 <Content>
@@ -273,4 +279,17 @@ const Br = styled.div `
     @media (max-width: 768px) {
         display: block;
       }
+`
+const Title = styled.p `
+    cursor: pointer;
+    text-align: left;
+    max-width: 1170px;
+    width: 95%;
+    margin: auto;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 35px;
+    color: #333333;
+    margin: 20px auto;
 `

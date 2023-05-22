@@ -1,9 +1,10 @@
 import axios from "axios";
-import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
+import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
   start_change_email,
   start_change_username_and_name,
   start_check_email_code,
+  start_create_folder,
   start_create_new_password,
   start_forgot_password,
   start_forgot_password_code,
@@ -18,6 +19,7 @@ import {
 import {
   success_change_username_and_name,
   success_chnage_email,
+  success_create_folder,
   success_create_new_password,
   success_forgot_password,
   success_forgot_password_code,
@@ -295,5 +297,23 @@ export const change_code =(code) =>{
 export const clear_change_code_error =() =>{
   return {
     type:'clear_change_code_error'
+  }
+}
+
+export const create_folder = (data) =>{
+  console.log(data)
+  return (dispatch) =>{
+    dispatch(start_create_folder())
+    axios.post(`${url}create_folder`,data).then((r)=>{
+        if(r.data.status){
+          dispatch(success_create_folder(r.data))
+        }
+        else {
+          dispatch(error_create_folder())
+        }
+    }).catch((error)=>{
+      console.log(error)
+      dispatch(error_create_folder())
+    })
   }
 }

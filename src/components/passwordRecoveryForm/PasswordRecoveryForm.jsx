@@ -13,6 +13,11 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
         item[i].value = e
         setData(item)
     }
+    const handelEye = (i) =>{
+        let item = [...data]
+        item[i].type = !item[i].type
+        setData(item)
+    }
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -24,7 +29,7 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
                     и символы
                 </RecoverySubText>
                 {data?.map((elm,i)=>{
-                    return <Input value={elm.value} error = {elm.error} key = {i} onChange = {(e)=>handelChage(e,i)} inputName={elm.lable} />
+                    return <Input onEye = {()=>handelEye(i)}  password={elm.password} t = {elm.type} value={elm.value} error = {elm.error} key = {i} onChange = {(e)=>handelChage(e,i)} inputName={elm.lable} />
                 })
 
                 }

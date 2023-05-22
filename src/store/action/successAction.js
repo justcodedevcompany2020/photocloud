@@ -70,3 +70,9 @@ export const success_send_email_code = (data) =>{
         data
     }
 }
+export const success_create_folder = (data) =>{
+    return {
+        type:'success_create_folder',
+        data,
+    }
+}

@@ -25,8 +25,8 @@ export const Header = () => {
     const [verefayEmail,setVerefayEmail] = useState(false)
     const [forgotPaswordMail,setForgotPasswordMail] = useState('')
     const [newPassword,setNewPassword] = useState([
-        {value:'',lable:'Новый пароль',error:false},
-        {value:'',lable:'Повтор пароля',error:false},
+        {value:'',lable:'Новый пароль',error:false,password:true,type:true},
+        {value:'',lable:'Повтор пароля',error:false,password:true,type:true},
     ])
     const [code,setCode] = useState('')
 
@@ -52,6 +52,9 @@ export const Header = () => {
     useOnClickOutside(recRef, () =>closeRecoverPassword());
     useOnClickOutside(recpasfor, () => closeRecoverCode());
     useOnClickOutside(recpasref, () => setRecoveryPasswordForm(false));
+    useOnClickOutside(verRef, () => setVerefayEmail(false));
+
+    
       
     // useOnClickOutside(recpasfor, () => setRecoveryPasswordFormToggle(false));
 
@@ -80,6 +83,11 @@ export const Header = () => {
         setLoginToggle(!loginToggle)
         setRecoveryToggle(!recoveryToggle)
     }
+    const openCloseRegisterOpenLogin = () =>{
+        console.log('ppp')
+        setRegToggle(false)
+        setLoginToggle(true)
+    }
     function isValidEmail(email) {
         return /\S+@\S+\.\S+/.test(email);
       }
@@ -88,26 +96,32 @@ export const Header = () => {
         temp.map((elm,i)=>{
             if(elm.lable === 'Имя'){
                 if(elm.value === ''){
-                    elm.error = 'Email is invalid' 
+                    elm.error = 'invalid' 
                 }
                 else {
                     elm.error = '' 
                 }
             }
             if(elm.lable === 'Эл. почта'){
-                if(!isValidEmail(elm.value)){
-                    elm.error = 'Email is invalid' 
+                if(elm.value === ''){
+                    elm.error = 'invalid'
+                }
+                else if(!isValidEmail(elm.value)){
+                    elm.error = 'Введите корректный адрес эл. почты' 
                 }
                 else {
                     elm.error = ''
                 }
             }
             if(elm.lable === 'Пароль'){
-                if(elm.value.length<=7){
-                    elm.error = '88'
+                if(elm.value === ''){
+                    elm.error = 'invalid'
+                } 
+                else if(elm.value.length<=7){
+                    elm.error = 'Пароль должен содержать не менее 8-ти символов'
                 }
                 else if(elm.value === ''){
-                    elm.error = 'password is empty'
+                    elm.error = ''
                 }
                 else {
                     elm.error = ''
@@ -115,7 +129,7 @@ export const Header = () => {
             }
             if(elm.lable === 'Юзернейм'){
                 if(elm.value === ''){
-                    elm.error = 'Username is empty'
+                    elm.error = 'invalid'
                 }
                 else {
                     elm.error = ''
@@ -123,7 +137,7 @@ export const Header = () => {
             }
             if(elm.lable === 'Повтор пароля'){
                 if(elm.value !== temp[3].value || elm.value ===''){
-                    elm.error = 'password'
+                    elm.error = 'invalid'
                 }
                 else {
                     elm.error = ''
@@ -270,7 +284,7 @@ export const Header = () => {
                 </LoginBlock>}
             </MainBlock>
         </HeaderBlock>
-        {regToggle && <Registration error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
+        {regToggle && <Registration openLogin = {()=>openCloseRegisterOpenLogin()} error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
         {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
         {recoveryPasswordFormToggle  && <RecoveryCode error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
