@@ -11,13 +11,21 @@ export const Input = ({
     errorText,
     password,
     onEye,
-    t
+    t,
+    maxlength
 }) => {
-    console.log()
     return (
         <>  
             <InputProvider  max = {max} width = {width}>
-                <UIInput type = {t?"password":"text"} max = {max} error = {error}  onChange ={(e)=>onChange ?onChange(e.target.value):{}} value = {value} width = {width}  placeholder={inputName} />
+                <UIInput  
+                    type = {t==='number'?'number':(t?"password":"text")} 
+                    max = {max} 
+                    error = {error}  
+                    onChange ={(e)=>onChange ?onChange(e.target.value):{}} 
+                    value = {value} 
+                    width = {width}  
+                    placeholder={inputName} 
+                    />
                 <EyeProvider>
                     {password && <Eye onClick={onEye}/>}
                 </EyeProvider>

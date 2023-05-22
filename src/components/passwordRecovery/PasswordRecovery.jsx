@@ -11,7 +11,7 @@ export const PasswordRecovery = forwardRef((props, ref) => {
                 <RecoveryPassText>Восстановление <br />
                     аккаунта</RecoveryPassText>
                 <RecoverySubText>
-                    Мы отправим 4-х значный код на вашу эл.почту для подтверждения личности
+                    Мы отправим 6-х значный код на вашу эл.почту для подтверждения личности
                 </RecoverySubText>
                 <Input value={value} onChange = {(e)=>setValue(e)} inputName={'Эл. почта'} />
                 <ErrorText>{props.error}</ErrorText>
@@ -25,8 +25,8 @@ const MainBlock = styled.div`
 left: 0px;
 top: 0px;
 z-index: 999;
-width: 400px;
-height: 370px;
+width: 570px;
+height: 419px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;

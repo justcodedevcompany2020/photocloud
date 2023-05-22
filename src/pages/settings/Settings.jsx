@@ -39,20 +39,19 @@ export const Settings = () =>{
         {value:'',lable:'Эл. почта',error:''},
     ])
     const [chnagePassword,setChnagePassword] = useState([
-        {value:'',lable:'Старый пароль',error:''},
-        {value:'',lable:'Новый пароль',error:''},
-        {value:'',lable:'Повтор пароля',error:''},
+        {value:'',lable:'Старый пароль',error:'',password:true,type:true},
+        {value:'',lable:'Новый пароль',error:'',password:true,type:true},
+        {value:'',lable:'Повтор пароля',error:'',password:true,type:true},
     ])
     const closeChangePassword = () =>{
         setChnagePassword([
-        {value:'',lable:'Старый пароль',error:''},
-        {value:'',lable:'Новый пароль',error:''},
-        {value:'',lable:'Повтор пароля',error:''},
+        {value:'',lable:'Старый пароль',error:'',password:true,type:true},
+        {value:'',lable:'Новый пароль',error:'',password:true,type:true},
+        {value:'',lable:'Повтор пароля',error:'',password:true,type:true},
         ])
         setChangePasswordToggle(false)
     }
     const sendCode = (value) =>{
-        console.log(value)
         if(value.lenght !== ''){
             dispatch(change_code({code:value}))
         }
@@ -133,7 +132,6 @@ export const Settings = () =>{
             dispatch(change_username_and_name({name:data[0].value,username:data[1].value}))
         }
         if(item[2].value !== prevData[2].value){
-            console.log('555')
             // setChangeMail(true)
             if(!isValidEmail(item[2].value)){
                 item[2].error = true
@@ -157,6 +155,9 @@ export const Settings = () =>{
             setChangeMail(false)
         }
     },[changeData.stautsCode])
+    useEffect(()=>{
+        setChangeMail(false)
+    },[])
     return <>
         <Title onClick = {()=>navigate('/userProfile')}><Vectore /> Настройки</Title>
     

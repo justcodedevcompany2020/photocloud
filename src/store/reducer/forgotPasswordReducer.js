@@ -24,7 +24,7 @@ export const forgotPassword = (state = initialState, action) => {
             break
         case 'error_forgot_password':
             temp.loading = false
-            temp.error = 'Неверный Эл. почта'
+            temp.error = 'Пользователь не зарегистрирован'
             break
         case 'clear_forgot_password_error':
             temp.error = ''

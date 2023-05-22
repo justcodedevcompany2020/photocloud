@@ -5,10 +5,15 @@ import { forwardRef, useEffect, useState } from "react";
 
 export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,loading}, ref) => {
     const [data,setData] = useState([
-        {value:'',lable:'Старый пароль',error:''},
-        {value:'',lable:'Новый пароль',error:''},
-        {value:'',lable:'Повтор пароля',error:''},
+        {value:'',lable:'Старый пароль',error:'',type:true,password:true},
+        {value:'',lable:'Новый пароль',error:'',type:true,password:true},
+        {value:'',lable:'Повтор пароля',error:'',type:true,password:true},
     ])
+    const handelEye = (i) => {
+        let item = [...data]
+        item[i].type =!item[i].type
+        setData(item)
+    }
     useEffect(()=>{
         setData(changeData)
     },[data])
@@ -25,7 +30,7 @@ export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,lo
                 и символы</SubText>
             {
                 data.map((elm,i)=>{
-                    return <Input error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
+                    return <Input onEye={()=>handelEye(i)} password={elm.password} t = {elm.type} error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
                 })
             }
                 <ErrorText>{error}</ErrorText>

@@ -29,7 +29,6 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
             <RegistrationTitle>Регистрация</RegistrationTitle>
             {
                 data.map((elm,i)=>{
-                    console.log(elm.type)
                     return <Input onEye = {()=>handelEye(i)} password={elm.password} t = {elm.type} errorText ={elm.error } error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
                 })
             }

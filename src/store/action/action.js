@@ -191,6 +191,7 @@ export const clear_forgot_password_code = () =>{
 
 
 export const create_new_password = (data) =>{
+  console.log(data)
   return (dispatch) =>{
     dispatch(start_create_new_password())
     axios.post(`${url}add_new_password_from_forgot_password`,data).then((r)=>{
@@ -301,7 +302,6 @@ export const clear_change_code_error =() =>{
 }
 
 export const create_folder = (data) =>{
-  console.log(data)
   return (dispatch) =>{
     dispatch(start_create_folder())
     axios.post(`${url}create_folder`,data).then((r)=>{
@@ -312,7 +312,6 @@ export const create_folder = (data) =>{
           dispatch(error_create_folder())
         }
     }).catch((error)=>{
-      console.log(error)
       dispatch(error_create_folder())
     })
   }

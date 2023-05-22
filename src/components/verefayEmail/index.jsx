@@ -15,7 +15,7 @@ export const VerefayEmail = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input value={value} onChange ={(e)=>setValue(e)} inputName={'Код подтверждения'} />
+                <Input maxlength ={999999} t = 'number' value={value} onChange ={(e)=>setValue(e)} inputName={'Код подтверждения'} />
                 <ErrorText>{props.error}</ErrorText>
                 <Text onClick={()=>dispatch(resend_verify_mail({email:props.email}))}>Отправить код повторно</Text>
                 <Button loading = {props.loading} onClick={()=>props.click(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />

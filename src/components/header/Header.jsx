@@ -25,9 +25,10 @@ export const Header = () => {
     const [verefayEmail,setVerefayEmail] = useState(false)
     const [forgotPaswordMail,setForgotPasswordMail] = useState('')
     const [newPassword,setNewPassword] = useState([
-        {value:'',lable:'Новый пароль',error:false,password:true,type:true},
-        {value:'',lable:'Повтор пароля',error:false,password:true,type:true},
+        {value:'',lable:'Новый пароль',error:'',password:true,type:true},
+        {value:'',lable:'Повтор пароля',error:'',password:true,type:true},
     ])
+    const [noteMail,setNotMail] = useState('')
     const [code,setCode] = useState('')
 
     
@@ -174,7 +175,15 @@ export const Header = () => {
     }
     const handelRecoveryForm = (e) =>{
         setForgotPasswordMail(e)
-        dispatch(forgot_password_api({email:e}))
+        //////////////////////////
+        if(!isValidEmail(e)){
+            setNotMail('Неправильная эл. почта')
+        }
+        else {
+            setNotMail('')
+            dispatch(forgot_password_api({email:e}))
+
+        }
     }
     const handleCloseLoginModal = () => {
         setLoginToggle(false)
@@ -191,12 +200,23 @@ export const Header = () => {
             item[0].error = true
             item[1].error = true
         }
+        if(item[0].value.length<8){
+            item[0].error = 'Пароль должен содержать не менее 8-ти символов'
+        }
+        if(item[1].value.length<8){
+            item[1].error = 'Пароль должен содержать не менее 8-ти символов'
+        }
+        if(item[0].value !== item[1].value){
+            item[1].error = 'Пароли не совпадают'
+
+        }
         else {
             item[0].error = false
             item[1].error = false
         }
         setNewPassword(item)
         if(!item[0].error && !item[1].error){
+            console.log('78')
             dispatch(create_new_password({
                 email:forgotPaswordMail,
                 code:code,
@@ -286,7 +306,7 @@ export const Header = () => {
         </HeaderBlock>
         {regToggle && <Registration openLogin = {()=>openCloseRegisterOpenLogin()} error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
-        {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
+        {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {noteMail ? noteMail:forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
         {recoveryPasswordFormToggle  && <RecoveryCode error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
         {recoveryPasswordForm && <PasswordRecoveryForm loading = {forgotPassword.loadingNew} data = {newPassword} handelNewPassword = {(e)=>handelNewPassword(e)} ref = {recpasref}/>}
         {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
