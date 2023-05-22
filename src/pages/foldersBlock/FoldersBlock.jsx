@@ -30,7 +30,6 @@ export const FoldersBlock = () => {
                     <Text>Добавить папку</Text>
                 </AddCardsWrapper>
                 {creatFolder.folder?.map((elm,i)=>{
-                    console.log(elm)
                     return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
                         <Main></Main>
                         <MainText>

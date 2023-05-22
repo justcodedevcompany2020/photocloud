@@ -8,6 +8,7 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { get_all_folder, get_folder_by_slug } from "../../store/action/action"
 import { CreateFolderForm } from "../createFolderForm/CreateFolderForm"
 import { ReactComponent as Img } from "../../assets/img.svg"
+import { AddPhoto } from "../addPhoto"
 
 export const FolderPageBlock = () =>{
     const [createFolderModal, setCreateFolderModal] = useState()
@@ -16,7 +17,7 @@ export const FolderPageBlock = () =>{
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const folderRef = useRef()
-    console.log(creatFolder.slug_data)
+    const addRef = useRef()
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
 
     useEffect(()=>{
@@ -36,7 +37,7 @@ export const FolderPageBlock = () =>{
                 <BluePlusIcon />
                 </PlusIconWrapper>
             </AddFoto>
-            <Text>Добавить папку</Text>
+            <Text>Добавить картинку</Text>
         </AddCardsWrapper>
     </MainBlock>
     <Title>Папки</Title>
@@ -66,7 +67,9 @@ export const FolderPageBlock = () =>{
     }
     </MainBlock>
     {createFolderModal && <CreateFolderForm prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
-
+    {true && 
+            <AddPhoto ref = {addRef} />
+    }
     </>
 }
 

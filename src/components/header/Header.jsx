@@ -85,7 +85,6 @@ export const Header = () => {
         setRecoveryToggle(!recoveryToggle)
     }
     const openCloseRegisterOpenLogin = () =>{
-        console.log('ppp')
         setRegToggle(false)
         setLoginToggle(true)
     }
@@ -216,7 +215,6 @@ export const Header = () => {
         }
         setNewPassword(item)
         if(!item[0].error && !item[1].error){
-            console.log('78')
             dispatch(create_new_password({
                 email:forgotPaswordMail,
                 code:code,
