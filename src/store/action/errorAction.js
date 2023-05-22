@@ -63,3 +63,13 @@ export const error_create_folder = () =>{
         type:'error_create_folder'
     }
 }
+export const error_get_all_folder = () =>{
+    return {
+        type:'error_get_all_folder'
+    }
+}
+export const error_get_folfer_by_slug = () =>{
+    return {
+        type:'error_get_folfer_by_slug'
+    }
+}

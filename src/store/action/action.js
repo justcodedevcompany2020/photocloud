@@ -1,5 +1,5 @@
 import axios from "axios";
-import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
+import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_all_folder, error_get_folfer_by_slug, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
   start_change_email,
   start_change_username_and_name,
@@ -8,6 +8,8 @@ import {
   start_create_new_password,
   start_forgot_password,
   start_forgot_password_code,
+  start_get_all_folder,
+  start_get_folfer_by_slug,
   start_get_user,
   start_login,
   start_logout,
@@ -23,6 +25,8 @@ import {
   success_create_new_password,
   success_forgot_password,
   success_forgot_password_code,
+  success_get_all_folder,
+  success_get_folfer_by_slug,
   success_get_user,
   success_login,
   success_logout,
@@ -257,7 +261,6 @@ export const open_popup_change_password = () =>{
 export const change_email = (email) =>{
   const token  = localStorage.getItem('token')
 
-  console.log(email)
   return (dispatch) =>{
     dispatch(start_change_email())
     axios.post(`${url}add_new_email_from_my_cabinet`,email,{
@@ -302,9 +305,14 @@ export const clear_change_code_error =() =>{
 }
 
 export const create_folder = (data) =>{
+  const token  = localStorage.getItem('token')
   return (dispatch) =>{
     dispatch(start_create_folder())
-    axios.post(`${url}create_folder`,data).then((r)=>{
+    axios.post(`${url}create_folder`,data,{
+      headers: { Authorization: `Bearer ${token}` },
+
+    }).then((r)=>{
+      console.log(r.data.status)
         if(r.data.status){
           dispatch(success_create_folder(r.data))
         }
@@ -315,4 +323,40 @@ export const create_folder = (data) =>{
       dispatch(error_create_folder())
     })
   }
+}
+
+export const get_all_folder = () =>{
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+    dispatch(start_get_all_folder())
+    axios.get(`${url}get_my_all_folders`,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+        dispatch(success_get_all_folder(r.data))
+      }
+      else {
+        dispatch(error_get_all_folder())
+      }
+      console.log(r)
+    })
+    .catch((error)=>{
+      dispatch(error_get_all_folder())
+      console.log(error)
+    })
+  }
+}
+
+export const get_folder_by_slug = (slug)=>{
+    return (dispatch) =>{
+      dispatch(start_get_folfer_by_slug())
+      axios.get(`${url}get_folder_by_slug/${slug}`).then((r)=>{
+        console.log(r)
+        dispatch(success_get_folfer_by_slug(r.data))
+      })
+      .catch((error)=>{
+        dispatch(error_get_folfer_by_slug())
+        console.log(error)
+      })
+    }
 }

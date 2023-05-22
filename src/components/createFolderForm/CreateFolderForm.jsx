@@ -5,16 +5,17 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { create_folder } from "../../store/action/action";
 
-export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB }, ref) => {
+export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB,loading,prId }, ref) => {
     const [value,setValue] = useState('')
     const dispatch = useDispatch()
     const [error,setError] = useState(false)
     const handelChange = () =>{
         if(value){
-            dispatch(create_folder({name:value}))
+            setError('')
+            dispatch(create_folder({name:value,parent_id:prId}))
         }
         else {
-            setValue(true)
+            setError('Данное поле обязательно')
         }
     }
     return (<BackDiv>
@@ -22,8 +23,9 @@ export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB }, ref) => {
             <MainBlock ref={ref}>
                 <Content>
                     <RegistrationTitle>Создать папку</RegistrationTitle>
-                    <Input error={error} value={value} onChange ={(e)=>setValue(e)} width={'100%'} inputName={'Название папки'} />
-                    <Button onClick={()=>handelChange()} mt={'40px'} bgColor={'#4F6688'} text={'Создать'} />
+                    <Input errorText={''} error={error} value={value} onChange ={(e)=>setValue(e)} width={'100%'} inputName={'Название папки'} />
+                    <ErrorText>{error}</ErrorText>
+                    <Button loading ={loading} onClick={()=>handelChange()}  mt ={'10px'} bgColor={'#4F6688'} text={'Создать'} />
                 </Content>
             </MainBlock>
         </MainBlockWrapper>
@@ -80,4 +82,10 @@ line-height: 47px;
 text-align: center;
 color: #333333;
 
+`
+const ErrorText = styled.p`
+    margin: 0;
+    font-size: 12px;
+    color: red;
+    height: 20px;
 `

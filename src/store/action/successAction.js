@@ -76,3 +76,15 @@ export const success_create_folder = (data) =>{
         data,
     }
 }
+export const success_get_all_folder = (data) =>{
+    return {
+        type:'success_get_all_folder',
+        data
+    }
+}
+export const success_get_folfer_by_slug = (data) =>{
+    return {
+        type:'success_get_folfer_by_slug',
+        data
+    }
+}

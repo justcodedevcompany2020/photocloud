@@ -69,3 +69,13 @@ export const start_create_folder =() =>{
         type:'start_create_folder'
     }
 }
+export const start_get_all_folder = () =>{
+    return {
+        type:'start_get_all_folder'
+    }
+}
+export const start_get_folfer_by_slug = () =>{
+    return {
+        type:'start_get_folfer_by_slug'
+    }
+}

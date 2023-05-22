@@ -10,6 +10,7 @@ import { Settings } from './pages/settings/Settings';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { get_user } from './store/action/action';
+import { FolderPage } from './pages/folderPage';
 
 function App() {
   const dispatch = useDispatch()
@@ -25,6 +26,7 @@ function App() {
           <Route path="/createFolder" element={<FoldersBlock />} />
           <Route path='/userProfile' element={<UserProfile />} />
           <Route path='/settings' element={<Settings />} />
+          <Route path='/folder/:id' element={<FolderPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
