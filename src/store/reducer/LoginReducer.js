@@ -26,6 +26,13 @@ export const loginReducer = (state = initialState, action) => {
         case 'clear_login_error':
             temp.error = ''
             break
+        case 'success_logout':
+            temp.status = false
+            temp.loading= false
+            temp.user = []
+            temp.token = ''
+            temp.error = ''
+            break            
         default:
             break;
     }

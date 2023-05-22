@@ -31,7 +31,8 @@ export const SettingsBlock = () => {
     const {reg} = useSelector((st)=>st)
     useEffect(()=>{
         if(reg.logOutStats){
-            navigate('/')
+            window.location = '/'
+            // navigate('/')
         }
     },[reg.logOutStats])
     return (

@@ -3,18 +3,20 @@ import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
 import { CreateFolderForm } from "../../components/createFolderForm/CreateFolderForm"
 import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { useNavigate } from "react-router-dom"
-
+import { get_all_folder } from "../../store/action/action.js";
 export const FoldersBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
     const folderRef = useRef()
     const navigate = useNavigate()
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
+    const dispatch = useDispatch()
     useEffect(()=>{
         if(creatFolder.status){
+            dispatch(get_all_folder())
             setCreateFolderModal(false)
         }
     },[creatFolder.status])

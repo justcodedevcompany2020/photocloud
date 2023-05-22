@@ -138,6 +138,7 @@ export const logout_action = () =>{
     }).then((r)=>{
       dispatch(start_logout())
       if(r.data.status){
+        localStorage.removeItem('token')
         dispatch(success_logout(r.data))
       }
       else {

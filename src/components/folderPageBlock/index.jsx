@@ -12,6 +12,8 @@ import { AddPhoto } from "../addPhoto"
 
 export const FolderPageBlock = () =>{
     const [createFolderModal, setCreateFolderModal] = useState()
+    const [addImages, setAddImages] = useState(false)
+
     const {id} = useParams()
     const {creatFolder} = useSelector((st)=>st)
     const dispatch = useDispatch()
@@ -19,6 +21,7 @@ export const FolderPageBlock = () =>{
     const folderRef = useRef()
     const addRef = useRef()
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
+    useOnClickOutside(addRef, () => setAddImages(false));
 
     useEffect(()=>{
         dispatch(get_folder_by_slug(id))
@@ -29,10 +32,18 @@ export const FolderPageBlock = () =>{
             dispatch(get_folder_by_slug(id))
         }
     },[creatFolder.status])
+    useEffect(()=>{
+        if(addImages){
+            document.body.style.setProperty('overflow', 'hidden');
+        }
+        else {
+            document.body.style.setProperty('overflow', 'auto');
+        }
+    },[addImages])
     return <>
     <MainBlock> 
         <AddCardsWrapper>
-            <AddFoto onClick={() => setCreateFolderModal(!createFolderModal)}>
+            <AddFoto onClick={() => setAddImages(true)}>
                 <PlusIconWrapper>
                 <BluePlusIcon />
                 </PlusIconWrapper>
@@ -67,8 +78,8 @@ export const FolderPageBlock = () =>{
     }
     </MainBlock>
     {createFolderModal && <CreateFolderForm prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
-    {true && 
-            <AddPhoto ref = {addRef} />
+    {addImages && 
+            <AddPhoto ref={addRef} />
     }
     </>
 }
