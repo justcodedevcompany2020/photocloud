@@ -73,3 +73,18 @@ export const error_get_folfer_by_slug = () =>{
         type:'error_get_folfer_by_slug'
     }
 }
+export const error_add_photo = () =>{
+    return {
+        type:'error_add_photo'
+    }
+}
+export const error_get_photo = () =>{
+    return {
+        type:'error_get_photo'
+    }
+}
+export const error_delate_photo = () =>{
+    return {
+        type:'error_delate_photo'
+    }
+}

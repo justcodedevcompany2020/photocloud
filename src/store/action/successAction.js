@@ -88,3 +88,21 @@ export const success_get_folfer_by_slug = (data) =>{
         data
     }
 }
+export const success_add_photo = (data) =>{
+    return {
+        type:'success_add_photo',
+        data
+    }
+}
+export const success_get_photo = (data) =>{
+    return {
+        type:'success_get_photo',
+        data
+    }
+}
+export const success_delate_photo = (data) =>{
+    return {
+        type:'success_delate_photo',
+        data
+    }
+}

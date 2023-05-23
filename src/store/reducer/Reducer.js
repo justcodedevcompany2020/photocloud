@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { addPhotoReducer } from './addPhotoReducer'
 import { changeDataReducer } from './changeDataReducer'
 import { createFolderReducer } from './createFolderReducer'
 import { forgotPassword } from './forgotPasswordReducer'
@@ -9,5 +10,6 @@ export default combineReducers({
     login:loginReducer,
     forgotPassword:forgotPassword,
     changeData:changeDataReducer,
-    creatFolder:createFolderReducer
+    creatFolder:createFolderReducer,
+    addPhoto:addPhotoReducer
 })

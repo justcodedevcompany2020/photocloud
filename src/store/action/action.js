@@ -1,15 +1,18 @@
 import axios from "axios";
-import { error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_forgot_password, error_forgot_password_code, error_get_all_folder, error_get_folfer_by_slug, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
+import { error_add_photo, error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_delate_photo, error_forgot_password, error_forgot_password_code, error_get_all_folder, error_get_folfer_by_slug, error_get_photo, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
+  start_add_photo,
   start_change_email,
   start_change_username_and_name,
   start_check_email_code,
   start_create_folder,
   start_create_new_password,
+  start_delate_photo,
   start_forgot_password,
   start_forgot_password_code,
   start_get_all_folder,
   start_get_folfer_by_slug,
+  start_get_photo,
   start_get_user,
   start_login,
   start_logout,
@@ -19,14 +22,17 @@ import {
   start_verefy_email,
 } from "./startAction";
 import {
+  success_add_photo,
   success_change_username_and_name,
   success_chnage_email,
   success_create_folder,
   success_create_new_password,
+  success_delate_photo,
   success_forgot_password,
   success_forgot_password_code,
   success_get_all_folder,
   success_get_folfer_by_slug,
+  success_get_photo,
   success_get_user,
   success_login,
   success_logout,
@@ -360,4 +366,65 @@ export const get_folder_by_slug = (slug)=>{
         console.log(error)
       })
     }
+}
+
+export const add_photo = (data) =>{
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+    dispatch(start_add_photo())
+    axios.post(`${url}add_photo`,data,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      if(r.data.status){
+        dispatch(success_add_photo(r.data))
+      }
+      else {
+        dispatch(error_add_photo())
+      }
+    })
+    .catch((r)=>{
+      dispatch(error_add_photo())
+    })
+  }
+}
+export const get_photo_by_slug = (data) =>{
+  return (dispatch) =>{
+    dispatch(start_get_photo())
+    axios.get(`${url}single_photo/${data}`).then((r)=>{
+      if(r.data.status){
+        dispatch(success_get_photo(data))
+      }
+      else {
+        dispatch(error_get_photo())
+      }
+      // console.log(r)
+    })
+    .catch(error=>{
+      dispatch(error_get_photo())
+      console.log(error)
+    })
+  }
+}
+
+export const delete_photo_by_id = (id) =>{
+  console.log(id)
+  const token  = localStorage.getItem('token')
+  return (dispatch) =>{
+    dispatch(start_delate_photo())
+    axios.get(`${url}delete_photo/${id}`,{
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((r)=>{
+      // console.log(r.data)
+      if(r.data.status){
+        console.log(r.data.status)
+        dispatch(success_delate_photo(r.data))
+      }
+      else {
+        dispatch(error_delate_photo())
+      }
+    })
+    .catch((r)=>{
+      dispatch(error_delate_photo())
+    })
+  }
 }

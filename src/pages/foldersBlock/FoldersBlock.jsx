@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { useNavigate } from "react-router-dom"
 import { get_all_folder } from "../../store/action/action.js";
+import { ClipLoader } from "react-spinners"
 export const FoldersBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
@@ -23,29 +24,42 @@ export const FoldersBlock = () => {
     return (<>
         <MainBlock>
             <Content>
-                <AddCardsWrapper>
-                    <AddCards onClick={() => setCreateFolderModal(!createFolderModal)}>
-                        <PlusIconWrapper>
-                            <PlusIcon />
-                        </PlusIconWrapper>
-                    </AddCards>
-                    <Text>Добавить папку</Text>
-                </AddCardsWrapper>
-                {creatFolder.folder?.map((elm,i)=>{
-                    return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
-                        <Main></Main>
-                        <MainText>
-                            <Title>
-                                {elm.name}
-                            </Title>
-                            <Count>
-                                <p style={{margin:'0 5px'}}>0</p> <Img />
-                            </Count>
-                        </MainText>
-                    </Card>
-                })
-
-                }
+                {creatFolder.loading_get_follder||creatFolder.loading_slug||creatFolder.loading ?
+                <LoadingDiv>
+                <ClipLoader
+                    color={'#4F6688'}
+                    loading={creatFolder.loading_get_follder||creatFolder.loading_slug||creatFolder.loading}
+                    size={30}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+                </LoadingDiv>:
+                <>
+                    <AddCardsWrapper>
+                        <AddCards onClick={() => setCreateFolderModal(!createFolderModal)}>
+                            <PlusIconWrapper>
+                                <PlusIcon />
+                            </PlusIconWrapper>
+                        </AddCards>
+                        <Text>Добавить папку</Text>
+                    </AddCardsWrapper>
+                    {creatFolder.folder?.map((elm,i)=>{
+                        console.log(elm.photo.length && elm.photo[0].slug)
+                        return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
+                            <Main>
+                                {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
+                            </Main>
+                            <MainText>
+                                <Title>
+                                    {elm.name}
+                                </Title>
+                                <Count>
+                                    <p style={{margin:'0 5px'}}>{elm.photo.length}</p> <Img />
+                                </Count>
+                            </MainText>
+                        </Card>
+                    })}
+                </>}
             </Content>
         </MainBlock>
         {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />}
@@ -144,4 +158,18 @@ font-size: 18px;
 line-height: 21px;
 text-align: right;
 font-feature-settings: 'pnum' on, 'lnum' on;
+`
+const LoadingDiv = styled.div `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 720px;
+    max-width: 1170px;
+    width: 95%;
+`
+const Image = styled.img `
+width: 220px;
+height: 220px;
+object-fit: cover;
+border-radius: 8px;
 `

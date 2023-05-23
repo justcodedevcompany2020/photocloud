@@ -1,31 +1,32 @@
 import Multiselect from "multiselect-react-dropdown";
 import { forwardRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components"
+import { add_photo } from "../../store/action/action";
 import { Button } from "../../ui/Button";
 
 import './style.css'
-export const AddPhoto = forwardRef(({},ref) =>{
+export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
+    const dispatch = useDispatch()
     const [image, setImage] = useState([])
     const [array,setArray] = useState([])
-    const [sendImg,setSedImg] = useState([])
     const CloseItem = (i) =>{
         let item = [...array]
         item.splice(i,1)
         setArray(item)
     } 
     const showImg = (event) =>{
-        setSedImg()
         let img;
         let itme = [...array]
         img = (event.target.files.length);
         let arr = Array(img).fill(0);
-        let count = 8-itme.length
+        let count = 8-(length+itme.length)
         arr = arr.slice(0,count)
         console.log(arr);
        arr =  arr.map((el,i)=>{
            console.log('[ps')
             itme.push(URL.createObjectURL(event.target.files[i]))
-            return URL.createObjectURL(event.target.files[i])
+            return event.target.files[i]
         })
         console.log(arr)
         setArray(itme)
@@ -37,13 +38,21 @@ export const AddPhoto = forwardRef(({},ref) =>{
         {name: '21️', id: 1},
     ])
     const [day,setDay] = useState(null)
-    
+    const sendData = () =>{
+        const formData = new FormData()
+        image.map((elm,i)=>{
+            formData.append('file[]',elm)
+        })
+        formData.append('day',10)
+        formData.append('folder_id',id)
+        dispatch(add_photo(formData))
+    }
     return <BackDiv>
         <MainBlock ref  = {ref}>
         <RecoveryContent>
             <RecoveryPassText>Добавить изображение</RecoveryPassText>
             <CardWrapper>
-                {array.length <8 && <Card>
+                {(array.length+length) <8 && <Card>
                 <label for="images" class="drop-container"> + </label>
                     <input onChange={(e)=>showImg(e)} multiple type={'file'} id = {'images'}   accept="image/png, image/jpeg"></input>
                     {/* <input onChange={(e)=>showImg(e)} multiple type={'file'}  accept="image/png, image/jpeg"></input> */}
@@ -66,7 +75,7 @@ export const AddPhoto = forwardRef(({},ref) =>{
                         displayValue="name"
                         style = {{padding:'20px'}}
                     />
-            <Button mt = {'30px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
+            <Button loading = {loading} onClick={()=>sendData()} mt = {'30px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
         </RecoveryContent>
         </MainBlock>
     </BackDiv>

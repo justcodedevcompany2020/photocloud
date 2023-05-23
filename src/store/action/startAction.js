@@ -79,3 +79,18 @@ export const start_get_folfer_by_slug = () =>{
         type:'start_get_folfer_by_slug'
     }
 }
+export const start_add_photo = () =>{
+    return {
+        type:'start_add_photo'
+    }
+}
+export const start_get_photo = () =>{
+    return {
+        type:'start_get_photo'
+    }
+}
+export const start_delate_photo = () =>{
+    return {
+        type:'start_delate_photo'
+    }
+}

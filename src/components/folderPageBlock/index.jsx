@@ -4,18 +4,22 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
+import { ReactComponent as Sheare } from "../../assets/shear.svg"
+import { ReactComponent as Delate } from "../../assets/delate.svg"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
-import { get_all_folder, get_folder_by_slug } from "../../store/action/action"
+import { delete_photo_by_id, get_all_folder, get_folder_by_slug, get_photo_by_slug } from "../../store/action/action"
 import { CreateFolderForm } from "../createFolderForm/CreateFolderForm"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { AddPhoto } from "../addPhoto"
+import { ClipLoader } from "react-spinners"
 
 export const FolderPageBlock = () =>{
     const [createFolderModal, setCreateFolderModal] = useState()
     const [addImages, setAddImages] = useState(false)
-
     const {id} = useParams()
     const {creatFolder} = useSelector((st)=>st)
+    const {addPhoto} = useSelector((st)=>st)
+    const [delateIndex,setDelateIndex] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const folderRef = useRef()
@@ -40,8 +44,20 @@ export const FolderPageBlock = () =>{
             document.body.style.setProperty('overflow', 'auto');
         }
     },[addImages])
+    useEffect(()=>{
+        if(addPhoto.status){
+            dispatch(get_folder_by_slug(id))
+            setAddImages(false)
+        }
+    },[addPhoto.status])
+    useEffect(()=>{
+        if(addPhoto.succes_delate){
+            dispatch(get_folder_by_slug(id))
+        }
+    },[addPhoto.succes_delate])
     return <>
     <MainBlock> 
+        {creatFolder?.slug_data?.photo?.length<8 &&
         <AddCardsWrapper>
             <AddFoto onClick={() => setAddImages(true)}>
                 <PlusIconWrapper>
@@ -49,7 +65,42 @@ export const FolderPageBlock = () =>{
                 </PlusIconWrapper>
             </AddFoto>
             <Text>Добавить картинку</Text>
+        </AddCardsWrapper>}
+        {creatFolder?.slug_data?.photo?.map((elm,i)=>{
+            return <AddCardsWrapper  key={i}>
+                {(addPhoto.delate_loading && delateIndex === i) ?
+                <LoadingDiv>
+                    <ClipLoader
+                        color={'#4F6688'}
+                        loading={addPhoto.delate_loading}
+                        size={30}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </LoadingDiv>:
+                <>
+                    <AddFoto style={{border:'none'}}>
+                        <Image src={`https://photocloud.justcode.am/uploads/${elm.slug}`} />
+                    </AddFoto>
+                    <TextWrapper>
+                        <Text2>
+                            <div style={{marginRight:'5px',marginBottom:'-3px'}}>
+                                <Sheare />  
+                            </div>
+                            Поделиться
+                        </Text2>
+                        <Text2 onClick={()=>{
+                            setDelateIndex(i)
+                            dispatch(delete_photo_by_id(elm.id))
+                        }}>
+                            <Delate />
+                        </Text2>
+                    </TextWrapper>
+                </>}
         </AddCardsWrapper>
+        })
+
+        }
     </MainBlock>
     <Title>Папки</Title>
     <MainBlock>
@@ -61,9 +112,10 @@ export const FolderPageBlock = () =>{
         </AddCards>
         <Text>Добавить папку</Text>
     </AddCardsWrapper>
-    {
+    {   
         creatFolder.slug_data?.folders?.map((elm,i)=>{
-            return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
+            console.log(elm)
+            return <Card onClick={()=>{ window.location = `/folder/${elm.slug}`}}>
             <Main></Main>
             <MainText>
                 <CardTitle>
@@ -79,7 +131,7 @@ export const FolderPageBlock = () =>{
     </MainBlock>
     {createFolderModal && <CreateFolderForm prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
     {addImages && 
-            <AddPhoto ref={addRef} />
+            <AddPhoto length = {creatFolder?.slug_data?.photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
     }
     </>
 }
@@ -190,4 +242,32 @@ font-weight: 600;
 font-size: 18px;
 line-height: 21px;
 color: #333333;
+`
+const Image = styled.img `
+width: 220px;
+height: 220px;
+object-fit: cover;
+border-radius: 8px;
+`
+const TextWrapper = styled.div `
+height: 50px;
+display: flex;
+justify-content: space-between;
+`
+const Text2 = styled.p `
+display: flex;
+align-items: center;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+font-feature-settings: 'pnum' on, 'lnum' on;
+color: #4F6688;
+cursor: pointer;
+` 
+const LoadingDiv = styled.div `
+display: flex;
+justify-content: center;
+align-items: center;
+height: 270px;
 `
