@@ -22,6 +22,11 @@ export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,lo
         item[i].value=e
         setData(item) 
     }
+    useEffect(()=>{
+        let item = [...data]
+        item[0].error = error
+        setData(item)
+    },[loading])
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Cмена пароля</RegistrationTitle>
@@ -30,10 +35,10 @@ export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,lo
                 и символы</SubText>
             {
                 data.map((elm,i)=>{
-                    return <Input onEye={()=>handelEye(i)} password={elm.password} t = {elm.type} error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
+                    return <Input errorText={elm.error} onEye={()=>handelEye(i)} password={elm.password} t = {elm.type} error={elm.error} onChange={(e)=>handelChange(e,i)} key={i} width={'100%'} inputName={elm.lable} />
                 })
             }
-                <ErrorText>{error}</ErrorText>
+                {/* <ErrorText>{error}</ErrorText> */}
             <Button loading ={loading} onClick={()=>handelClick(data)} mt={'10px'} bgColor={'#4F6688'} text={'Сохранить'} />
         </MainBlock>
     </BackDiv>)

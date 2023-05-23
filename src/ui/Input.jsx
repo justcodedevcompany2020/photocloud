@@ -13,12 +13,18 @@ export const Input = ({
     disabled,
     onEye,
     t,
-    maxlength
+    maxlength,
+    onKeyDown,
 }) => {
     return (
         <>  
-            <InputProvider  max = {max} width = {width}>
+            <InputProvider   max = {max} width = {width}>
                 <UIInput  
+                    onKeyDown={(e)=>{
+                        if (e.key === 'Enter') {
+                            onKeyDown()
+                        }
+                    }}
                     disabled = {disabled}
                     type = {t==='number'?'number':(t?"password":"text")} 
                     max = {max} 

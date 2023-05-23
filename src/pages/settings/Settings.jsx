@@ -59,6 +59,7 @@ export const Settings = () =>{
 
 
     const handelClick = (value) =>{
+
         let item = [...value]
         if(item[0].value === ''){
             item[0].error = true
@@ -69,6 +70,15 @@ export const Settings = () =>{
         if((item[1].value !== item[2].value) || item[1].value === ''||item[2].value === '' ||item[1].value.length<8|| item[2].value.length<8 ){
             item[1].error = true
             item[2].error = true
+            if(item[1].value.length<8 && item[1].value !==''){
+                item[1].error = 'Пароль должен содержать не менее 8-ти символов'
+            }
+            if(item[2].value.length<8 && item[1].value !==''){
+                item[2].error = 'Пароль должен содержать не менее 8-ти символов'
+            }
+            if(item[1].value !== item[2].value){
+                item[2].error = 'Пароли не совпадают'
+            }
         }
         else {
             item[1].error = false

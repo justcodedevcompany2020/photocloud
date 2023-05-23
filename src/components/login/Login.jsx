@@ -50,7 +50,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
             <Content>
                 <RegistrationTitle>Вход</RegistrationTitle>
                 {data.map((elm,i)=>(
-                    <Input password={elm.password} t = {elm.type} onEye={()=>handelEye(i)} error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
+                    <Input onKeyDown = {()=>handleCloseModal(data)} password={elm.password} t = {elm.type} onEye={()=>handelEye(i)} error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
                 ))
 
                 }

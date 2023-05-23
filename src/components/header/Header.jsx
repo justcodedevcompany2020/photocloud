@@ -207,21 +207,24 @@ export const Header = () => {
    
     const handelNewPassword = (value) =>{
         let item = [...value]
+        console.log(item[0].value.length)
         if((item[0].value !== item[1].value )|| item[0].value === '' || item[1].value === '' ||item[0].value.length<8||item[1].value.length<8){
+            console.log('666')
             item[0].error = true
             item[1].error = true
+            if(item[0].value.length<8){
+                console.log('88888')
+                item[0].error = 'Пароль должен содержать не менее 8-ти символов'
+            }
+            if(item[1].value.length<8){
+                console.log('88888')
+                item[1].error = 'Пароль должен содержать не менее 8-ти символов'
+            }
+            if(item[0].value !== item[1].value){
+                item[1].error = 'Пароли не совпадают'
+            }
         }
-        if(item[0].value.length<8){
-            item[0].error = 'Пароль должен содержать не менее 8-ти символов'
-        }
-        if(item[1].value.length<8){
-            item[1].error = 'Пароль должен содержать не менее 8-ти символов'
-        }
-        if(item[0].value !== item[1].value){
-            item[1].error = 'Пароли не совпадают'
-
-        }
-        else {
+        else  {
             item[0].error = false
             item[1].error = false
         }

@@ -6,21 +6,35 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { useNavigate } from "react-router-dom"
-import { get_all_folder } from "../../store/action/action.js";
+import { clear_login_error, get_all_folder } from "../../store/action/action.js";
 import { ClipLoader } from "react-spinners"
+import { Login } from "../../components/login/Login"
 export const NoUserFolderBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
+    const [login,setLogin] = useState(false)
+    const dispatch = useDispatch()
+
     const folderRef = useRef()
     const navigate = useNavigate()
+    const logRef = useRef();
+
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
-    const dispatch = useDispatch()
+    useOnClickOutside(logRef, () => closeLogin());
+    const closeLogin = () =>{
+        setLogin(false)
+        dispatch(clear_login_error())
+    }
     useEffect(()=>{
         if(creatFolder.status){
             dispatch(get_all_folder())
             setCreateFolderModal(false)
         }
     },[creatFolder.status])
+    const handleForgotModal = () => {
+        setLogin(false)
+    }
+
     return (<>
         <MainTitle>Папки</MainTitle>
 
@@ -38,7 +52,7 @@ export const NoUserFolderBlock = () => {
                 </LoadingDiv>:
                 <>
                     <AddCardsWrapper>
-                        <AddCards onClick={() => setCreateFolderModal(!createFolderModal)}>
+                        <AddCards onClick={() => setLogin(true)}>
                             <PlusIconWrapper>
                                 <PlusIcon />
                             </PlusIconWrapper>
@@ -62,7 +76,8 @@ export const NoUserFolderBlock = () => {
                 } */}
             </Content>
         </MainBlock>
-        {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />}
+        {/* {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />} */}
+        {login && <Login  ref={logRef} forgotPassCB={handleForgotModal} />}
     </>
     )
 }
