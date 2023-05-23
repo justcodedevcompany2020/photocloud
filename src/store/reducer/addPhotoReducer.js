@@ -2,9 +2,10 @@ const initialState = {
     status:false,
     loading:false,
     data:[],
-    photo:[],
+    photo:'',
     delate_loading:false,
     succes_delate:false,
+    slugLoading:false,
 }
 
 export const addPhotoReducer = (state = initialState, action) => {
@@ -26,7 +27,15 @@ export const addPhotoReducer = (state = initialState, action) => {
             temp.data = action.data
             break
         case 'success_get_photo':
-            temp.photo.push(action.data.photo_url)
+            temp.slugLoading = false
+            console.log(action.data)
+            temp.photo = action.data
+            break
+        case 'start_get_photo':
+            temp.slugLoading = true
+            break
+        case 'error_get_photo':
+            temp.slugLoading = false
             break
         case 'start_delate_photo':
             temp.delate_loading = true

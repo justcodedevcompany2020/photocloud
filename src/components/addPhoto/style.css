@@ -20,7 +20,10 @@
     margin:  0 25px;
   }
 
- 
+  .multiSelectContainer ul{
+    width: 92%;
+    margin: auto;
+  }
   
   input[type=file] {
     visibility: hidden;

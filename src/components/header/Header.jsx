@@ -53,7 +53,7 @@ export const Header = () => {
     useOnClickOutside(recRef, () =>closeRecoverPassword());
     useOnClickOutside(recpasfor, () => closeRecoverCode());
     useOnClickOutside(recpasref, () => setRecoveryPasswordForm(false));
-    useOnClickOutside(verRef, () => setVerefayEmail(false));
+    useOnClickOutside(verRef, () => closeVerfeyEmail());
 
     
       
@@ -62,7 +62,12 @@ export const Header = () => {
         dispatch(clear_register_error())
         setRegToggle(false)
     }
+    const  closeVerfeyEmail = () =>{
+        dispatch(clear_register_error())
+        setVerefayEmail(false)
+    }
     const handleRegToggle = () => {
+        dispatch(clear_register_error())
         setRegToggle(!regToggle)
     }
     const closeLogin = () =>{
@@ -71,22 +76,27 @@ export const Header = () => {
     }
     const closeRecoverPassword =() =>{
         setRecoveryToggle(false)
+        dispatch(clear_register_error())
         dispatch(clear_forgot_password_error())
     }
     const closeRecoverCode = () =>{
         dispatch(clear_forgot_password_code())
         setRecoveryPasswordFormToggle(false)
+        dispatch(clear_register_error())
     }
 
     const handleLoginToggle = () => {
+        dispatch(clear_register_error())
         setLoginToggle(!loginToggle)
     }
 
     const handleForgotModal = () => {
+        dispatch(clear_register_error())
         setLoginToggle(!loginToggle)
         setRecoveryToggle(!recoveryToggle)
     }
     const openCloseRegisterOpenLogin = () =>{
+        dispatch(clear_register_error())
         setRegToggle(false)
         setLoginToggle(true)
     }

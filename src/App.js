@@ -11,11 +11,14 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { get_user } from './store/action/action';
 import { FolderPage } from './pages/folderPage';
+import { SinglPage } from './pages/singlePage';
+import { NoUserFolderBlock } from './pages/NoUserFolder';
 
 function App() {
   const dispatch = useDispatch()
+  const token = localStorage.getItem('token')
+
   useEffect(()=>{
-    const token = localStorage.getItem('token')
     dispatch(get_user(token))
   },[])
   return (
@@ -23,10 +26,11 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route path="" element={<MiddleInfo />} />
-          <Route path="/createFolder" element={<FoldersBlock />} />
+         { <Route path="/createFolder" element={token ?<FoldersBlock />:<NoUserFolderBlock />} />}
           <Route path='/userProfile' element={<UserProfile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/folder/:id' element={<FolderPage />} />
+          <Route path='/img/:id' element={<SinglPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

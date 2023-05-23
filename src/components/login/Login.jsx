@@ -33,8 +33,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
         if(send){
             dispatch(login_action({username:data[0].value,password:data[1].value}))
         }
-        // regCB()
-        // loginCloseCB()
+        setData(item)
     }
     const handelEye = (i) =>{
         let item = [...data]

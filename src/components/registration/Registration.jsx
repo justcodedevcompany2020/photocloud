@@ -28,10 +28,22 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
         console.log(555)
         if(error !==''){
             let item = [...data]
-            item[2].error = 'Такой пользователь уже существует'
+            console.log(error)
+            if(error === 'Такой пользователь уже существует'){
+                item[1].error = 'Такой пользователь уже существует'
+            }
+            else {
+                item[1].error = ''
+            }
+            if(error !=='Такой пользователь уже существует') {
+                item[2].error = 'Этот эл. адрес уже зарегистрирован.'
+            }
+            else {
+                item[2].error = ''
+            }
             setData(item)
         }
-    },[error])
+    },[loading])
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>

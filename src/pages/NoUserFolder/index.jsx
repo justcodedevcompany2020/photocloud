@@ -8,7 +8,7 @@ import { ReactComponent as Img } from "../../assets/img.svg"
 import { useNavigate } from "react-router-dom"
 import { get_all_folder } from "../../store/action/action.js";
 import { ClipLoader } from "react-spinners"
-export const FoldersBlock = () => {
+export const NoUserFolderBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
     const folderRef = useRef()
@@ -45,23 +45,21 @@ export const FoldersBlock = () => {
                         </AddCards>
                         <Text>Добавить папку</Text>
                     </AddCardsWrapper>
-                    {creatFolder.folder?.map((elm,i)=>{
-                       
-                        return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
-                            <Main>
-                                {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
-                            </Main>
-                            <MainText>
-                                <Title>
-                                    {elm.name}
-                                </Title>
-                                <Count>
-                                    <p style={{margin:'0 5px'}}>{elm.photo.length}</p> <Img />
-                                </Count>
-                            </MainText>
-                        </Card>
-                    })}
                 </>}
+            </Content>
+            <Content>
+                {/* {
+                    {creatFolder?.slug_data?.photo?.length<8 &&
+                        <AddCardsWrapper>
+                            <AddFoto onClick={() => setAddImages(true)}>
+                                <PlusIconWrapper>
+                                <BluePlusIcon />
+                                </PlusIconWrapper>
+                            </AddFoto>
+                            <Text>Добавить картинку</Text>
+                        </AddCardsWrapper>}
+                    
+                } */}
             </Content>
         </MainBlock>
         {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />}
@@ -71,7 +69,7 @@ export const FoldersBlock = () => {
 
 const MainBlock = styled.div`
 max-width: 1170px;
-min-height: 720px;
+min-height: 280px;
 width: 95%;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);

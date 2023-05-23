@@ -10,6 +10,7 @@ export const Input = ({
     max,
     errorText,
     password,
+    disabled,
     onEye,
     t,
     maxlength
@@ -18,6 +19,7 @@ export const Input = ({
         <>  
             <InputProvider  max = {max} width = {width}>
                 <UIInput  
+                    disabled = {disabled}
                     type = {t==='number'?'number':(t?"password":"text")} 
                     max = {max} 
                     error = {error}  

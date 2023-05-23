@@ -1,6 +1,7 @@
-export const error_register = () =>{
+export const error_register = (data) =>{
     return {
         type:'error_register',
+        data
     }
 }
 export const error_verefy_email = () =>{

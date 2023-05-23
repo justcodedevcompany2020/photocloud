@@ -12,6 +12,7 @@ import { CreateFolderForm } from "../createFolderForm/CreateFolderForm"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { AddPhoto } from "../addPhoto"
 import { ClipLoader } from "react-spinners"
+import { Shear } from "../shear"
 
 export const FolderPageBlock = () =>{
     const [createFolderModal, setCreateFolderModal] = useState()
@@ -20,12 +21,18 @@ export const FolderPageBlock = () =>{
     const {creatFolder} = useSelector((st)=>st)
     const {addPhoto} = useSelector((st)=>st)
     const [delateIndex,setDelateIndex] = useState(null)
+    const [openShare,setOpenShare] = useState(false)
+    const [shearId,setShearid] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const folderRef = useRef()
     const addRef = useRef()
+    const shRef = useRef()
+
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     useOnClickOutside(addRef, () => setAddImages(false));
+    useOnClickOutside(shRef, () => setOpenShare(false));
+
 
     useEffect(()=>{
         dispatch(get_folder_by_slug(id))
@@ -38,6 +45,7 @@ export const FolderPageBlock = () =>{
     },[creatFolder.status])
     useEffect(()=>{
         if(addImages){
+            window.scrollTo(0, 0)
             document.body.style.setProperty('overflow', 'hidden');
         }
         else {
@@ -55,6 +63,9 @@ export const FolderPageBlock = () =>{
             dispatch(get_folder_by_slug(id))
         }
     },[addPhoto.succes_delate])
+    const handelCloseHSare = (e) =>{
+        setOpenShare(false)
+    }
     return <>
     <MainBlock> 
         {creatFolder?.slug_data?.photo?.length<8 &&
@@ -79,11 +90,15 @@ export const FolderPageBlock = () =>{
                     />
                 </LoadingDiv>:
                 <>
-                    <AddFoto style={{border:'none'}}>
+                    <AddFoto onClick={()=>navigate(`/img/${elm.slug}`)} style={{border:'none'}}>
                         <Image src={`https://photocloud.justcode.am/uploads/${elm.slug}`} />
                     </AddFoto>
                     <TextWrapper>
-                        <Text2>
+                        <Text2 onClick={()=>{
+                            console.log(elm.slug)
+                            setShearid(elm.slug)
+                            setOpenShare(true)
+                            }}>
                             <div style={{marginRight:'5px',marginBottom:'-3px'}}>
                                 <Sheare />  
                             </div>
@@ -114,7 +129,6 @@ export const FolderPageBlock = () =>{
     </AddCardsWrapper>
     {   
         creatFolder.slug_data?.folders?.map((elm,i)=>{
-            console.log(elm)
             return <Card onClick={()=>{ window.location = `/folder/${elm.slug}`}}>
             <Main>
             {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
@@ -136,6 +150,9 @@ export const FolderPageBlock = () =>{
     {addImages && 
             <AddPhoto length = {creatFolder?.slug_data?.photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
     }
+    {openShare && 
+        <Shear id = {shearId} handelCloseHSare = {(e)=>handelCloseHSare(e)} ref ={shRef}/>
+    }
     </>
 }
 
@@ -147,13 +164,13 @@ background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 10px;
 // height: 100px;
-margin: 20px auto;
+margin: 25px auto;
 margin-top: 25px;
 padding: 15px;
 margin-top: 0;
+box-sizing: border-box;
 display: flex;
 flex-wrap: wrap;
-
 `
 const Title = styled.p `
     text-align: left;

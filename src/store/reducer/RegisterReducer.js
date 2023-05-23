@@ -23,10 +23,15 @@ export const registerRegister = (state = initialState, action) => {
             temp.loading = false
             break;
         case 'error_register':
-            console.log('888')
             temp.status = false
             temp.loading = false
-            temp.error = 'Такой пользователь уже существует'
+            console.log(action.data)
+            if(action.data === 'The username has already been taken.'){
+                temp.error = 'Такой пользователь уже существует'
+            }
+            else {
+                temp.error = 'Этот эл. адрес уже зарегистрирован.'
+            }
             break
         case 'clear_register_error':
             console.log('red')

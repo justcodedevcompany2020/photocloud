@@ -13,7 +13,7 @@ export const UserProfile = () => {
     return (
         <>
         <SettingsBlock/>
-        <Title>Папки</Title>
+        {/* <Title>Папки</Title> */}
         <FoldersBlock/>
         </>
     )

@@ -24,7 +24,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         arr = arr.slice(0,count)
         console.log(arr);
        arr =  arr.map((el,i)=>{
-           console.log('[ps')
             itme.push(URL.createObjectURL(event.target.files[i]))
             return event.target.files[i]
         })
@@ -43,7 +42,7 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         image.map((elm,i)=>{
             formData.append('file[]',elm)
         })
-        formData.append('day',10)
+        formData.append('day',day)
         formData.append('folder_id',id)
         dispatch(add_photo(formData))
     }
