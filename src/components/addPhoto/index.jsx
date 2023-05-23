@@ -43,7 +43,10 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
             formData.append('file[]',elm)
         })
         formData.append('day',day)
-        formData.append('folder_id',id)
+        console.log(id,88)
+        if(id){
+            formData.append('folder_id',id)
+        }
         dispatch(add_photo(formData))
     }
     return <BackDiv>

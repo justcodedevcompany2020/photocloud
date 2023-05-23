@@ -382,6 +382,7 @@ export const add_photo = (data) =>{
     axios.post(`${url}add_photo`,data,{
       headers: { Authorization: `Bearer ${token}` },
     }).then((r)=>{
+      console.log(r)
       if(r.data.status){
         dispatch(success_add_photo(r.data))
       }

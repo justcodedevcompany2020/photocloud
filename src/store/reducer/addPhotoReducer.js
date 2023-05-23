@@ -22,6 +22,7 @@ export const addPhotoReducer = (state = initialState, action) => {
             temp.data = []
             break
         case 'success_add_photo':
+            console.log('55555')
             temp.loading = false
             temp.status = true
             temp.data = action.data

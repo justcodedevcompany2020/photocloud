@@ -294,11 +294,13 @@ export const Header = () => {
             window.removeEventListener('resize', handleWindowResize);
           };
     },[])
+    const token = localStorage.getItem('token')
+    console.log(token)
     return (<>
         <HeaderBlock >
             <MainBlock>
                 <LogoBlock>
-                    <Link style={{ textDecoration: 'none' }} to={'/userProfile'}><LogoTitle>
+                    <Link style={{ textDecoration: 'none' }} to={token &&'/userProfile'}><LogoTitle>
                         PhotoHosting
                     </LogoTitle></Link>
                 </LogoBlock>

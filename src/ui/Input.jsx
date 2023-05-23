@@ -63,7 +63,7 @@ color: black;
 `
 export const ErrorText = styled.p`
     margin: 0;
-    font-size: 9px;
+    font-size: 10px;
     color: red;
     width: ${props => props.width ? props.width : '350px'};
     max-width: ${props => props.max ? props.max : '350px'};

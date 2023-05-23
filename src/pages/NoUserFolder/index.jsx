@@ -5,22 +5,33 @@ import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
+import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
 import { useNavigate } from "react-router-dom"
 import { clear_login_error, get_all_folder } from "../../store/action/action.js";
 import { ClipLoader } from "react-spinners"
 import { Login } from "../../components/login/Login"
+import { AddPhoto } from "../../components/addPhoto"
+
 export const NoUserFolderBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
     const [login,setLogin] = useState(false)
-    const dispatch = useDispatch()
+    const [addImages, setAddImages] = useState(false)
+    const [shearId,setShearid] = useState('')
+    const [openShare,setOpenShare] = useState(false)
+    const [delateIndex,setDelateIndex] = useState(null)
 
+    const {addPhoto} = useSelector((st)=>st)
+    const dispatch = useDispatch()
+    const addRef = useRef()
     const folderRef = useRef()
     const navigate = useNavigate()
     const logRef = useRef();
 
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     useOnClickOutside(logRef, () => closeLogin());
+    useOnClickOutside(addRef, () => setAddImages(false));
+
     const closeLogin = () =>{
         setLogin(false)
         dispatch(clear_login_error())
@@ -34,7 +45,13 @@ export const NoUserFolderBlock = () => {
     const handleForgotModal = () => {
         setLogin(false)
     }
-
+    useEffect(()=>{
+        console.log(addPhoto.data.data)
+            if(addPhoto.status){
+                setAddImages(false)
+            }
+    },[addPhoto.status])
+    console.log(creatFolder?.slug_data?.photo)
     return (<>
         <MainTitle>Папки</MainTitle>
 
@@ -62,8 +79,8 @@ export const NoUserFolderBlock = () => {
                 </>}
             </Content>
             <Content>
-                {/* {
-                    {creatFolder?.slug_data?.photo?.length<8 &&
+                
+                    {(!creatFolder?.slug_data.photo || creatFolder?.slug_data?.photo?.length<8) &&
                         <AddCardsWrapper>
                             <AddFoto onClick={() => setAddImages(true)}>
                                 <PlusIconWrapper>
@@ -72,12 +89,41 @@ export const NoUserFolderBlock = () => {
                             </AddFoto>
                             <Text>Добавить картинку</Text>
                         </AddCardsWrapper>}
-                    
-                } */}
+                        {addPhoto.data.data?.map((elm,i)=>{
+                            console.log(elm)
+                               return <AddCardsWrapper>
+                               <AddFoto onClick={()=>navigate(`/img/${elm}`)} style={{border:'none'}}>
+                                   <Image src={`https://photocloud.justcode.am/uploads/${elm}`} />
+                               </AddFoto>
+                               <TextWrapper>
+                                   {/* <Text2 onClick={()=>{
+                                       console.log(elm.slug)
+                                       setShearid(elm.slug)
+                                       setOpenShare(true)
+                                       }}>
+                                       <div style={{marginRight:'5px',marginBottom:'-3px'}}>
+                                           <Sheare />  
+                                       </div>
+                                       Поделиться
+                                   </Text2> */}
+                                   {/* <Text2 onClick={()=>{
+                                       setDelateIndex(i)
+                                       dispatch(delete_photo_by_id(elm.id))
+                                   }}>
+                                       <Delate />
+                                   </Text2> */}
+                               </TextWrapper>
+                           </AddCardsWrapper>
+                        })
+
+                        }
             </Content>
         </MainBlock>
         {/* {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />} */}
         {login && <Login  ref={logRef} forgotPassCB={handleForgotModal} />}
+        {addImages && 
+            <AddPhoto length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
+    }
     </>
     )
 }
@@ -199,4 +245,29 @@ font-size: 30px;
 line-height: 35px;
 color: #333333;
 margin: 20px auto;
+`
+const AddFoto = styled.div`
+width: 220px;
+height: 220px;
+// background: #4F6688;
+border-radius: 10px;
+position: relative;
+cursor: pointer;
+border: 2px solid #4F6688;
+box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+`
+const Text2 = styled.p `
+display: flex;
+align-items: center;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+font-feature-settings: 'pnum' on, 'lnum' on;
+color: #4F6688;
+cursor: pointer;`
+const TextWrapper = styled.div `
+height: 50px;
+display: flex;
+justify-content: space-between;
 `
