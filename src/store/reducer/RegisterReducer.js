@@ -23,9 +23,16 @@ export const registerRegister = (state = initialState, action) => {
             temp.loading = false
             break;
         case 'error_register':
+            console.log('888')
             temp.status = false
             temp.loading = false
             temp.error = 'Такой пользователь уже существует'
+            break
+        case 'clear_register_error':
+            console.log('red')
+            temp.status = false
+            temp.loading = false
+            temp.error = ''
             break
         case 'start_verefy_email':
             temp.loading_verify = true

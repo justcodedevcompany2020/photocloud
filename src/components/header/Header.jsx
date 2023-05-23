@@ -13,7 +13,7 @@ import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
+import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, clear_register_error, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
 import { VerefayEmail } from "../verefayEmail";
 
 export const Header = () => {
@@ -48,7 +48,7 @@ export const Header = () => {
       ]);
     const {reg} = useSelector(st=>st)
     const {forgotPassword} = useSelector(st=>st)
-    useOnClickOutside(refReg, () => setRegToggle(false));
+    useOnClickOutside(refReg, () => closeReg());
     useOnClickOutside(logRef, () => closeLogin());
     useOnClickOutside(recRef, () =>closeRecoverPassword());
     useOnClickOutside(recpasfor, () => closeRecoverCode());
@@ -58,13 +58,15 @@ export const Header = () => {
     
       
     // useOnClickOutside(recpasfor, () => setRecoveryPasswordFormToggle(false));
-
+    const closeReg = () =>{
+        dispatch(clear_register_error())
+        setRegToggle(false)
+    }
     const handleRegToggle = () => {
         setRegToggle(!regToggle)
     }
     const closeLogin = () =>{
         setLoginToggle(false)
-        /////
         dispatch(clear_login_error())
     }
     const closeRecoverPassword =() =>{

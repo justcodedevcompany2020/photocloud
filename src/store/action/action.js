@@ -428,3 +428,8 @@ export const delete_photo_by_id = (id) =>{
     })
   }
 }
+export const clear_register_error = () =>{
+  return {
+      type:'clear_register_error'
+  }
+}

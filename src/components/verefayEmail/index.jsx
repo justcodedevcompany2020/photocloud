@@ -7,6 +7,11 @@ import {resend_verify_mail} from '../../store/action/action'
 export const VerefayEmail = forwardRef((props, ref) => {
     const [value,setValue] = useState('')
     const dispatch = useDispatch()
+    const handelChange = (e) =>{
+        if(e.length<7){
+            setValue(e)
+        }
+    }
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -15,10 +20,13 @@ export const VerefayEmail = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input maxlength ={999999} t = 'number' value={value} onChange ={(e)=>setValue(e)} inputName={'Код подтверждения'} />
-                <ErrorText>{props.error}</ErrorText>
-                <Text onClick={()=>dispatch(resend_verify_mail({email:props.email}))}>Отправить код повторно</Text>
-                <Button loading = {props.loading} onClick={()=>props.click(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
+                <Input error={props.error} errorText = {props.error} maxlength ={999999} t = 'number' value={value} onChange ={(e)=>handelChange(e)} inputName={'Код подтверждения'} />
+                {/* <ErrorText>{props.error}</ErrorText> */}
+                <Text onClick={()=>
+                    {setValue('')
+                        dispatch(resend_verify_mail({email:props.email}))}
+                    }>Отправить код повторно</Text>
+                <Button loading = {props.loading} onClick={()=>props.click(value)} mt={'0px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
     </BackDiv>)
@@ -72,7 +80,7 @@ const RecoverySubText = styled.p`
 margin-top: 0px;
 `
 const Text = styled.p`
-    margin: 0;
+    margin:10px, 0;
     cursor: pointer;
     font-family: 'Raleway';
 font-style: normal;

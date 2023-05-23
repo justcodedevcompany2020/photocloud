@@ -5,6 +5,11 @@ import styled from "styled-components";
 
 export const RecoveryCode = forwardRef((props, ref) => {
     const [value,setValue] = useState('')
+    const handelChange  = (e) =>{
+        if(e.length<7){
+            setValue(e)
+        }
+    }
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -13,7 +18,7 @@ export const RecoveryCode = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input value = {value} onChange = {(e)=>setValue(e)} inputName={'Код подтверждения'} />
+                <Input t= 'number' value = {value} onChange = {(e)=>handelChange(e)} inputName={'Код подтверждения'} />
                 <ErrorText>{props.error}</ErrorText>
                 <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>

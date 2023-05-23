@@ -116,13 +116,16 @@ export const FolderPageBlock = () =>{
         creatFolder.slug_data?.folders?.map((elm,i)=>{
             console.log(elm)
             return <Card onClick={()=>{ window.location = `/folder/${elm.slug}`}}>
-            <Main></Main>
+            <Main>
+            {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
+
+            </Main>
             <MainText>
                 <CardTitle>
                     {elm.name}
                 </CardTitle>
                 <Count>
-                    <p style={{margin:'0 5px'}}>0</p> <Img />
+                    <p style={{margin:'0 5px'}}>{elm.count_photo}</p> <Img />
                 </Count>
             </MainText>
         </Card>

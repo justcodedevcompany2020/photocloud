@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,openLogin }, ref) => {
@@ -24,16 +24,35 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
         item[i].type =!item[i].type
         setData(item)
     }
+    useEffect(()=>{
+        console.log(555)
+        if(error !==''){
+            let item = [...data]
+            item[2].error = 'Такой пользователь уже существует'
+            setData(item)
+        }
+    },[error])
     return (<BackDiv>
         <MainBlock ref={ref}>
             <RegistrationTitle>Регистрация</RegistrationTitle>
             {
                 data.map((elm,i)=>{
-                    return <Input onEye = {()=>handelEye(i)} password={elm.password} t = {elm.type} errorText ={elm.error } error = {elm.error !== ''} value={elm.value} key = {i} onChange={(e)=>handelChange(e,i)} width={'100%'} inputName={elm.lable} />
+                    return <Input 
+                        onEye = {()=>handelEye(i)} 
+                        password={elm.password} 
+                        t = {elm.type} 
+                        errorText ={elm.error } 
+                        error = {elm.error !== ''} 
+                        value={elm.value} 
+                        key = {i} 
+                        onChange={(e)=>handelChange(e,i)} 
+                        width={'100%'} 
+                        inputName={elm.lable} 
+                    />
                 })
             }
-            <ErrorText>{error}</ErrorText>
-            <Button loading = {loading} mt={'0px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
+            {/* <ErrorText>{error}</ErrorText> */}
+            <Button loading = {loading} mt={'10px'} bgColor={'#4F6688'} text={'Зарегистрироваться'} onClick={()=> loginBtnCB(data)}/>
             <BtnSubText>Уже зарегистрировались? <LoginText onClick={openLogin} >Войти</LoginText></BtnSubText> </MainBlock>
     </BackDiv>)
 });
