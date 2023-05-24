@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { SettingsBlock } from "../../components/settingsBlock/SettingsBlock"
+
 import {FolderPageBlock} from '../../components/folderPageBlock/index'
 import { useSelector } from "react-redux"
 export const FolderPage = () =>{

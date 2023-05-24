@@ -25,7 +25,6 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
         setData(item)
     }
     useEffect(()=>{
-        console.log(555)
         if(error !==''){
             let item = [...data]
             console.log(error)
@@ -50,6 +49,7 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
             {
                 data.map((elm,i)=>{
                     return <Input 
+                        onKeyDown = {()=>loginBtnCB(data)}
                         onEye = {()=>handelEye(i)} 
                         password={elm.password} 
                         t = {elm.type} 

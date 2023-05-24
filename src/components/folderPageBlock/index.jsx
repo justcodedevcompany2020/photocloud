@@ -22,6 +22,7 @@ export const FolderPageBlock = () =>{
     const {addPhoto} = useSelector((st)=>st)
     const [delateIndex,setDelateIndex] = useState(null)
     const [openShare,setOpenShare] = useState(false)
+    const [photo,setPhoto] = useState([])
     const [shearId,setShearid] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -60,12 +61,19 @@ export const FolderPageBlock = () =>{
     },[addPhoto.status])
     useEffect(()=>{
         if(addPhoto.succes_delate){
-            dispatch(get_folder_by_slug(id))
+            let item = [...photo]
+            item.splice(delateIndex,1)
+            console.log(item,117)
+            setPhoto(item)
+            // dispatch(get_folder_by_slug(id))
         }
     },[addPhoto.succes_delate])
     const handelCloseHSare = (e) =>{
-        setOpenShare(false)
+        // setOpenShare(false)
     }
+    useEffect(()=>{
+        setPhoto(creatFolder?.slug_data?.photo)
+    },[creatFolder?.slug_data?.photo])
     return <>
     <MainBlock> 
         {creatFolder?.slug_data?.photo?.length<8 &&
@@ -77,7 +85,7 @@ export const FolderPageBlock = () =>{
             </AddFoto>
             <Text>Добавить картинку</Text>
         </AddCardsWrapper>}
-        {creatFolder?.slug_data?.photo?.map((elm,i)=>{
+        {photo?.map((elm,i)=>{
             return <AddCardsWrapper  key={i}>
                 {(addPhoto.delate_loading && delateIndex === i) ?
                 <LoadingDiv>
@@ -95,8 +103,6 @@ export const FolderPageBlock = () =>{
                     </AddFoto>
                     <TextWrapper>
                         <Text2 onClick={()=>{
-                            console.log(elm.slug)
-                            setShearid(elm.slug)
                             setOpenShare(true)
                             }}>
                             <div style={{marginRight:'5px',marginBottom:'-3px'}}>

@@ -37,8 +37,8 @@ export const Input = ({
                 <EyeProvider>
                     {password && <Eye onClick={onEye}/>}
                 </EyeProvider>
-            </InputProvider>
             <ErrorText max = {max} width = {width} >{errorText !== 'invalid' ?errorText:''}</ErrorText>
+            </InputProvider>
         </>
     )
 }
@@ -46,7 +46,7 @@ export const Input = ({
 export const UIInput = styled.input`
 width: ${props => props.width ? props.width : '350px'};
 max-width: ${props => props.max ? props.max : '350px'};
-padding:15px 20px;
+padding:15px 15px;
 margin: 12px 0;
 box-sizing: border-box;
 padding-right: 35px;
@@ -63,12 +63,14 @@ color: black;
 `
 export const ErrorText = styled.p`
     margin: 0;
-    font-size: 10px;
+    font-size: 12px;
     color: red;
     width: ${props => props.width ? props.width : '350px'};
     max-width: ${props => props.max ? props.max : '350px'};
     margin: auto;
     height: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
     text-align: left; 
 
 `

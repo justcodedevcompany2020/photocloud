@@ -144,6 +144,7 @@ display: flex;
 flex-wrap: wrap
 `
 const Close = styled.div`
+cursor: pointer;
 position: absolute;
 margin: 0;
 background: #FFFFFF;

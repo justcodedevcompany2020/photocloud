@@ -21,8 +21,9 @@
   }
 
   .multiSelectContainer ul{
-    width: 92%;
-    margin: auto;
+    /* width: 92%; */
+    margin: 0 25px;
+    /* margin: auto; */
   }
   
   input[type=file] {

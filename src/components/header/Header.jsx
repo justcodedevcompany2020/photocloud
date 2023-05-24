@@ -148,8 +148,11 @@ export const Header = () => {
                 }
             }
             if(elm.lable === 'Повтор пароля'){
-                if(elm.value !== temp[3].value || elm.value ===''){
+                if(elm.value ===''){
                     elm.error = 'invalid'
+                }
+                else if(elm.value !=='' && elm.value !== temp[3].value){
+                    elm.error = 'Пароли не совпадают'
                 }
                 else {
                     elm.error = ''
@@ -295,7 +298,7 @@ export const Header = () => {
           };
     },[])
     const token = localStorage.getItem('token')
-    console.log(token)
+    console.log(pathname)
     return (<>
         <HeaderBlock >
             <MainBlock>
@@ -304,7 +307,7 @@ export const Header = () => {
                         PhotoHosting
                     </LogoTitle></Link>
                 </LogoBlock>
-                {(pathname === '/userProfile' || pathname === '/settings') ? <UserProfileBlock>
+                {(pathname === '/userProfile' || pathname === '/settings' || token) ? <UserProfileBlock>
                     <UserName>
                         {reg.user.username}
                     </UserName>

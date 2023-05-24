@@ -415,7 +415,6 @@ export const get_photo_by_slug = (data) =>{
 }
 
 export const delete_photo_by_id = (id) =>{
-  console.log(id)
   const token  = localStorage.getItem('token')
   return (dispatch) =>{
     dispatch(start_delate_photo())
@@ -424,7 +423,6 @@ export const delete_photo_by_id = (id) =>{
     }).then((r)=>{
       // console.log(r.data)
       if(r.data.status){
-        console.log(r.data.status)
         dispatch(success_delate_photo(r.data))
       }
       else {
