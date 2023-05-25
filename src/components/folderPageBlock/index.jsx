@@ -33,10 +33,11 @@ export const FolderPageBlock = () =>{
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     useOnClickOutside(addRef, () => setAddImages(false));
     useOnClickOutside(shRef, () => setOpenShare(false));
-
+    
 
     useEffect(()=>{
         dispatch(get_folder_by_slug(id))
+
     },[])
     useEffect(()=>{
         if(creatFolder.status){
@@ -74,6 +75,14 @@ export const FolderPageBlock = () =>{
     useEffect(()=>{
         setPhoto(creatFolder?.slug_data?.photo)
     },[creatFolder?.slug_data?.photo])
+    useEffect(()=>{
+        if(openShare){
+            document.body.style.setProperty('overflow', 'hidden');
+        }
+        else {
+            document.body.style.setProperty('overflow', 'auto');
+        }
+    },[openShare])
     return <>
     <MainBlock> 
         {photo?.length<8 &&
@@ -104,6 +113,7 @@ export const FolderPageBlock = () =>{
                     <TextWrapper>
                         <Text2 onClick={()=>{
                             setOpenShare(true)
+                            setShearid(elm.slug)
                             }}>
                             <div style={{marginRight:'5px',marginBottom:'-3px'}}>
                                 <Sheare />  

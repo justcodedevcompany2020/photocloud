@@ -9,7 +9,6 @@ export const SinglPage = () =>{
     const {id} = useParams()
     const dispatch = useDispatch()
     const {addPhoto} = useSelector((st)=>st)
-    console.log(addPhoto)
     useEffect(()=>{
         dispatch(get_photo_by_slug(id))
     },[])

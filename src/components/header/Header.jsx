@@ -303,7 +303,7 @@ export const Header = () => {
         <HeaderBlock >
             <MainBlock>
                 <LogoBlock>
-                    <Link style={{ textDecoration: 'none' }} to={token &&'/userProfile'}><LogoTitle>
+                    <Link style={{ textDecoration: 'none' }} to={token ?'/userProfile':'/'}><LogoTitle>
                         PhotoHosting
                     </LogoTitle></Link>
                 </LogoBlock>

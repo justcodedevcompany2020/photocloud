@@ -101,7 +101,7 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
                         <option></option>
                         <option></option>
                     </select> */}
-            <ErrText>{error && 'Вы не можете иметь больше чем 8 фотографий '}</ErrText>
+            <ErrText>{error && 'Вы не можете загрузить больше 8-ми фотографий '}</ErrText>
             <Button disabled = {error} loading = {loading} onClick={()=>sendData()} mt = {'10px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
         </RecoveryContent>
         </MainBlock>
@@ -166,7 +166,9 @@ border-radius: 10px;
 `
 const CardWrapper = styled.div `
 display: flex;
-flex-wrap: wrap
+flex-wrap: wrap;
+max-height: 400px;
+overflow-y: scroll;
 `
 const Close = styled.div`
 cursor: pointer;

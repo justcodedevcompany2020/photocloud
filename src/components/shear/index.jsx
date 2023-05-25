@@ -9,8 +9,8 @@ export const Shear = forwardRef(({id,handelCloseHSare},ref) =>{
         <MainBlock ref ={ref}>
         <RecoveryContent>
             <RecoveryPassText>Поделиться</RecoveryPassText>
-            <Input  disabled value={`/img/${id}`}  />
-            <CopyToClipboard text  = {`http://localhost:3000/img/${id}`}>
+            <Input  disabled value={`${ window.location.protocol + "//" + window.location.host}/img/${id}`}  />
+            <CopyToClipboard text  = {`${ window.location.protocol + "//" + window.location.host}/img/${id}`}>
                 <Button onClick={()=>{handelCloseHSare()}}  text ={'Копировать'} bgColor = '#4F6688' />
             </CopyToClipboard>
         </RecoveryContent>

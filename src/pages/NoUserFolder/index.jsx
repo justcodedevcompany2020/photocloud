@@ -8,9 +8,13 @@ import { ReactComponent as Img } from "../../assets/img.svg"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
 import { useNavigate } from "react-router-dom"
 import { clear_login_error, get_all_folder } from "../../store/action/action.js";
+import { ReactComponent as Sheare } from "../../assets/shear.svg"
+import { ReactComponent as Delate } from "../../assets/delate.svg"
+
 import { ClipLoader } from "react-spinners"
 import { Login } from "../../components/login/Login"
 import { AddPhoto } from "../../components/addPhoto"
+import { Shear } from "../../components/shear"
 
 export const NoUserFolderBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
@@ -19,7 +23,10 @@ export const NoUserFolderBlock = () => {
     const [addImages, setAddImages] = useState(false)
     const [shearId,setShearid] = useState('')
     const [openShare,setOpenShare] = useState(false)
+
     const [delateIndex,setDelateIndex] = useState(null)
+
+
 
     const {addPhoto} = useSelector((st)=>st)
     const dispatch = useDispatch()
@@ -27,10 +34,14 @@ export const NoUserFolderBlock = () => {
     const folderRef = useRef()
     const navigate = useNavigate()
     const logRef = useRef();
+    const shRef = useRef()
+    const [photo,setPhot ] = useState([])
 
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     useOnClickOutside(logRef, () => closeLogin());
     useOnClickOutside(addRef, () => setAddImages(false));
+    useOnClickOutside(shRef, () => setOpenShare(false));
+
 
     const closeLogin = () =>{
         setLogin(false)
@@ -51,7 +62,15 @@ export const NoUserFolderBlock = () => {
                 setAddImages(false)
             }
     },[addPhoto.status])
-    console.log(creatFolder?.slug_data?.photo)
+    useEffect(()=>{
+        setPhot(addPhoto.data.data)
+    },[addPhoto.data.data])
+    const deletePhoto = (i) =>{
+        console.log(i)
+        let item = [...photo]
+        item.splice(i,1)
+        setPhot(item)
+    }
     return (<>
         <MainTitle>Папки</MainTitle>
 
@@ -89,29 +108,28 @@ export const NoUserFolderBlock = () => {
                             </AddFoto>
                             <Text>Добавить картинку</Text>
                         </AddCardsWrapper>}
-                        {addPhoto.data.data?.map((elm,i)=>{
+                        {photo?.map((elm,i)=>{
                             console.log(elm)
                                return <AddCardsWrapper>
                                <AddFoto onClick={()=>navigate(`/img/${elm}`)} style={{border:'none'}}>
                                    <Image src={`https://photocloud.justcode.am/uploads/${elm}`} />
                                </AddFoto>
                                <TextWrapper>
-                                   {/* <Text2 onClick={()=>{
-                                       console.log(elm.slug)
-                                       setShearid(elm.slug)
+                                   <Text2 onClick={()=>{
+                                       setShearid(elm)
                                        setOpenShare(true)
                                        }}>
                                        <div style={{marginRight:'5px',marginBottom:'-3px'}}>
                                            <Sheare />  
                                        </div>
                                        Поделиться
-                                   </Text2> */}
-                                   {/* <Text2 onClick={()=>{
-                                       setDelateIndex(i)
-                                       dispatch(delete_photo_by_id(elm.id))
+                                   </Text2>
+                                   <Text2 onClick={()=>{
+                                       deletePhoto(i)
+                                    //    dispatch(delete_photo_by_id(elm.id))
                                    }}>
                                        <Delate />
-                                   </Text2> */}
+                                   </Text2>
                                </TextWrapper>
                            </AddCardsWrapper>
                         })
@@ -121,9 +139,10 @@ export const NoUserFolderBlock = () => {
         </MainBlock>
         {/* {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />} */}
         {login && <Login  ref={logRef} forgotPassCB={handleForgotModal} />}
-        {addImages && 
-            <AddPhoto length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
-    }
+        {addImages && <AddPhoto length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />}
+        {openShare && 
+            <Shear id = {shearId}  ref ={shRef}/>
+        }
     </>
     )
 }
