@@ -188,7 +188,7 @@ export const Settings = () =>{
                 <Content>
                     <InputWrapper>  
                         <Lable>Имя</Lable>
-                        <Input error={data[0].error} value={data[0].value} onChange ={(e)=>hadnelClick(e,0)} width={'500px'} max={'500px'} inputName={'Имя'} />
+                        <Input  error={data[0].error} value={data[0].value} onChange ={(e)=>hadnelClick(e,0)} width={'500px'} max={'500px'} inputName={'Имя'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Юзернейм</Lable>
@@ -245,6 +245,12 @@ height: 100%;
 const InputWrapper = styled.div`
 display: flex;
 flex-direction: column;
+width: 500px;
+@media (max-width: 768px) {
+    justify-content: center;
+    width: 100%;
+
+}
 `
 const Lable = styled.label `
 color:#5B5B5B;
@@ -254,7 +260,6 @@ font-weight: 400;
 font-size: 15px;
 line-height: 18px;
 margin-bottom: -5px;    
-margin-left: 18px;
 cursor: pointer;
 `
 const ButtonWrapper = styled.div`

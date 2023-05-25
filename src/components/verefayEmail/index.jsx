@@ -38,7 +38,7 @@ export const VerefayEmail = forwardRef((props, ref) => {
                     setCounter(60)
                     dispatch(resend_verify_mail({email:props.email}))}
                     }>Отправить код повторно</Text>:
-                <Text>{counter}</Text>}
+                <Text> Отправить код повторно : {counter}</Text>}
                 <Button loading = {props.loading} onClick={()=>props.click(value)} mt={'0px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>

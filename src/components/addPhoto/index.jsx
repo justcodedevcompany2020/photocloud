@@ -175,6 +175,10 @@ flex-wrap: wrap;
 max-height: 400px;
 // min-height: 50px;
 overflow-y: scroll;
+@media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+}
 `
 const Close = styled.div`
 cursor: pointer;

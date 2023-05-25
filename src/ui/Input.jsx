@@ -57,7 +57,7 @@ color: black;
     color: black;
   }
 @media (max-width: 768px) {
-    max-width:350;
+    max-width:350px;
     width:100%;
 }
 `
@@ -72,7 +72,10 @@ export const ErrorText = styled.p`
     margin-top: -10px;
     margin-bottom: 10px;
     text-align: left; 
-
+    @media (max-width: 768px) {
+        max-width:350px;
+        width:100%;
+    }
 `
 export const EyeProvider = styled.div `
 position: absolute;
@@ -85,4 +88,8 @@ export const InputProvider = styled.div`
     width: ${props => props.width ? props.width : '350px'};
     max-width: ${props => props.max ? props.max : '350px'};
     margin: auto;
+    @media (max-width: 768px) {
+        max-width:350px;
+        margin: 0;
+    }
 `

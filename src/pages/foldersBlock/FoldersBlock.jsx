@@ -86,6 +86,9 @@ border-radius: 10px;
 margin: auto;
 margin-top: 25px;
 margin-top: 0;
+// @media (max-width: 768px) {
+//     justify-content: center;
+// }
 `
 const AddCardsWrapper = styled.div`
 width: 220px;
@@ -104,6 +107,8 @@ flex-wrap: wrap;
 // justify-content: space-between;
 @media (max-width: 768px) {
     margin: 15px auto;
+    display: flex;
+    justify-content: center;
   }
 `
 const AddCards = styled.div`

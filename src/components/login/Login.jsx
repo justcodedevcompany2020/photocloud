@@ -47,10 +47,19 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
     }
     return (<BackDiv>
         <MainBlock ref={ref}>
-            <Content>
+            {/* <Content> */}
                 <RegistrationTitle>Вход</RegistrationTitle>
                 {data.map((elm,i)=>(
-                    <Input onKeyDown = {()=>handleCloseModal(data)} password={elm.password} t = {elm.type} onEye={()=>handelEye(i)} error={elm.error} key={i} onChange={(e)=>handelChange(e,i)} width = {'100%'} inputName={elm.lable} value = {elm.value} />
+                    <Input 
+                        onKeyDown = {()=>handleCloseModal(data)}
+                        password={elm.password} 
+                        t = {elm.type} 
+                        onEye={()=>handelEye(i)} 
+                        error={elm.error} key={i} 
+                        onChange={(e)=>handelChange(e,i)} 
+                        width = {'100%'} 
+                        inputName={elm.lable} 
+                        value = {elm.value} />
                 ))
 
                 }
@@ -60,7 +69,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
                 <Button loading = {login.loading} onClick={()=>handleCloseModal(data)} mt={'5px'} bgColor={'#4F6688'} text={'Войти'} />
                 {/* </Link> */}
                 <BtnSubText>Нет аккаунта ? <LoginText onClick={regCB} >Зарегистрироваться</LoginText></BtnSubText>
-            </Content>
+            {/* </Content> */}
         </MainBlock>
     </BackDiv>)
 });

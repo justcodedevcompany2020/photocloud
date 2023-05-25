@@ -18,7 +18,10 @@ export const RecoveryCode = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input t= 'number' value = {value} onChange = {(e)=>handelChange(e)} inputName={'Код подтверждения'} />
+                <Input
+                    width = {'100%'} 
+
+                 t= 'number' value = {value} onChange = {(e)=>handelChange(e)} inputName={'Код подтверждения'} />
                 <ErrorText>{props.error}</ErrorText>
                 <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>

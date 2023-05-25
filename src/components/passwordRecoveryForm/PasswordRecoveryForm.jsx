@@ -29,7 +29,8 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
                     и символы
                 </RecoverySubText>
                 {data?.map((elm,i)=>{
-                    return <Input   
+                    return <Input  
+                        width = {'100%'}  
                         onEye = {()=>handelEye(i)}  
                         password={elm.password} 
                         errorText = {elm.error}

@@ -166,6 +166,11 @@ border-radius: 10px;
 margin: auto;
 margin-top: 25px;
 margin-top: 0;
+@media (max-width: 768px) {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
 `
 const AddCardsWrapper = styled.div`
 width: 220px;

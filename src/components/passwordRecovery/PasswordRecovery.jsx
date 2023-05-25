@@ -13,7 +13,9 @@ export const PasswordRecovery = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Мы отправим 6-х значный код на вашу эл.почту для подтверждения личности
                 </RecoverySubText>
-                <Input value={value} onChange = {(e)=>setValue(e)} inputName={'Эл. почта'} />
+                <Input 
+                    width = {'100%'} 
+                 value={value} onChange = {(e)=>setValue(e)} inputName={'Эл. почта'} />
                 <ErrorText>{props.error}</ErrorText>
                 <Button loading = {props.loading} onClick={()=>props.handelRecoveryForm(value)} mt={'10px'} bgColor={'#4F6688'} text={'Отправить код'} />
             </RecoveryContent>

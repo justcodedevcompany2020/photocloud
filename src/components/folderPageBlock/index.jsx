@@ -193,6 +193,9 @@ margin-top: 0;
 box-sizing: border-box;
 display: flex;
 flex-wrap: wrap;
+@media (max-width: 768px) {
+    justify-content: center;
+  }
 `
 const Title = styled.p `
     text-align: left;
