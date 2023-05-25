@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Input } from "../../ui/Input";
 import { Button } from "../../ui/Button";
 import styled from "styled-components";
@@ -7,11 +7,23 @@ import {resend_verify_mail} from '../../store/action/action'
 export const VerefayEmail = forwardRef((props, ref) => {
     const [value,setValue] = useState('')
     const dispatch = useDispatch()
+    const [counter, setCounter] = useState(60);
+    const [active,setActive] = useState(false)
     const handelChange = (e) =>{
         if(e.length<7){
             setValue(e)
         }
     }
+    useEffect(() => {
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000)
+        if(timer){
+            setActive(true)
+        }
+        else {
+            setActive(false)
+        }
+        return () => clearInterval(timer)
+    }, [counter])
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -22,10 +34,11 @@ export const VerefayEmail = forwardRef((props, ref) => {
                 </RecoverySubText>
                 <Input error={props.error} errorText = {props.error} maxlength ={999999} t = 'number' value={value} onChange ={(e)=>handelChange(e)} inputName={'Код подтверждения'} />
                 {/* <ErrorText>{props.error}</ErrorText> */}
-                <Text onClick={()=>
-                    {setValue('')
-                        dispatch(resend_verify_mail({email:props.email}))}
-                    }>Отправить код повторно</Text>
+                {!active?<Text onClick={()=>{setValue('')
+                    setCounter(60)
+                    dispatch(resend_verify_mail({email:props.email}))}
+                    }>Отправить код повторно</Text>:
+                <Text>{counter}</Text>}
                 <Button loading = {props.loading} onClick={()=>props.click(value)} mt={'0px'} bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
