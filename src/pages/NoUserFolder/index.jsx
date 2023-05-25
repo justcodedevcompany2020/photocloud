@@ -258,7 +258,7 @@ const LoadingDiv = styled.div `
 const Image = styled.img `
 width: 220px;
 height: 220px;
-object-fit: cover;
+// object-fit: cover;
 border-radius: 8px;
 `
 const MainTitle = styled.p `

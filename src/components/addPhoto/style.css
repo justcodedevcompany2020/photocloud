@@ -19,17 +19,39 @@
   .searchWrapper{
     margin:  10px 25px;
   }
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 5px;
+
+}
   .multiSelectContainer ul{
-    /* width: 92%; */
     margin: 0 25px;
-    /* margin: auto; */
   }
   
   input[type=file] {
     visibility: hidden;
     width: 96px;
-    height: 96px;
+    /* height: 96px; */
     /* max-width: 100%; */
     /* color: #444; */
     /* padding: 5px; */

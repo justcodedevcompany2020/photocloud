@@ -17,6 +17,9 @@ export const changeDataReducer = (state = initialState, action) => {
             temp.loading = true
             temp.status = false
             break
+        case 'clear_success_chnage_date':
+            temp.status = false
+            break
         case 'success_change_username_and_name':
             temp.loading = false
             temp.status = true

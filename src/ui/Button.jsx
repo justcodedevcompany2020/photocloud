@@ -49,4 +49,9 @@ font-weight: 600;
 font-size:${props => props.font ? props.font : '17px'};
 line-height: 20px;
 cursor: pointer;
+:hover{
+    background: rgb(90 112 145);
+    border:rgb(90 112 145);
+    color:white;
+}
 `

@@ -6,6 +6,8 @@ import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
 import { ReactComponent as Sheare } from "../../assets/shear.svg"
 import { ReactComponent as Delate } from "../../assets/delate.svg"
+import { ReactComponent as File } from "../../assets/file.svg"
+
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { delete_photo_by_id, get_all_folder, get_folder_by_slug, get_photo_by_slug } from "../../store/action/action"
 import { CreateFolderForm } from "../createFolderForm/CreateFolderForm"
@@ -148,8 +150,11 @@ export const FolderPageBlock = () =>{
         creatFolder.slug_data?.folders?.map((elm,i)=>{
             return <Card onClick={()=>{ window.location = `/folder/${elm.slug}`}}>
             <Main>
-            {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
 
+            {elm.photo.length ?
+                <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />:
+                <div style={{display:"flex",alignItems:'center',justifyContent:'center',width:'100%',height:'100%'}}><File /></div>
+            }
             </Main>
             <MainText>
                 <CardTitle>
@@ -283,7 +288,7 @@ color: #333333;
 const Image = styled.img `
 width: 220px;
 height: 220px;
-object-fit: cover;
+// object-fit: cover;
 border-radius: 8px;
 `
 const TextWrapper = styled.div `

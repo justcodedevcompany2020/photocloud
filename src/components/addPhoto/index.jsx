@@ -31,20 +31,25 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         let arr = Array(img).fill(0);
         let count = 8-(length+itme.length)
         console.log(length+arr.length)
-        if((length+arr.length)>8){
-            setError(true)
-        }
-        else {
-            setError(false)
-        }
+        
         // arr = arr.slice(0,count)
            arr =  arr.map((el,i)=>{
             itme.push(URL.createObjectURL(event.target.files[i]))
             return event.target.files[i]
         })
-        console.log(arr)
+        console.log(itme.length)
         setArray(itme)
         setImage(arr)
+        if((length+arr.length)>8){
+            setError(true)
+        }
+        else if(length+itme.length>8){
+            setError(true)
+        }
+        else {
+            setError(false)
+        }
+
     }
     const [multyData,setMultyData] = useState([
         {name: 'Никогда не удалять'},
@@ -154,7 +159,7 @@ margin-top: 0px;
 `
 const Card = styled.div`
 width: 98px;
-height: 98px;
+// height: 98px;
 border-radius: 10px;
 margin: 10px 20px;
 position: relative;
@@ -168,6 +173,7 @@ const CardWrapper = styled.div `
 display: flex;
 flex-wrap: wrap;
 max-height: 400px;
+// min-height: 50px;
 overflow-y: scroll;
 `
 const Close = styled.div`

@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
+import { ReactComponent as File } from "../../assets/file.svg"
+
 import { useNavigate } from "react-router-dom"
 import { get_all_folder } from "../../store/action/action.js";
 import { ClipLoader } from "react-spinners"
@@ -49,7 +51,11 @@ export const FoldersBlock = () => {
                        
                         return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
                             <Main>
-                                {elm.photo.length !==0 && <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />}
+                                {elm.photo.length !==0 ? 
+                                    <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />:
+                                    <div style={{display:"flex",alignItems:'center',justifyContent:'center',width:'100%',height:'100%'}}><File /></div>
+
+                                }
                             </Main>
                             <MainText>
                                 <Title>
@@ -172,7 +178,7 @@ const LoadingDiv = styled.div `
 const Image = styled.img `
 width: 220px;
 height: 220px;
-object-fit: cover;
+// object-fit: cover;
 border-radius: 8px;
 `
 const MainTitle = styled.p `

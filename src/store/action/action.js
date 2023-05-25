@@ -441,3 +441,8 @@ export const clear_register_error = () =>{
       type:'clear_register_error'
   }
 }
+export const clear_success_chnage_date = () =>{
+  return {
+    type:'clear_success_chnage_date'
+  }
+}

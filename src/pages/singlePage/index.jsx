@@ -38,6 +38,6 @@ margin-top: 25px;
 const Image = styled.img `
 width: 60%;
 height: 90%;
-object-fit: cover;
+object-fit: contain;
 border-radius: 8px;
 `

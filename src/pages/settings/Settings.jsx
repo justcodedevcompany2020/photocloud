@@ -5,7 +5,7 @@ import { Button } from "../../ui/Button"
 import { Input } from "../../ui/Input"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useDispatch, useSelector } from "react-redux"
-import { change_code, change_email, change_username_and_name, open_popup_change_password, update_user_password } from "../../store/action/action"
+import { change_code, change_email, change_username_and_name, clear_success_chnage_date, open_popup_change_password, update_user_password } from "../../store/action/action"
 import { ChangeEmailForm } from "../../components/changeEmailForm"
 import { ReactComponent as Vectore } from '../../assets/Vectore.svg';
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ export const Settings = () =>{
     const {changeData} = useSelector(st=>st)
     const [changeMail,setChangeMail] = useState(false)
     const navigate = useNavigate();
-
+    const [succes,setSuccess] = useState('')
 
     useOnClickOutside(refReg, () => closeChangePassword());
     useOnClickOutside(refcode, () => setChangeMail(false));
@@ -59,7 +59,6 @@ export const Settings = () =>{
 
 
     const handelClick = (value) =>{
-
         let item = [...value]
         if(item[0].value === ''){
             item[0].error = true
@@ -116,6 +115,20 @@ export const Settings = () =>{
             setChangePasswordToggle(false)
         }
     },[changeData.changePasswordstatus])
+    useEffect(()=>{
+        console.log(changeData.status)
+        if(changeData.status){
+            setSuccess('Ваши изменения успешно сохранены')
+            const timer = setTimeout(() => {
+                setSuccess('')       
+              }, 1500);
+              return () => clearTimeout(timer);
+        }
+
+    },[changeData.status])
+    useEffect(()=>{
+        dispatch(clear_success_chnage_date())
+    },[])
     const handelClickSave = () =>{
         let send = false
         let item = [...data]
@@ -170,7 +183,6 @@ export const Settings = () =>{
     },[])
     return <>
         <Title onClick = {()=>navigate('/userProfile')}><Vectore /> Настройки</Title>
-    
         <MainBlock>
             <Block>
                 <Content>
@@ -193,6 +205,7 @@ export const Settings = () =>{
                     }
                     }>Сменить пароль</TextMobile>
                     <Br />
+                    <SuccessText>{succes}</SuccessText>
                     <ButtonWrapper>
                         <Button loading = {changeData.loading} onClick={(e)=>handelClickSave(e)}  text={'Сохранить'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
                         <Text onClick={()=>{
@@ -241,12 +254,13 @@ font-weight: 400;
 font-size: 15px;
 line-height: 18px;
 margin-bottom: -5px;    
+margin-left: 18px;
 cursor: pointer;
 `
 const ButtonWrapper = styled.div`
 display: flex;
 justify-content: space-between;
-margin-top: 40px;
+margin-top: 20px;
 width: 500px;
 @media (max-width: 768px) {
     justify-content: center;
@@ -303,4 +317,8 @@ const Title = styled.p `
     line-height: 35px;
     color: #333333;
     margin: 20px auto;
+`
+const SuccessText = styled.p `
+    height: 20px;
+    color: #059f05;
 `
