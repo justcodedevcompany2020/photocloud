@@ -298,7 +298,6 @@ export const Header = () => {
           };
     },[])
     const token = localStorage.getItem('token')
-    console.log(pathname)
     return (<>
         <HeaderBlock >
             <MainBlock>

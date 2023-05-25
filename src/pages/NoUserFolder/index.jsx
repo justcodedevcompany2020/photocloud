@@ -71,6 +71,15 @@ export const NoUserFolderBlock = () => {
         item.splice(i,1)
         setPhot(item)
     }
+    useEffect(()=>{
+        if(openShare){
+            window.scrollTo(0, 0)
+            document.body.style.setProperty('overflow', 'hidden');
+        }
+        else {
+            document.body.style.setProperty('overflow', 'auto');
+        }
+    },[openShare])
     return (<>
         <MainTitle>Папки</MainTitle>
 
@@ -109,7 +118,6 @@ export const NoUserFolderBlock = () => {
                             <Text>Добавить картинку</Text>
                         </AddCardsWrapper>}
                         {photo?.map((elm,i)=>{
-                            console.log(elm)
                                return <AddCardsWrapper>
                                <AddFoto onClick={()=>navigate(`/img/${elm}`)} style={{border:'none'}}>
                                    <Image src={`https://photocloud.justcode.am/uploads/${elm}`} />

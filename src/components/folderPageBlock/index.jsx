@@ -77,6 +77,7 @@ export const FolderPageBlock = () =>{
     },[creatFolder?.slug_data?.photo])
     useEffect(()=>{
         if(openShare){
+            window.scrollTo(0, 0)
             document.body.style.setProperty('overflow', 'hidden');
         }
         else {
