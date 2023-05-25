@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route path="" element={<MiddleInfo />} />
+          <Route path="" element={!token ?<MiddleInfo />:<UserProfile />} />
          { <Route path="/createFolder" element={token ?<FoldersBlock />:<NoUserFolderBlock />} />}
           <Route path='/userProfile' element={<UserProfile />} />
           <Route path='/settings' element={<Settings />} />

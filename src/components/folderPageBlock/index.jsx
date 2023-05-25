@@ -76,7 +76,7 @@ export const FolderPageBlock = () =>{
     },[creatFolder?.slug_data?.photo])
     return <>
     <MainBlock> 
-        {creatFolder?.slug_data?.photo?.length<8 &&
+        {photo?.length<8 &&
         <AddCardsWrapper>
             <AddFoto onClick={() => setAddImages(true)}>
                 <PlusIconWrapper>
@@ -154,7 +154,7 @@ export const FolderPageBlock = () =>{
     </MainBlock>
     {createFolderModal && <CreateFolderForm prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
     {addImages && 
-            <AddPhoto length = {creatFolder?.slug_data?.photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
+            <AddPhoto length = {photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
     }
     {openShare && 
         <Shear id = {shearId} handelCloseHSare = {(e)=>handelCloseHSare(e)} ref ={shRef}/>

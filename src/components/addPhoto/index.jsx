@@ -10,10 +10,19 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
     const dispatch = useDispatch()
     const [image, setImage] = useState([])
     const [array,setArray] = useState([])
+    const [error,setError] = useState(false)
     const CloseItem = (i) =>{
         let item = [...array]
+        let item2 = [...image]
+        console.log(length+array.length)
+       
         item.splice(i,1)
+        item2.splice(i,1)
+        if(item.length+length<=8){
+            setError(false)
+        }
         setArray(item)
+        setImage(item2)
     } 
     const showImg = (event) =>{
         let img;
@@ -21,9 +30,15 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         img = (event.target.files.length);
         let arr = Array(img).fill(0);
         let count = 8-(length+itme.length)
-        arr = arr.slice(0,count)
-        console.log(arr);
-       arr =  arr.map((el,i)=>{
+        console.log(length+arr.length)
+        if((length+arr.length)>8){
+            setError(true)
+        }
+        else {
+            setError(false)
+        }
+        // arr = arr.slice(0,count)
+           arr =  arr.map((el,i)=>{
             itme.push(URL.createObjectURL(event.target.files[i]))
             return event.target.files[i]
         })
@@ -32,9 +47,13 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         setImage(arr)
     }
     const [multyData,setMultyData] = useState([
-        {name: '10', id: 1},
-        {name: '11️', id: 1},
-        {name: '21️', id: 1},
+        {name: 'Никогда не удалять'},
+        {name: '1 день', id: 1},
+        {name: '7 дней', id: 7},
+        {name: '14 дней', id: 14},
+        {name: '30 дней', id: 30},
+        {name: '60 дней', id: 60},
+
     ])
     const [day,setDay] = useState(null)
     const sendData = () =>{
@@ -43,7 +62,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
             formData.append('file[]',elm)
         })
         formData.append('day',day)
-        console.log(id,88)
         if(id){
             formData.append('folder_id',id)
         }
@@ -54,7 +72,7 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         <RecoveryContent>
             <RecoveryPassText>Добавить изображение</RecoveryPassText>
             <CardWrapper>
-                {(array.length+length) <8 && <Card>
+                { <Card>
                 <label for="images" class="drop-container"> + </label>
                     <input onChange={(e)=>showImg(e)} multiple type={'file'} id = {'images'}   accept="image/png, image/jpeg"></input>
                     {/* <input onChange={(e)=>showImg(e)} multiple type={'file'}  accept="image/png, image/jpeg"></input> */}
@@ -71,13 +89,20 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
                     <Multiselect 
                         singleSelect
                         showArrow
-                        onSelect = {(e)=>{setDay(e[0].name)}}
+                        onSelect = {(e)=>{setDay(e[0].id)}}
                         options = {multyData}
-                        selectedValues
                         displayValue="name"
+                        selectedValues = {[multyData[0]]}
                         style = {{padding:'20px'}}
                     />
-            <Button loading = {loading} onClick={()=>sendData()} mt = {'30px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
+                    {/* <select style={{width:"92%",height:"40px",border: "1px solid #BEBEBE",borderRadius:"8px"}}>
+                        <option>1 день</option>
+                        <option>7 дней</option>
+                        <option></option>
+                        <option></option>
+                    </select> */}
+            <ErrText>{error && 'Вы не можете иметь больше чем 8 фотографий '}</ErrText>
+            <Button disabled = {error} loading = {loading} onClick={()=>sendData()} mt = {'10px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
         </RecoveryContent>
         </MainBlock>
     </BackDiv>
@@ -160,4 +185,11 @@ justify-content: center;
 align-items: center;
 display: flex;
 height: 25px;
+`
+const ErrText = styled.p `
+margin: 10px 0;
+font-size: 13px;
+color: red;
+height: 20px;
+
 `

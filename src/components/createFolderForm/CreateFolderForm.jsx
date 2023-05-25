@@ -86,7 +86,7 @@ color: #333333;
 `
 const ErrorText = styled.p`
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     color: red;
     height: 20px;
 `
