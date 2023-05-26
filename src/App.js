@@ -30,15 +30,18 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route path="" element={!tokens ?<MiddleInfo />:<UserProfile />} />
           <Route path="/createFolder" element={tokens ?<FoldersBlock />:<NoUserFolderBlock />} />
+          <Route path='/img/:id' element={<SinglPage />} />
           <Route path="*" element={<MiddleInfo />} />
           </Route>
       </Routes>:
       <Routes>
           <Route path="/" element={<MainLayout />}>
+          <Route path="" element={!tokens ?<MiddleInfo />:<UserProfile />} />
           <Route path="/createFolder" element={tokens ?<FoldersBlock />:<NoUserFolderBlock />} />
           <Route path='/userProfile' element={<UserProfile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/folder/:id' element={<FolderPage />} />
+          <Route path='/img/:id' element={<SinglPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
