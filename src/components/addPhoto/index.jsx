@@ -109,7 +109,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
                         <span>x</span>
                     </Close >
                     <CardImg alt="preview image" src={el} key={i}/>
-                    {console.log(largeSize,el)}
                     {largeSize.includes(el) &&
                         <ErrorMsg>Максимальный размер 2 мб</ErrorMsg>
                     }

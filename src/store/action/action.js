@@ -52,12 +52,10 @@ export const register_action = (data) => {
         if (r.data.status) {
           dispatch(success_register(r.data));
         } else {
-          console.log(r.data,78)
           dispatch(error_register(r.data));
         }
       })
       .catch((error) => {
-        console.log(error.response.data.message.username)
         if(error.response.data.message.username){
           dispatch(error_register(error?.response?.data?.message?.username[0]));
         }

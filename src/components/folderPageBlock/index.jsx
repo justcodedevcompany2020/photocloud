@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
@@ -27,7 +27,6 @@ export const FolderPageBlock = () =>{
     const [photo,setPhoto] = useState([])
     const [shearId,setShearid] = useState('')
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const folderRef = useRef()
     const addRef = useRef()
     const shRef = useRef()
@@ -110,7 +109,7 @@ export const FolderPageBlock = () =>{
                     />
                 </LoadingDiv>:
                 <>
-                    <AddFoto onClick={()=>navigate(`/img/${elm.slug}`)} style={{border:'none'}}>
+                    <AddFoto onClick={()=>window.location = `/img/${elm.slug}`} style={{border:'none'}}>
                         <Image src={`https://photocloud.justcode.am/uploads/${elm.slug}`} />
                     </AddFoto>
                     <TextWrapper>

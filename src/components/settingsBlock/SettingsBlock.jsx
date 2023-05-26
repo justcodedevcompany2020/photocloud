@@ -4,7 +4,6 @@ import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReactComponent as Settings } from '../../assets/settings.svg';
-import { useNavigate } from "react-router-dom"; 
 import { useDispatch, useSelector } from "react-redux";
 import { logout_action } from "../../store/action/action";
 
@@ -14,7 +13,6 @@ export const SettingsBlock = () => {
         window.innerHeight,
       ]);
       const dispatch = useDispatch()
-      const navigate = useNavigate();
     useEffect(()=>{
 
         const handleWindowResize = () => {
@@ -32,7 +30,6 @@ export const SettingsBlock = () => {
     useEffect(()=>{
         if(reg.logOutStats){
             window.location = '/'
-            // navigate('/')
         }
     },[reg.logOutStats])
     return (
@@ -52,9 +49,9 @@ export const SettingsBlock = () => {
                     </LogoutWrapper>
                 </UserBlock>
                 <SettingsDiv>
-                    {windowSize[0]<=768 ? <Settings onClick = {()=>navigate("/settings")} />:
+                    {windowSize[0]<=768 ? <Settings onClick = {()=>window.location = "/settings"} />:
                         <ButtonWrapper>
-                            <Button onClick = {()=>navigate("/settings")} text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
+                            <Button onClick = {()=>window.location = "/settings"} text={'Настройки'} txColor={'#4F6688'} mb={'0px'} width={'230px'} />
                         </ButtonWrapper>
                     }
                 </SettingsDiv>

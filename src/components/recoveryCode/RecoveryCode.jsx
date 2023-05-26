@@ -1,15 +1,30 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { Input } from "../../ui/Input";
 import { Button } from "../../ui/Button";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { forgot_password_api } from "../../store/action/action";
 
 export const RecoveryCode = forwardRef((props, ref) => {
     const [value,setValue] = useState('')
-    const handelChange  = (e) =>{
+    const [counter, setCounter] = useState(60);
+    const [active,setActive] = useState(false)
+    const dispatch = useDispatch()
+    const handelChange  = (e) =>{   
         if(e.length<7){
             setValue(e)
         }
     }
+    useEffect(() => {
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000)
+        if(timer){
+            setActive(true)
+        }
+        else {
+            setActive(false)
+        }
+        return () => clearInterval(timer)
+    }, [counter])
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
             <RecoveryCodeContent>
@@ -18,12 +33,17 @@ export const RecoveryCode = forwardRef((props, ref) => {
                 <RecoverySubText>
                     Введите код подтверждения
                 </RecoverySubText>
-                <Input
-                    width = {'100%'} 
-
-                 t= 'number' value = {value} onChange = {(e)=>handelChange(e)} inputName={'Код подтверждения'} />
-                <ErrorText>{props.error}</ErrorText>
-                <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)} mt={'25px'} bgColor={'#4F6688'} text={'Подтвердить'} />
+                <Input width = {'100%'} t= 'number' value = {value} onChange = {(e)=>handelChange(e)} inputName={'Код подтверждения'} />
+                {props.error && <ErrorText>{props.error}</ErrorText>}
+                {!active?<Text onClick={()=>{setValue('')
+                    setCounter(60)
+                    console.log()
+                    dispatch(forgot_password_api({email:props.forgotPaswordMail}))
+                    // dispatch(resend_verify_mail({email:props.email}))
+                }
+                    }>Отправить код повторно</Text>:
+                <Text> Отправить код повторно : {counter}</Text>}
+                <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)}  bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
     </BackDiv>)
@@ -79,5 +99,16 @@ const ErrorText = styled.p`
     margin: 0;
     font-size: 14px;
     color: red;
-    height: 20px;
+    height: 15px;
+`
+const Text = styled.p`
+    margin:1px, 0;
+    cursor: pointer;
+    font-family: 'Raleway';
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+line-height: 15px;
+text-align: center;
+color:#4F6688
 `

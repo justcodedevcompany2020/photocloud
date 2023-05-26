@@ -16,7 +16,6 @@ export const Button = ({
     loading = false,
     disabled
 }) => {
-    console.log(disabled)
     return (<>
         <UIbutton disabled = {loading||disabled} font = {font} onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}
         <div style={{position:'absolute', top:'13px',button:'0',margin:'auto',right: '3px'}}>
@@ -53,5 +52,8 @@ cursor: pointer;
     background: rgb(90 112 145);
     border:rgb(90 112 145);
     color:white;
+}
+@media (max-width: 768px) {
+    width:100%;
 }
 `

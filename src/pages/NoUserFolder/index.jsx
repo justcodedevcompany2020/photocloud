@@ -1,12 +1,9 @@
 import styled from "styled-components"
 import { ReactComponent as PlusIcon } from "../../assets/plus.svg"
-import { CreateFolderForm } from "../../components/createFolderForm/CreateFolderForm"
 import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { useDispatch, useSelector } from "react-redux"
-import { ReactComponent as Img } from "../../assets/img.svg"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
-import { useNavigate } from "react-router-dom"
 import { clear_login_error, get_all_folder } from "../../store/action/action.js";
 import { ReactComponent as Sheare } from "../../assets/shear.svg"
 import { ReactComponent as Delate } from "../../assets/delate.svg"
@@ -32,7 +29,6 @@ export const NoUserFolderBlock = () => {
     const dispatch = useDispatch()
     const addRef = useRef()
     const folderRef = useRef()
-    const navigate = useNavigate()
     const logRef = useRef();
     const shRef = useRef()
     const [photo,setPhot ] = useState([])
@@ -72,14 +68,23 @@ export const NoUserFolderBlock = () => {
         setPhot(item)
     }
     useEffect(()=>{
-        if(openShare,addImages){
+        if(openShare){
             window.scrollTo(0, 0)
             document.body.style.setProperty('overflow', 'hidden');
         }
         else {
             document.body.style.setProperty('overflow', 'auto');
         }
-    },[openShare,addImages])
+    },[openShare])
+    useEffect(()=>{
+        if(addImages){
+            window.scrollTo(0, 0)
+            document.body.style.setProperty('overflow', 'hidden');
+        }
+        else {
+            document.body.style.setProperty('overflow', 'auto');
+        }
+    },[addImages])
     return (<>
         <MainTitle>Папки</MainTitle>
 
@@ -119,7 +124,7 @@ export const NoUserFolderBlock = () => {
                         </AddCardsWrapper>}
                         {photo?.map((elm,i)=>{
                                return <AddCardsWrapper>
-                               <AddFoto onClick={()=>navigate(`/img/${elm}`)} style={{border:'none'}}>
+                               <AddFoto onClick={()=>window.location = (`/img/${elm}`)} style={{border:'none'}}>
                                    <Image src={`https://photocloud.justcode.am/uploads/${elm}`} />
                                </AddFoto>
                                <TextWrapper>
@@ -128,7 +133,7 @@ export const NoUserFolderBlock = () => {
                                        setOpenShare(true)
                                        }}>
                                        <div style={{marginRight:'5px',marginBottom:'-3px'}}>
-                                           <Sheare />  
+                                           <Sheare  />  
                                        </div>
                                        Поделиться
                                    </Text2>
@@ -149,7 +154,7 @@ export const NoUserFolderBlock = () => {
         {login && <Login  ref={logRef} forgotPassCB={handleForgotModal} />}
         {addImages && <AddPhoto length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />}
         {openShare && 
-            <Shear id = {shearId}  ref ={shRef}/>
+            <Shear  id = {shearId}  ref ={shRef}/>
         }
     </>
     )
@@ -189,6 +194,8 @@ flex-wrap: wrap;
 // justify-content: space-between;
 @media (max-width: 768px) {
     margin: 15px auto;
+    display: flex;
+    justify-content: center;
   }
 `
 const AddCards = styled.div`

@@ -7,14 +7,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as Img } from "../../assets/img.svg"
 import { ReactComponent as File } from "../../assets/file.svg"
 
-import { useNavigate } from "react-router-dom"
 import { get_all_folder } from "../../store/action/action.js";
 import { ClipLoader } from "react-spinners"
 export const FoldersBlock = () => {
     const [createFolderModal, setCreateFolderModal] = useState()
     const {creatFolder} = useSelector((st)=>st)
     const folderRef = useRef()
-    const navigate = useNavigate()
     useOnClickOutside(folderRef, () => setCreateFolderModal(false));
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -49,7 +47,7 @@ export const FoldersBlock = () => {
                     </AddCardsWrapper>
                     {creatFolder.folder?.map((elm,i)=>{
                        
-                        return <Card onClick={()=>{navigate(`/folder/${elm.slug}`)}}>
+                        return <Card onClick={()=>{window.location = (`/folder/${elm.slug}`)}}>
                             <Main>
                                 {elm.photo.length !==0 ? 
                                     <Image src={`https://photocloud.justcode.am/uploads/${elm.photo.length && elm.photo[0].slug}`} />:

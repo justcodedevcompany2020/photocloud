@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import { ReactComponent as UserIcon } from '../../assets/UserIcon.svg';
 import { ReactComponent as UsericoneMobil } from '../../assets/UsericoneMobil.svg';
-
-
 import { Button } from "../../ui/Button";
 import { Registration } from "../registration/Registration";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +9,7 @@ import { Login } from "../login/Login";
 import { PasswordRecovery } from "../passwordRecovery/PasswordRecovery";
 import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, clear_register_error, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
 import { VerefayEmail } from "../verefayEmail";
@@ -32,7 +30,6 @@ export const Header = () => {
     const [code,setCode] = useState('')
 
     
-    let { pathname } = useLocation();
     const dispatch = useDispatch()
     const refReg = useRef();
     const logRef = useRef();
@@ -40,7 +37,6 @@ export const Header = () => {
     const recpasfor = useRef()
     const recpasref = useRef()
     const verRef = useRef();
-    const navigate = useNavigate();
     const [registerData,setRegisterData] = useState([])
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
@@ -180,7 +176,6 @@ export const Header = () => {
         // setRegToggle(!regToggle)
         // setLoginToggle(false)
         // dispatch(register_action())
-        // navigate('userProfile')
     }
 
     const handleRegFromLogin = () => {
@@ -212,15 +207,12 @@ export const Header = () => {
         let item = [...value]
         console.log(item[0].value.length)
         if((item[0].value !== item[1].value )|| item[0].value === '' || item[1].value === '' ||item[0].value.length<8||item[1].value.length<8){
-            console.log('666')
             item[0].error = true
             item[1].error = true
             if(item[0].value.length<8){
-                console.log('88888')
                 item[0].error = 'Пароль должен содержать не менее 8-ти символов'
             }
             if(item[1].value.length<8){
-                console.log('88888')
                 item[1].error = 'Пароль должен содержать не менее 8-ти символов'
             }
             if(item[0].value !== item[1].value){
@@ -253,14 +245,13 @@ export const Header = () => {
             setLoginToggle(false)
             setRegToggle(false)
             setVerefayEmail(true)
-            // navigate('userProfile')
         }
     },[reg.status])
 
     useEffect(()=>{
         if(reg.status_verif){
             setVerefayEmail(false)
-            navigate('userProfile')
+            window.location = '/userProfile'
             setLoginToggle(false)
         }
     },[reg.status_verif])
@@ -306,7 +297,7 @@ export const Header = () => {
                         PhotoHosting
                     </LogoTitle></Link>
                 </LogoBlock>
-                {(pathname === '/userProfile' || pathname === '/settings' || token) ? <UserProfileBlock>
+                {(token) ? <UserProfileBlock>
                     <UserName>
                         {reg.user.username}
                     </UserName>
@@ -324,7 +315,7 @@ export const Header = () => {
         {regToggle && <Registration openLogin = {()=>openCloseRegisterOpenLogin()} error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
         {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
         {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {noteMail ? noteMail:forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
-        {recoveryPasswordFormToggle  && <RecoveryCode error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
+        {recoveryPasswordFormToggle  && <RecoveryCode  forgotPaswordMail = {forgotPaswordMail} error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
         {recoveryPasswordForm && <PasswordRecoveryForm loading = {forgotPassword.loadingNew} data = {newPassword} handelNewPassword = {(e)=>handelNewPassword(e)} ref = {recpasref}/>}
         {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
     </>

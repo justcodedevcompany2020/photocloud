@@ -65,9 +65,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
                 }
                 <ForgotPasswordText onClick={forgotPassCB}>Забыли пароль</ForgotPasswordText>
                 <ErrorText>{login.error}</ErrorText>
-                {/* <Link to={'/userProfile'}>  */}
                 <Button loading = {login.loading} onClick={()=>handleCloseModal(data)} mt={'5px'} bgColor={'#4F6688'} text={'Войти'} />
-                {/* </Link> */}
                 <BtnSubText>Нет аккаунта ? <LoginText onClick={regCB} >Зарегистрироваться</LoginText></BtnSubText>
             {/* </Content> */}
         </MainBlock>
