@@ -11,35 +11,53 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
     const [image, setImage] = useState([])
     const [array,setArray] = useState([])
     const [error,setError] = useState(false)
-    const CloseItem = (i) =>{
+    const [largeSize,setLargeSize] = useState([])
+    const CloseItem = (i,el) =>{
         let item = [...array]
         let item2 = [...image]
-        console.log(length+array.length)
-       
+        let item3 = [...largeSize]
+
         item.splice(i,1)
         item2.splice(i,1)
+        if(item3.includes(el)){
+            let index = item3?.findIndex((element) => element === el)
+            console.log(index)
+            item3.splice(index, 1)
+        }
         if(item.length+length<=8){
             setError(false)
         }
         setArray(item)
         setImage(item2)
+        setLargeSize(item3)
     } 
     const showImg = (event) =>{
         let img;
         let itme = [...array]
+        let errorSize = [...largeSize]
+        console.log(event.target.files[0]?.size/1000000) 
         img = (event.target.files.length);
         let arr = Array(img).fill(0);
-        let count = 8-(length+itme.length)
-        console.log(length+arr.length)
         
-        // arr = arr.slice(0,count)
+        let count = 8-(length+itme.length)
            arr =  arr.map((el,i)=>{
-            itme.push(URL.createObjectURL(event.target.files[i]))
+            let url =URL.createObjectURL(event.target.files[i])
+            itme.push(url)
+            if(event.target.files[i]?.size/1000000>2){
+                errorSize.push(url)
+            }
             return event.target.files[i]
         })
-        console.log(itme.length)
+        // arr.map((elm,i)=>{
+        //     if(event.target.files[i]?.size/1000000>2){
+        //         console.log(URL.createObjectURL(event.target.files[i]),888)
+        //         errorSize.push(URL.createObjectURL(event.target.files[i]))
+        //     }
+        // })
+
         setArray(itme)
         setImage(arr)
+        setLargeSize(errorSize)
         if((length+arr.length)>8){
             setError(true)
         }
@@ -62,6 +80,7 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
     ])
     const [day,setDay] = useState(null)
     const sendData = () =>{
+        console.log('888')
         const formData = new FormData()
         image.map((elm,i)=>{
             formData.append('file[]',elm)
@@ -70,7 +89,9 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         if(id){
             formData.append('folder_id',id)
         }
-        dispatch(add_photo(formData))
+        if(!largeSize.length){
+            dispatch(add_photo(formData))
+        }
     }
     return <BackDiv>
         <MainBlock ref  = {ref}>
@@ -83,11 +104,15 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
                     {/* <input onChange={(e)=>showImg(e)} multiple type={'file'}  accept="image/png, image/jpeg"></input> */}
                 </Card>}
                 {array.map((el, i) =>  {
-                return<Card>
-                    <Close onClick ={()=>CloseItem(i)}>
+                return<Card key={i}>
+                    <Close onClick ={()=>CloseItem(i,el)}>
                         <span>x</span>
                     </Close >
                     <CardImg alt="preview image" src={el} key={i}/>
+                    {console.log(largeSize,el)}
+                    {largeSize.includes(el) &&
+                        <ErrorMsg>Максимальный размер 2 мб</ErrorMsg>
+                    }
                 </Card> 
                 })}
             </CardWrapper>
@@ -144,6 +169,7 @@ z-index: 9989;
 display: flex;
 justify-content: center;
 align-items: center;
+height: 100vh;
 `
 const RecoveryPassText = styled.p`
 font-family: 'Raleway';
@@ -204,4 +230,8 @@ font-size: 13px;
 color: red;
 height: 20px;
 
+`
+const ErrorMsg = styled.p `
+    font-size: 12px;
+    color: red;
 `

@@ -72,14 +72,14 @@ export const NoUserFolderBlock = () => {
         setPhot(item)
     }
     useEffect(()=>{
-        if(openShare){
+        if(openShare,addImages){
             window.scrollTo(0, 0)
             document.body.style.setProperty('overflow', 'hidden');
         }
         else {
             document.body.style.setProperty('overflow', 'auto');
         }
-    },[openShare])
+    },[openShare,addImages])
     return (<>
         <MainTitle>Папки</MainTitle>
 

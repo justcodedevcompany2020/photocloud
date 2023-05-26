@@ -45,6 +45,7 @@ z-index: 9989;
 display: flex;
 justify-content: center;
 align-items: center;
+height: 100vh;
 
 `
 const MainBlock = styled.div`
