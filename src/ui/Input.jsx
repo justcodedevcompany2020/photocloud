@@ -14,7 +14,7 @@ export const Input = ({
     onEye,
     t,
     maxlength,
-    onKeyDown,
+    onKeyDown = ()=>{},
 }) => {
     return (
         <>  

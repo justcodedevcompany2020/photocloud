@@ -6,7 +6,11 @@ import styled from "styled-components";
 export const PasswordRecoveryForm = forwardRef((props, ref) => {
     const [data,setData] = useState()
     useEffect(()=>{
-        setData(props.data)
+        console.log(props.data)
+        let data = [...props.data]
+        data[0].value =''
+        data[1].value =''
+        setData(data)
     },[])
     const handelChage = (e,i) =>{
         let item = [...data]
