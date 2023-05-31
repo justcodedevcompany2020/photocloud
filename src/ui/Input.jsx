@@ -49,7 +49,7 @@ max-width: ${props => props.max ? props.max : '350px'};
 padding:15px 15px;
 margin: 12px 0;
 box-sizing: border-box;
-padding-right: 35px;
+padding-right: ${props => props.type === 'password' ? '35px':'15px'};
 border: ${props =>props.error ? '1px solid red':'1px solid #BEBEBE'} ;
 border-radius: 8px;
 color: black;
@@ -82,6 +82,7 @@ position: absolute;
     top: 25px;
     margin: auto;
     right: 12px;
+    cursor: pointer;
 `
 export const InputProvider = styled.div`
     position: relative;

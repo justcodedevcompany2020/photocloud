@@ -16,7 +16,14 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
 
     const handelChange = (v,i) =>{
         let item = [...data]
-        item[i].value = v
+        if(item[i].lable === 'Юзернейм'){
+            if(item[i].value.length<20){
+                item[i].value = v
+            }
+        }
+        else {
+            item[i].value = v
+        }
         setData(item)
     }
     const handelEye = (i) => {

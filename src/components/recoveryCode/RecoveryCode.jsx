@@ -42,7 +42,7 @@ export const RecoveryCode = forwardRef((props, ref) => {
                     // dispatch(resend_verify_mail({email:props.email}))
                 }
                     }>Отправить код повторно</Text>:
-                <Text> Отправить код повторно : {counter}</Text>}
+                <Text1> Отправить код повторно : {counter}</Text1>}
                 <Button loading = {props.loading} onClick={()=>props.handelRecoveryPassForm(value)}  bgColor={'#4F6688'} text={'Подтвердить'} />
             </RecoveryCodeContent>
         </MainBlock>
@@ -102,9 +102,9 @@ const ErrorText = styled.p`
     height: 15px;
 `
 const Text = styled.p`
-    margin:1px, 0;
-    cursor: pointer;
-    font-family: 'Raleway';
+margin:1px, 0;
+cursor: pointer;
+font-family: 'Raleway';
 font-style: normal;
 font-weight: 600;
 font-size: 13px;
@@ -112,3 +112,12 @@ line-height: 15px;
 text-align: center;
 color:#4F6688
 `
+const Text1 = styled.p `
+margin:1px, 0;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+line-height: 15px;
+text-align: center;
+color:#4F6688`

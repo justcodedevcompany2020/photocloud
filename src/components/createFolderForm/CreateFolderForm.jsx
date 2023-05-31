@@ -23,7 +23,10 @@ export const CreateFolderForm = forwardRef(({ forgotPassCB, regCB,loading,prId }
             <MainBlock ref={ref}>
                 <Content>
                     <RegistrationTitle>Создать папку</RegistrationTitle>
-                    <Input  errorText={''} error={error} value={value} onChange ={(e)=>setValue(e)} width={'100%'} inputName={'Название папки'} />
+                    <Input  errorText={''} error={error} value={value} onChange ={(e)=> 
+                        
+                        e.length<20 && setValue(e)
+                        } width={'100%'} inputName={'Название папки'} />
                     <ErrorText>{error}</ErrorText>
                     <Button loading ={loading} onClick={()=>handelChange()}  mt ={'10px'} bgColor={'#4F6688'} text={'Создать'} />
                 </Content>

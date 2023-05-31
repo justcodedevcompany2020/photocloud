@@ -105,7 +105,15 @@ export const Settings = () =>{
     },[reg.user])
     const hadnelClick = (e,i) =>{
         let item =[...data]
-        item[i].value =  e
+
+        if(i === 1){
+            if(e.length<20){
+                item[i].value =  e
+            }
+        }
+        else {
+            item[i].value =  e
+        }
         setData(item)
     }
     useEffect(()=>{

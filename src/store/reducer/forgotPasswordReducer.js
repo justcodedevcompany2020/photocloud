@@ -14,8 +14,10 @@ export const forgotPassword = (state = initialState, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'start_forgot_password':
+            console.log('000')
             temp.loading = true
             temp.status = false
+            temp.errorCode = ''
             break
         case 'success_forgot_password':
             temp.status = true
