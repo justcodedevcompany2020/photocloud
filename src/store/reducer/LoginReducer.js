@@ -3,7 +3,8 @@ const initialState = {
     loading:false,
     user:[],
     token:'',
-    error:''
+    error:'',
+    open:false
 }
 
 export const loginReducer = (state = initialState, action) => {
@@ -32,6 +33,12 @@ export const loginReducer = (state = initialState, action) => {
             temp.user = []
             temp.token = ''
             temp.error = ''
+            break
+        case 'open_login_popUp':
+            temp.open = true
+            break
+        case 'close_login_popUp':
+            temp.open = false
             break            
         default:
             break;

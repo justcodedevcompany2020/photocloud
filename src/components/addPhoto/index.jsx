@@ -35,7 +35,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         let img;
         let itme = [...array]
         let errorSize = [...largeSize]
-        console.log(event.target.files[0]?.size/1000000) 
         img = (event.target.files.length);
         let arr = Array(img).fill(0);
         
@@ -48,16 +47,15 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
             }
             return event.target.files[i]
         })
-        // arr.map((elm,i)=>{
-        //     if(event.target.files[i]?.size/1000000>2){
-        //         console.log(URL.createObjectURL(event.target.files[i]),888)
-        //         errorSize.push(URL.createObjectURL(event.target.files[i]))
-        //     }
-        // })
 
         setArray(itme)
         setImage(arr)
         setLargeSize(errorSize)
+        var element = document.getElementById("lable");
+        if(itme.length){
+            element.classList.remove("drop-container2");
+            element.classList.add("drop-container");
+        }
         if((length+arr.length)>8){
             setError(true)
         }
@@ -80,7 +78,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
     ])
     const [day,setDay] = useState(null)
     const sendData = () =>{
-        console.log('888')
         const formData = new FormData()
         image.map((elm,i)=>{
             formData.append('file[]',elm)
@@ -92,6 +89,15 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
         if(!largeSize.length){
             dispatch(add_photo(formData))
         }
+        var element = document.getElementById("lable");
+        if(!array.length){
+            element.classList.remove("drop-container");
+            element.classList.add("drop-container2");
+        }
+        else {
+            element.classList.remove("drop-container2");
+            element.classList.add("drop-container");
+        }
     }
     return <BackDiv>
         <MainBlock ref  = {ref}>
@@ -99,9 +105,8 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
             <RecoveryPassText>Добавить изображение</RecoveryPassText>
             <CardWrapper>
                 { <Card>
-                <label for="images" class="drop-container"> + </label>
+                <label id = {'lable'} for="images" class="drop-container"> + </label>
                     <input onChange={(e)=>showImg(e)} multiple type={'file'} id = {'images'}   accept="image/png, image/jpeg"></input>
-                    {/* <input onChange={(e)=>showImg(e)} multiple type={'file'}  accept="image/png, image/jpeg"></input> */}
                 </Card>}
                 {array.map((el, i) =>  {
                 return<Card key={i}>
@@ -124,12 +129,6 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
                         selectedValues = {[multyData[0]]}
                         style = {{padding:'20px'}}
                     />
-                    {/* <select style={{width:"92%",height:"40px",border: "1px solid #BEBEBE",borderRadius:"8px"}}>
-                        <option>1 день</option>
-                        <option>7 дней</option>
-                        <option></option>
-                        <option></option>
-                    </select> */}
             <ErrText>{error && 'Вы не можете загрузить больше 8-ми фотографий '}</ErrText>
             <Button disabled = {error} loading = {loading} onClick={()=>sendData()} mt = {'10px'} mb = {'30px'} text ={'Загрузить'} bgColor = '#4F6688' />
         </RecoveryContent>
@@ -149,6 +148,7 @@ border-radius: 15px;
     width:90%;
     box-sizing: border-box;
     padding: 0 20px;
+    overflow: auto;
 }
 
 `

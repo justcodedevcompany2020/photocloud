@@ -11,7 +11,7 @@ import { RecoveryCode } from "../recoveryCode/RecoveryCode";
 import { PasswordRecoveryForm } from "../passwordRecoveryForm/PasswordRecoveryForm";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, clear_register_error, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
+import { clear_forgot_password_code, clear_forgot_password_error, clear_login_error, clear_register_error, close_login_popUp, create_new_password, forgot_password_api, forgot_password_code, register_action, verify_email } from "../../store/action/action";
 import { VerefayEmail } from "../verefayEmail";
 
 export const Header = () => {
@@ -44,6 +44,7 @@ export const Header = () => {
       ]);
     const {reg} = useSelector(st=>st)
     const {forgotPassword} = useSelector(st=>st)
+    const {login} = useSelector((st=>st))
     useOnClickOutside(refReg, () => closeReg());
     useOnClickOutside(logRef, () => closeLogin());
     useOnClickOutside(recRef, () =>closeRecoverPassword());
@@ -68,6 +69,7 @@ export const Header = () => {
     }
     const closeLogin = () =>{
         setLoginToggle(false)
+        dispatch(close_login_popUp())
         dispatch(clear_login_error())
     }
     const closeRecoverPassword =() =>{
@@ -84,12 +86,16 @@ export const Header = () => {
     const handleLoginToggle = () => {
         dispatch(clear_register_error())
         setLoginToggle(!loginToggle)
+        dispatch(close_login_popUp())
+
     }
 
     const handleForgotModal = () => {
         dispatch(clear_register_error())
         setLoginToggle(!loginToggle)
         setRecoveryToggle(!recoveryToggle)
+        dispatch(close_login_popUp())
+
     }
     const openCloseRegisterOpenLogin = () =>{
         dispatch(clear_register_error())
@@ -180,6 +186,8 @@ export const Header = () => {
 
     const handleRegFromLogin = () => {
         setLoginToggle(false)
+        dispatch(close_login_popUp())
+
         setRegToggle(true)
     }
     const handelRecoveryForm = (e) =>{
@@ -196,6 +204,7 @@ export const Header = () => {
     }
     const handleCloseLoginModal = () => {
         setLoginToggle(false)
+        dispatch(close_login_popUp())
         setRegToggle(false)
     }
     const handelRecoveryPassForm = (e) =>{
@@ -243,6 +252,7 @@ export const Header = () => {
       useEffect(()=>{
         if(reg.status){
             setLoginToggle(false)
+            dispatch(close_login_popUp())
             setRegToggle(false)
             setVerefayEmail(true)
         }
@@ -253,6 +263,7 @@ export const Header = () => {
             setVerefayEmail(false)
             window.location = '/userProfile'
             setLoginToggle(false)
+            dispatch(close_login_popUp())
         }
     },[reg.status_verif])
 
@@ -289,6 +300,12 @@ export const Header = () => {
           };
     },[])
     const token = localStorage.getItem('token')
+
+    useEffect(()=>{
+        if(login.open){
+            setLoginToggle(true)
+        }
+    },[login.open])
     return (<>
         <HeaderBlock >
             <MainBlock>

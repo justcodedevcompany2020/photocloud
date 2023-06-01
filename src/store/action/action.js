@@ -444,3 +444,14 @@ export const clear_success_chnage_date = () =>{
     type:'clear_success_chnage_date'
   }
 }
+
+export const open_login_popUp = () =>{
+  return {
+    type:'open_login_popUp'
+  }
+}
+export const close_login_popUp = () =>{
+  return {
+    type:'close_login_popUp'
+  }
+}

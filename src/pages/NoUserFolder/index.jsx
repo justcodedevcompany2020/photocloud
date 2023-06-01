@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "../../hooks/useOnClickOutside"
 import { useDispatch, useSelector } from "react-redux"
 import { ReactComponent as BluePlusIcon } from "../../assets/blueplus.svg"
-import { clear_login_error, get_all_folder } from "../../store/action/action.js";
+import { clear_login_error, get_all_folder, open_login_popUp } from "../../store/action/action.js";
 import { ReactComponent as Sheare } from "../../assets/shear.svg"
 import { ReactComponent as Delate } from "../../assets/delate.svg"
 
@@ -102,7 +102,7 @@ export const NoUserFolderBlock = () => {
                 </LoadingDiv>:
                 <>
                     <AddCardsWrapper>
-                        <AddCards onClick={() => setLogin(true)}>
+                        <AddCards onClick={() => dispatch(open_login_popUp())}>
                             <PlusIconWrapper>
                                 <PlusIcon />
                             </PlusIconWrapper>
