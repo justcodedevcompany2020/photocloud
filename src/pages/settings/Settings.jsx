@@ -18,7 +18,21 @@ export const Settings = () =>{
     const {changeData} = useSelector(st=>st)
     const [changeMail,setChangeMail] = useState(false)
     const [succes,setSuccess] = useState('')
-
+    const [windowSize, setWindowSize] = useState(getWindowSize())
+    function getWindowSize() {
+      const { innerWidth, innerHeight } = window
+      return { innerWidth, innerHeight }
+    }
+    useEffect(() => {
+      function handleWindowResize() {
+        setWindowSize(getWindowSize())
+      }
+      window.addEventListener('resize', handleWindowResize)
+      return () => {
+        window.removeEventListener('resize', handleWindowResize)
+      }
+    }, [])
+    console.log(windowSize.innerWidth)
     useOnClickOutside(refReg, () => closeChangePassword());
     useOnClickOutside(refcode, () => setChangeMail(false));
 
@@ -194,15 +208,15 @@ export const Settings = () =>{
                 <Content>
                     <InputWrapper>  
                         <Lable>Имя</Lable>
-                        <Input  error={data[0].error} value={data[0].value} onChange ={(e)=>hadnelClick(e,0)} width={'500px'} max={'500px'} inputName={'Имя'} />
+                        <Input  max = {windowSize.innerWidth>768?"500px":"100%"} width = {windowSize.innerWidth>768?"500px":"100%"} error={data[0].error} value={data[0].value} onChange ={(e)=>hadnelClick(e,0)}  inputName={'Имя'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Юзернейм</Lable>
-                        <Input error={data[1].error} value={data[1].value} onChange ={(e)=>hadnelClick(e,1)}  width={'500px'} max={'500px'} inputName={'Username'} />
+                        <Input max = {windowSize.innerWidth>768?"500px":"100%"} width = {windowSize.innerWidth>768?"500px":"100%"}  error={data[1].error} value={data[1].value} onChange ={(e)=>hadnelClick(e,1)}   inputName={'Username'} />
                     </InputWrapper>
                     <InputWrapper>
                         <Lable>Эл. почта</Lable>
-                        <Input error={data[2].error} value={data[2].value} onChange ={(e)=>hadnelClick(e,2)} width={'500px'} max={'500px'} inputName={'User@gmail.com'} />
+                        <Input max = {windowSize.innerWidth>768?"500px":"100%"} width = {windowSize.innerWidth>768?"500px":"100%"} error={data[2].error} value={data[2].value} onChange ={(e)=>hadnelClick(e,2)}  inputName={'User@gmail.com'} />
                     </InputWrapper>
                     <TextMobile onClick={()=>{
                         dispatch(open_popup_change_password())
@@ -210,7 +224,6 @@ export const Settings = () =>{
 
                     }
                     }>Сменить пароль</TextMobile>
-                    <Br />
                     <SuccessText>{succes}</SuccessText>
                     <ButtonWrapper>
                         <Button loading = {changeData.loading} onClick={(e)=>handelClickSave(e)}  text={'Сохранить'} bgColor={'#4F6688'} width={'230px'} ml={'10px'} />
@@ -222,7 +235,7 @@ export const Settings = () =>{
                 </Content>
             </Block>
         </MainBlock>
-        {changePasswordToggle && <ChangePasswordForm error = {changeData.error} loading= {changeData.changePasswordLoading} changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
+        {changePasswordToggle && <ChangePasswordForm close = {()=>closeChangePassword()} error = {changeData.error} loading= {changeData.changePasswordLoading} changeData = {chnagePassword} handelClick = {(data)=>handelClick(data)} ref = {refReg} />}
         {changeMail && <ChangeEmailForm error = {changeData.errorCode} loading = {changeData.codeLoading} handelRecoveryForm = {(e)=>sendCode(e)} ref = {refcode}/>}
     </>
 }
@@ -237,6 +250,12 @@ border-radius: 10px;
 height: 100px;
 margin: auto;
 margin-top: 25px;
+@media (max-width: 768px) {
+    width: 50%;
+  }
+  @media (max-width: 425px) {
+    width: 90%;
+  }
 `
 const Block = styled.div`
     width: 50%;
@@ -251,12 +270,8 @@ height: 100%;
 const InputWrapper = styled.div`
 display: flex;
 flex-direction: column;
-width: 500px;
 @media (max-width: 768px) {
-    justify-content: center;
-    width: 100%;
-
-}
+    }
 `
 const Lable = styled.label `
 color:#5B5B5B;
@@ -302,6 +317,7 @@ const TextMobile = styled.p `
         font-size: 16px;
         line-height: 19px;
         margin-bottom:0;
+        text-decoration: underline;
         // width: 120px;
 
       }
@@ -332,4 +348,7 @@ const Title = styled.p `
 const SuccessText = styled.p `
     height: 20px;
     color: #059f05;
+    @media (max-width: 768px) {
+        font-size: 13px;
+    }
 `

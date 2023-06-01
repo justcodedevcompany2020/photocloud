@@ -24,6 +24,7 @@ export const PasswordRecoveryForm = forwardRef((props, ref) => {
     }
     return (<BackDiv {...props}>
         <MainBlock ref={ref}>
+        <Close onClick={()=>props.close()}>X</Close>
             <RecoveryCodeContent>
                 <RecoveryPassText>Восстановление <br />
                     аккаунта</RecoveryPassText>
@@ -79,10 +80,14 @@ height: 495px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+position: relative;
 @media (max-width: 768px) {
-    width:90%;
+    width:50%;
     box-sizing: border-box;
     padding: 0 20px;
+}
+@media (max-width: 425px) {
+    width:90%;
 }
 `
 const RecoveryCodeContent = styled.div`
@@ -98,6 +103,10 @@ text-align: center;
 color: #333333;
 margin-bottom: 9px;
 margin-top: 0px;
+@media (max-width: 425px) {
+    font-size: 25px;
+    line-height: 25px;
+}
 `
 const RecoverySubText = styled.p`
 margin-top: 0px;
@@ -110,4 +119,15 @@ padding: 0 120px;
 @media (max-width: 768px) {
     padding: 0;
 }
+`
+const Close = styled.p`
+position: absolute;
+    right: 15px;
+    top:10px;
+    margin: 0;
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+
+    }
 `

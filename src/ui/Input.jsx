@@ -76,6 +76,10 @@ export const ErrorText = styled.p`
         max-width:350px;
         width:100%;
     }
+    @media (max-width: 425px) {
+        font-size: 10px;
+        line-height: 10px;
+    }
 `
 export const EyeProvider = styled.div `
 position: absolute;

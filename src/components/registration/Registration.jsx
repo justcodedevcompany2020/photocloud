@@ -4,7 +4,7 @@ import { Button } from "../../ui/Button"
 import { forwardRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,openLogin }, ref) => {
+export const    Registration = forwardRef(({close, loginBtnCB,registerData,loading,error,openLogin }, ref) => {
     const [data,setData] = useState([
         {value:'',error:'',lable:'Имя'},
         {value:'',error:'',lable:'Юзернейм'},
@@ -52,6 +52,7 @@ export const Registration = forwardRef(({ loginBtnCB,registerData,loading,error,
     },[loading])
     return (<BackDiv>
         <MainBlock ref={ref}>
+            <Close onClick={()=>close()}>X</Close>
             <RegistrationTitle>Регистрация</RegistrationTitle>
             {
                 data.map((elm,i)=>{
@@ -100,13 +101,16 @@ width: 570px;
 height: 623px;
 background: #FFFFFF;
 font-weight: 600;
-
+position: relative;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
 @media (max-width: 768px) {
-    width:90%;
+    width:50%;
     box-sizing: border-box;
     padding: 0 20px;
+}
+@media (max-width: 600px) {
+    width:90%;
 }
 `
 const RegistrationTitle = styled.div`
@@ -137,4 +141,15 @@ const ErrorText = styled.p`
     font-size: 14px;
     color: red;
     height: 20px;
+`
+const Close = styled.p`
+position: absolute;
+    right: 15px;
+    top:10px;
+    margin: 0;
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+
+    }
 `

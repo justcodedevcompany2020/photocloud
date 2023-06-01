@@ -3,7 +3,8 @@ import { Input } from "../../ui/Input"
 import { Button } from "../../ui/Button"
 import { forwardRef, useEffect, useState } from "react";
 
-export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,loading}, ref) => {
+export const ChangePasswordForm = forwardRef(({close,handelClick,changeData,error ,loading}, ref) => {
+    console.log(close)
     const [data,setData] = useState([
         {value:'',lable:'Старый пароль',error:'',type:true,password:true},
         {value:'',lable:'Новый пароль',error:'',type:true,password:true},
@@ -29,6 +30,7 @@ export const ChangePasswordForm = forwardRef(({ handelClick,changeData,error ,lo
     },[loading])
     return (<BackDiv>
         <MainBlock ref={ref}>
+            <Close onClick={()=>close()}>X</Close>
             <RegistrationTitle>Cмена пароля</RegistrationTitle>
             <SubText>Придумайте сложный пароль,содержащий
                 строчные и прописные буквы,а так же цифры
@@ -69,10 +71,14 @@ height: 506px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+position: relative;
 @media (max-width: 768px) {
-    width:90%;
+    width:50%;
     box-sizing: border-box;
     padding: 0 20px;
+}
+@media (max-width: 600px) {
+    width:90%;
 }
 `
 const RegistrationTitle = styled.div`
@@ -109,4 +115,10 @@ const ErrorText = styled.p`
     font-size: 12px;
     color: red;
     height: 20px;
+`
+const Close = styled.p`
+position: absolute;
+    right: 15px;
+    top:10px;
+    margin: 0;
 `

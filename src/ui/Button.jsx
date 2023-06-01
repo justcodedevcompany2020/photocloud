@@ -18,7 +18,7 @@ export const Button = ({
 }) => {
     return (<>
         <UIbutton disabled = {loading||disabled} font = {font} onClick={onClick} height={height} mt={mt} ml={ml} bgColor={bgColor} txColor={txColor} width={width} mb={mb}>{text}
-        <div style={{position:'absolute', top:'13px',button:'0',margin:'auto',right: '15px'}}>
+        <div style={{position:'absolute', top:'16px',button:'0',margin:'auto',right: '15px'}}>
             <ClipLoader
                 color={'white'}
                 loading={loading}
@@ -53,7 +53,7 @@ cursor: pointer;
     border:rgb(90 112 145);
     color:white;
 }
-@media (max-width: 768px) {
+@media (max-width: 425px) {
     width:100%;
 }
 `

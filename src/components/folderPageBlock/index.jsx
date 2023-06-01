@@ -167,9 +167,9 @@ export const FolderPageBlock = () =>{
         })
     }
     </MainBlock>
-    {createFolderModal && <CreateFolderForm prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
+    {createFolderModal && <CreateFolderForm close = {()=>setCreateFolderModal(false)} prId  ={creatFolder.slug_data.id} loading = {creatFolder.loading} ref={folderRef} />}
     {addImages && 
-            <AddPhoto length = {photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
+            <AddPhoto  close = {()=>setAddImages(false)} length = {photo?.length} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />
     }
     {openShare && 
         <Shear id = {shearId} handelCloseHSare = {(e)=>handelCloseHSare(e)} ref ={shRef}/>

@@ -14,9 +14,11 @@ export const SinglPage = () =>{
     },[])
     return (<>
         <MainBlock>
-            <Image src={`https://photocloud.justcode.am/uploads/${addPhoto.photo && addPhoto.photo}`} />
+            <Img>
+                <Image src={`https://photocloud.justcode.am/uploads/${addPhoto.photo && addPhoto.photo}`} />
+            </Img>
         </MainBlock>
-        <Footer></Footer>
+        <Footer /> 
     </>
     )
 }
@@ -34,10 +36,15 @@ margin: auto;
 align-items: center;
 justify-content: center;
 margin-top: 25px;
+
+`
+const Img = styled.div `
+width: 50%;
+height: 90%;
 `
 const Image = styled.img `
-width: 60%;
-height: 90%;
+width: 100%;
+height: 100%;
 object-fit: contain;
-border-radius: 8px;
+border-radius: 20px;
 `

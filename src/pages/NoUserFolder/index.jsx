@@ -150,9 +150,8 @@ export const NoUserFolderBlock = () => {
                         }
             </Content>
         </MainBlock>
-        {/* {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />} */}
         {login && <Login  ref={logRef} forgotPassCB={handleForgotModal} />}
-        {addImages && <AddPhoto length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />}
+        {addImages && <AddPhoto close = {()=>setAddImages(false)} length = {creatFolder?.slug_data?.photo?.length ?creatFolder?.slug_data?.photo?.length:0} loading = {addPhoto.loading} id = {creatFolder.slug_data.id} ref={addRef} />}
         {openShare && 
             <Shear  id = {shearId}  ref ={shRef}/>
         }

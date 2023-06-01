@@ -68,7 +68,7 @@ export const FoldersBlock = () => {
                 </>}
             </Content>
         </MainBlock>
-        {createFolderModal && <CreateFolderForm loading = {creatFolder.loading} ref={folderRef} />}
+        {createFolderModal && <CreateFolderForm close = {()=>setCreateFolderModal(false)} setCreateFolderModal loading = {creatFolder.loading} ref={folderRef} />}
     </>
     )
 }

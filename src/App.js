@@ -25,19 +25,19 @@ function App() {
 
   return (
     <div className="App">
-      {!tokens ?
+      {!token ?
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route path="" element={!tokens ?<MiddleInfo />:<UserProfile />} />
-          <Route path="/createFolder" element={tokens ?<FoldersBlock />:<NoUserFolderBlock />} />
+          <Route path="" element={<MiddleInfo />} />
+          <Route path="/createFolder" element={<NoUserFolderBlock />} />
           <Route path='/img/:id' element={<SinglPage />} />
           <Route path="*" element={<MiddleInfo />} />
           </Route>
       </Routes>:
       <Routes>
           <Route path="/" element={<MainLayout />}>
-          <Route path="" element={!tokens ?<MiddleInfo />:<UserProfile />} />
-          <Route path="/createFolder" element={tokens ?<FoldersBlock />:<NoUserFolderBlock />} />
+          <Route path="" element={<UserProfile />} />
+          <Route path="/createFolder" element={<FoldersBlock />} />
           <Route path='/userProfile' element={<UserProfile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/folder/:id' element={<FolderPage />} />

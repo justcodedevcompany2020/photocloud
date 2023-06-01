@@ -6,7 +6,7 @@ import { add_photo } from "../../store/action/action";
 import { Button } from "../../ui/Button";
 
 import './style.css'
-export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
+export const AddPhoto = forwardRef(({close,id,loading,length},ref) =>{
     const dispatch = useDispatch()
     const [image, setImage] = useState([])
     const [array,setArray] = useState([])
@@ -102,6 +102,7 @@ export const AddPhoto = forwardRef(({id,loading,length},ref) =>{
     return <BackDiv>
         <MainBlock ref  = {ref}>
         <RecoveryContent>
+        <Close1 onClick={()=>close()}>X</Close1>
             <RecoveryPassText>Добавить изображение</RecoveryPassText>
             <CardWrapper>
                 { <Card>
@@ -144,6 +145,7 @@ min-height: 400px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+position: relative;
 @media (max-width: 768px) {
     width:90%;
     box-sizing: border-box;
@@ -233,4 +235,15 @@ height: 20px;
 const ErrorMsg = styled.p `
     font-size: 12px;
     color: red;
+`
+const Close1 = styled.p`
+position: absolute;
+    right: 15px;
+    top:10px;
+    margin: 0;
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+
+    }
 `

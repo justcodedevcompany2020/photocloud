@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login_action } from "../../store/action/action";
 
-export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register }, ref) => {
+export const Login = forwardRef(({close, forgotPassCB, regCB, loginCloseCB,register }, ref) => {
     const dispatch = useDispatch()
     const {login}= useSelector((st)=>st)
     const  [data,setData] = useState([
@@ -48,6 +48,7 @@ export const Login = forwardRef(({ forgotPassCB, regCB, loginCloseCB,register },
     return (<BackDiv>
         <MainBlock ref={ref}>
             {/* <Content> */}
+            <Close onClick={()=>close()}>X</Close>
                 <RegistrationTitle>Вход</RegistrationTitle>
                 {data.map((elm,i)=>(
                     <Input 
@@ -97,7 +98,13 @@ height: 419px;
 background: #FFFFFF;
 box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
 border-radius: 15px;
+position: relative;
 @media (max-width: 768px) {
+    width:50%;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+@media (max-width: 600px) {
     width:90%;
     box-sizing: border-box;
     padding: 0 20px;
@@ -150,4 +157,15 @@ const ErrorText = styled.p`
     font-size: 14px;
     color: red;
     height: 20px;
+`
+const Close = styled.p`
+position: absolute;
+    right: 15px;
+    top:10px;
+    margin: 0;
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+
+    }
 `

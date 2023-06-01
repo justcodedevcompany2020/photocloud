@@ -9,7 +9,9 @@ export const SettingsForm = () => {
     const [changePasswordModal, setChangePasswordModal] = useState(false)
     const changePassRef = useRef();
     useOnClickOutside(changePassRef, () => setChangePasswordModal(false));
-    
+    const closePopUp = () =>{
+        setChangePasswordModal(false)
+    }
     return (<>
         <MainBlock>
             <div>

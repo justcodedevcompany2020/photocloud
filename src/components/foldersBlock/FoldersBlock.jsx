@@ -25,7 +25,7 @@ export const FoldersBlock = () => {
                 </AddCards>
             </Content>
         </MainBlock>
-        {createFolderModal && <CreateFolderForm ref={folderRef} />}
+        {createFolderModal && <CreateFolderForm  close = {()=>setCreateFolderModal(false)} ref={folderRef} />}
     </>
     )
 }

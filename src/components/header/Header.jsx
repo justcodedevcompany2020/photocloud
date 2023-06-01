@@ -306,6 +306,14 @@ export const Header = () => {
             setLoginToggle(true)
         }
     },[login.open])
+    const closeModal = () =>{
+        closeLogin()
+        closeReg()
+        closeRecoverPassword()
+        closeRecoverCode()
+        setRecoveryPasswordForm(false)
+        closeVerfeyEmail()
+    }
     return (<>
         <HeaderBlock >
             <MainBlock>
@@ -329,12 +337,12 @@ export const Header = () => {
                 </LoginBlock>}
             </MainBlock>
         </HeaderBlock>
-        {regToggle && <Registration openLogin = {()=>openCloseRegisterOpenLogin()} error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
-        {loginToggle && <Login ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
-        {recoveryToggle && <PasswordRecovery loading = {forgotPassword.loading} error = {noteMail ? noteMail:forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
-        {recoveryPasswordFormToggle  && <RecoveryCode  forgotPaswordMail = {forgotPaswordMail} error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
-        {recoveryPasswordForm && <PasswordRecoveryForm loading = {forgotPassword.loadingNew} data = {newPassword} handelNewPassword = {(e)=>handelNewPassword(e)} ref = {recpasref}/>}
-        {verefayEmail && <VerefayEmail error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
+        {regToggle && <Registration close = {()=>closeModal()} openLogin = {()=>openCloseRegisterOpenLogin()} error = {reg.error} loading = {reg.loading} registerData = {registerData} ref={refReg} loginBtnCB={(e)=>handleLoginClick(e)} />}
+        {loginToggle && <Login close = {()=>closeModal()} ref={logRef} forgotPassCB={handleForgotModal} regCB={handleRegFromLogin} loginCloseCB={handleCloseLoginModal}  />}
+        {recoveryToggle && <PasswordRecovery close = {()=>closeModal()} loading = {forgotPassword.loading} error = {noteMail ? noteMail:forgotPassword.error} handelRecoveryForm = {(e)=>handelRecoveryForm(e)} ref={recRef}  />}
+        {recoveryPasswordFormToggle  && <RecoveryCode  close = {()=>closeModal()}  forgotPaswordMail = {forgotPaswordMail} error = {forgotPassword.errorCode} loading = {forgotPassword.loadingCode} handelRecoveryPassForm = {(e)=>handelRecoveryPassForm(e)} ref = {recpasfor} />}
+        {recoveryPasswordForm && <PasswordRecoveryForm  close = {()=>closeModal()} loading = {forgotPassword.loadingNew} data = {newPassword} handelNewPassword = {(e)=>handelNewPassword(e)} ref = {recpasref}/>}
+        {verefayEmail && <VerefayEmail  close = {()=>closeModal()} error = {reg.error_verify_email} email = {registerData[2].value} loading = {reg.loading_verify} click = {(value)=>handelVerefyForm(value)} ref = {verRef}  /> }
     </>
     )
 }
