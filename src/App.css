@@ -17,6 +17,10 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
 @font-face {
   font-family: "Raleway"; 
