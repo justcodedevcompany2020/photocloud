@@ -20,6 +20,7 @@ export const Slider = () =>{
 const Img = styled.img`
     width:200px;
     margin-right:40px;
+    object-fit: contain;
     height:100px;
     border-radius:15px;
     @media (max-width: 768px) {
