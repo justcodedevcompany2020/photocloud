@@ -94,3 +94,8 @@ export const start_delate_photo = () =>{
         type:'start_delate_photo'
     }
 }
+export const start_get_slider_data = () =>{
+    return {
+        type:'start_get_slider_data'
+    }
+}

@@ -89,3 +89,8 @@ export const error_delate_photo = () =>{
         type:'error_delate_photo'
     }
 }
+export const error_get_slider_data = () =>{
+    return {
+        type:'error_get_slider_data'
+    }
+}

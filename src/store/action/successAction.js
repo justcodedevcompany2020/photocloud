@@ -106,3 +106,9 @@ export const success_delate_photo = (data) =>{
         data
     }
 }
+export const success_get_slider_data = (data) =>{
+    return {
+        type:'success_get_slider_data',
+        data
+    }
+}

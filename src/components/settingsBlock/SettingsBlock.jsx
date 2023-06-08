@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Button } from "../../ui/Button"
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReactComponent as Settings } from '../../assets/settings.svg';
 import { useDispatch, useSelector } from "react-redux";

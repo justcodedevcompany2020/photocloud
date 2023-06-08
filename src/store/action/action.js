@@ -1,5 +1,5 @@
 import axios from "axios";
-import { error_add_photo, error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_delate_photo, error_forgot_password, error_forgot_password_code, error_get_all_folder, error_get_folfer_by_slug, error_get_photo, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
+import { error_add_photo, error_change_email, error_change_username_and_name, error_check_email_code, error_create_folder, error_create_new_password, error_delate_photo, error_forgot_password, error_forgot_password_code, error_get_all_folder, error_get_folfer_by_slug, error_get_photo, error_get_slider_data, error_get_user, error_login, error_logout, error_register, error_update_password, error_verefy_email } from "./errorAction";
 import {
   start_add_photo,
   start_change_email,
@@ -13,6 +13,7 @@ import {
   start_get_all_folder,
   start_get_folfer_by_slug,
   start_get_photo,
+  start_get_slider_data,
   start_get_user,
   start_login,
   start_logout,
@@ -33,6 +34,7 @@ import {
   success_get_all_folder,
   success_get_folfer_by_slug,
   success_get_photo,
+  success_get_slider_data,
   success_get_user,
   success_login,
   success_logout,
@@ -453,5 +455,21 @@ export const open_login_popUp = () =>{
 export const close_login_popUp = () =>{
   return {
     type:'close_login_popUp'
+  }
+}
+export const get_Slider_data = () =>{
+  return (dispatch) =>{
+    axios.get(`${url}slider`).then((r)=>{
+      dispatch(start_get_slider_data())
+      if(r.data.status){
+        dispatch(success_get_slider_data(r.data.data))
+      }
+      else {
+        dispatch(error_get_slider_data())
+      }
+    })
+    .catch((error)=>{
+      dispatch(error_get_slider_data())
+    })
   }
 }

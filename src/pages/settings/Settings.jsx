@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { change_code, change_email, change_username_and_name, clear_success_chnage_date, open_popup_change_password, update_user_password } from "../../store/action/action"
 import { ChangeEmailForm } from "../../components/changeEmailForm"
 import { ReactComponent as Vectore } from '../../assets/Vectore.svg';
+import { Slider } from "../../components/Slider"
 
 
 export const Settings = () =>{
@@ -202,6 +203,9 @@ export const Settings = () =>{
         setChangeMail(false)
     },[])
     return <>
+        <Div>
+            <Slider />
+        </Div>
         <Title onClick = {()=>window.location = ('/userProfile')}><Vectore /> Настройки</Title>
         <MainBlock>
             <Block>
@@ -351,4 +355,7 @@ const SuccessText = styled.p `
     @media (max-width: 768px) {
         font-size: 13px;
     }
+`
+const Div = styled.div `
+    margin-top: 20px;
 `
