@@ -60,7 +60,7 @@ color: #333333;
 margin-left: auto;
 margin-right: auto;
 margin-bottom: 65px;
-width: 44em;
+// width: 44em;
 @media (max-width: 768px) {
     font-size: 16px;
     width: 90%; 

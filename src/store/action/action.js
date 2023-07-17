@@ -44,7 +44,7 @@ import {
   success_verefy_email,
 } from "./successAction";
 
-const url = "https://photocloud.justcode.am/api/";
+const url = "https://admin.myalbum.boo/api/";
 export const register_action = (data) => {
   return (dispatch) => {
     dispatch(start_register());
